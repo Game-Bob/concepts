@@ -1,0 +1,19 @@
+---
+import Footer from "@jjlmoya/identity/footer";
+import packageJson from "../../package.json";
+import { getBrand } from "../identity/brands";
+import type { Language } from "../i18n/languages";
+
+interface Props {
+    language: Language;
+}
+
+const { language } = Astro.props;
+---
+
+<Footer
+    class="concepts-site-footer"
+    identity={getBrand(language)}
+    {language}
+    version={packageJson.version}
+/>

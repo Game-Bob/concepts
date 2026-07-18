@@ -1,0 +1,69 @@
+@import url("@fontsource/inter/index.css");
+@import url("./tokens.css");
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    --concepts-header-height: 4.25rem;
+    --concepts-footer-height: 4.75rem;
+
+    min-width: 20rem;
+    min-height: 100%;
+    background: var(--color-page);
+    color: var(--color-text);
+    font-family: Inter, system-ui, sans-serif;
+    color-scheme: light;
+}
+
+html.theme-dark {
+    color-scheme: dark;
+}
+
+body {
+    display: flex;
+    width: 100%;
+    min-height: 100dvh;
+    flex-direction: column;
+    margin: 0;
+    background: var(--color-page);
+    color: var(--color-text);
+}
+
+html[data-identity="gamebob"] {
+    --concepts-header-height: 4.5rem;
+}
+
+.concepts-site-header,
+.concepts-site-footer {
+    width: 100%;
+    max-width: none;
+}
+
+.concepts-site-header .gamebob-header__container,
+.concepts-site-header .jjlmoya-header__nav,
+.concepts-site-footer .gamebob-footer__content {
+    width: 100%;
+    max-width: none;
+}
+
+.concepts-site-footer.gamebob-footer {
+    flex: 0 0 auto;
+    padding-block: 0.75rem;
+}
+
+.concepts-site-footer .gamebob-footer-kitty__svg {
+    width: 3.25rem;
+    height: 3.25rem;
+}
+
+button,
+a {
+    font: inherit;
+}
+
+:focus-visible {
+    outline: 0.1875rem solid var(--color-focus);
+    outline-offset: 0.1875rem;
+}

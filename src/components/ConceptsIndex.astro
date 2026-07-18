@@ -1,0 +1,84 @@
+---
+import Header from "@jjlmoya/identity/header";
+import LanguageSheet from "@jjlmoya/identity/language-sheet";
+import LanguageTrigger from "@jjlmoya/identity/language-trigger";
+import { CONCEPTS, getConceptLocale } from "../concepts/registry";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { BRANDS, getBrand } from "../identity/brands";
+import { getConceptsAlternateLinks, getConceptsIndexUrl, getConceptsPath } from "../routing/routes";
+import { getSiteNavigation } from "../routing/navigation";
+import { CONCEPTS_LOCALES } from "../sections/concepts/locales";
+import type { Language } from "../i18n/languages";
+import { LANGUAGES } from "../i18n/languages";
+import { LANGUAGE_UI } from "../i18n/language-ui";
+import { HEADER_UI } from "../i18n/header-ui";
+import WaitingCard from "./cards/WaitingCard.astro";
+import SiteFooter from "./SiteFooter.astro";
+import "../styles/concepts-index.css";
+
+interface Props {
+    language: Language;
+}
+const { language } = Astro.props;
+const locale = CONCEPTS_LOCALES[language];
+const brand = getBrand(language);
+const homeUrl =
+    language === "es" ? "https://www.jjlmoya.es/" : `https://www.gamebob.dev/${language}/`;
+const labels = HEADER_UI[language];
+const languageUi = LANGUAGE_UI[language];
+const languageLinks = LANGUAGES.map(({ code, name }) => ({
+    code,
+    name,
+    href: import.meta.env.DEV ? getConceptsPath(code) : getConceptsIndexUrl(code),
+    current: code === language,
+}));
+const concepts = CONCEPTS.map((concept) => ({
+    ...concept,
+    locale: getConceptLocale(concept.id, language),
+    href: `./${concept.slugs[language]}/`,
+}));
+---
+
+<BaseLayout
+    {language}
+    {brand}
+    title={`${locale.title} - ${BRANDS[brand].name}`}
+    description={locale.description}
+    canonical={getConceptsIndexUrl(language)}
+    alternates={getConceptsAlternateLinks()}
+>
+    <Header
+        class="concepts-site-header"
+        identity={brand}
+        {homeUrl}
+        navigation={getSiteNavigation(language)}
+        {labels}
+    >
+        <LanguageTrigger slot="desktop-actions" label={languageUi.change} />
+        <LanguageTrigger slot="mobile-actions" label={languageUi.change} />
+    </Header>
+    <LanguageSheet links={languageLinks} title={languageUi.select} closeLabel={languageUi.close} />
+    <main class="concepts-index">
+        <header class="concepts-index__header">
+            <p class="concepts-index__brand">{BRANDS[brand].name}</p>
+            <h1 class="concepts-index__title">{locale.title}</h1>
+            <p class="concepts-index__description">{locale.description}</p>
+        </header>
+        <ol class="concepts-index__grid">
+            {
+                concepts.map((concept, index) => (
+                    <li>
+                        {concept.id === "waiting" && (
+                            <WaitingCard
+                                href={concept.href}
+                                locale={concept.locale}
+                                number={String(index + 1).padStart(2, "0")}
+                            />
+                        )}
+                    </li>
+                ))
+            }
+        </ol>
+    </main>
+    <SiteFooter {language} />
+</BaseLayout>

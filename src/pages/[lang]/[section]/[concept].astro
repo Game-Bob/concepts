@@ -1,0 +1,28 @@
+---
+import type { GetStaticPaths } from "astro";
+import ConceptDetail from "../../../components/ConceptDetail.astro";
+import { CONCEPTS, type ConceptId } from "../../../concepts/registry";
+import { LANGUAGE_CODES, type Language } from "../../../i18n/languages";
+import { CONCEPTS_SECTION_SLUGS } from "../../../i18n/sections";
+
+interface Props {
+    language: Exclude<Language, "es">;
+    conceptId: ConceptId;
+}
+export const getStaticPaths = (() =>
+    LANGUAGE_CODES.filter(
+        (language): language is Exclude<Language, "es"> => language !== "es"
+    ).flatMap((language) =>
+        CONCEPTS.map((concept) => ({
+            params: {
+                lang: language,
+                section: CONCEPTS_SECTION_SLUGS[language],
+                concept: concept.slugs[language],
+            },
+            props: { language, conceptId: concept.id },
+        }))
+    )) satisfies GetStaticPaths;
+const { language, conceptId } = Astro.props;
+---
+
+<ConceptDetail {language} {conceptId} />

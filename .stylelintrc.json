@@ -1,0 +1,71 @@
+{
+    "extends": ["stylelint-config-standard"],
+    "plugins": ["stylelint-declaration-strict-value"],
+    "overrides": [
+        {
+            "files": ["**/*.astro"],
+            "customSyntax": "postcss-html"
+        },
+        {
+            "files": ["src/styles/tokens.css"],
+            "rules": {
+                "scale-unlimited/declaration-strict-value": null
+            }
+        },
+        {
+            "files": ["src/styles/global.css"],
+            "rules": {
+                "at-rule-disallowed-list": null,
+                "property-disallowed-list": null
+            }
+        }
+    ],
+    "rules": {
+        "scale-unlimited/declaration-strict-value": [
+            ["color", "background-color", "border-color", "fill", "stroke"],
+            {
+                "ignoreValues": ["transparent", "none", "inherit", "currentColor", "initial"]
+            }
+        ],
+        "alpha-value-notation": "number",
+        "at-rule-disallowed-list": ["font-face", "import"],
+        "color-function-notation": "modern",
+        "color-named": "never",
+        "color-no-invalid-hex": true,
+        "comment-empty-line-before": null,
+        "custom-property-pattern": null,
+        "declaration-block-no-duplicate-properties": true,
+        "declaration-no-important": true,
+        "media-feature-range-notation": "context",
+        "no-descending-specificity": null,
+        "no-duplicate-selectors": true,
+        "property-disallowed-list": ["font", "font-family"],
+        "selector-class-pattern": null,
+        "selector-pseudo-class-no-unknown": [
+            true,
+            {
+                "ignorePseudoClasses": ["global"]
+            }
+        ],
+        "shorthand-property-no-redundant-values": true,
+        "unit-allowed-list": [
+            "px",
+            "rem",
+            "em",
+            "%",
+            "vw",
+            "vh",
+            "dvw",
+            "dvh",
+            "svw",
+            "svh",
+            "vmin",
+            "vmax",
+            "fr",
+            "deg",
+            "s",
+            "ms",
+            "ch"
+        ]
+    }
+}

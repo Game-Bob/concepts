@@ -1,0 +1,58 @@
+:root,
+.theme-light {
+    --color-page: #f4f1ea;
+    --color-surface: #fffdf8;
+    --color-text: #171715;
+    --color-muted: #66635d;
+    --color-border: #d8d3c8;
+    --color-accent: #087f73;
+    --color-accent-soft: #cce9e3;
+    --color-focus: #075f57;
+    --shadow-surface: 0 1.25rem 4rem rgb(42 39 31 / 0.12);
+    --waiting-background: #f8f5f2;
+    --waiting-text: #1a1a1a;
+    --waiting-copy: #444;
+    --waiting-muted: #77736f;
+    --waiting-line: #333;
+    --waiting-track: #ded9d3;
+    --waiting-penalty: #1a1a1a;
+    --waiting-on-penalty: #f8f5f2;
+    --waiting-penalty-copy: #c7c2bc;
+    --waiting-penalty-line: #756f69;
+    --waiting-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23e8e2df'/%3E%3C/svg%3E");
+    --waiting-grain-blend: multiply;
+    --waiting-grain-opacity: 0.38;
+    --waiting-card-accent: #77736f;
+    --waiting-card-glow: rgb(119 115 111 / 0.22);
+    --waiting-card-orbit: rgb(119 115 111 / 0.5);
+    --waiting-card-shadow: rgb(20 18 16 / 0.35);
+}
+
+.theme-dark {
+    --color-page: #090b0b;
+    --color-surface: #111515;
+    --color-text: #f1eee7;
+    --color-muted: #aaa69e;
+    --color-border: #303737;
+    --color-accent: #40dfc3;
+    --color-accent-soft: #173b36;
+    --color-focus: #8df7e4;
+    --shadow-surface: 0 1.25rem 4rem rgb(0 0 0 / 0.35);
+    --waiting-background: #0d0f10;
+    --waiting-text: #e9e4dc;
+    --waiting-copy: #c0b9b0;
+    --waiting-muted: #8b857d;
+    --waiting-line: #aaa39a;
+    --waiting-track: #303337;
+    --waiting-penalty: #030404;
+    --waiting-on-penalty: #f0ebe4;
+    --waiting-penalty-copy: #aaa39a;
+    --waiting-penalty-line: #4f4b47;
+    --waiting-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23262a2d'/%3E%3C/svg%3E");
+    --waiting-grain-blend: soft-light;
+    --waiting-grain-opacity: 0.62;
+    --waiting-card-accent: #aaa39a;
+    --waiting-card-glow: rgb(170 163 154 / 0.15);
+    --waiting-card-orbit: rgb(170 163 154 / 0.38);
+    --waiting-card-shadow: rgb(0 0 0 / 0.65);
+}

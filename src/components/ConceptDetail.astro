@@ -1,0 +1,56 @@
+---
+import Header from "@jjlmoya/identity/header";
+import LanguageSheet from "@jjlmoya/identity/language-sheet";
+import LanguageTrigger from "@jjlmoya/identity/language-trigger";
+import { getConceptLocale, type ConceptId } from "../concepts/registry";
+import { BRANDS, getBrand } from "../identity/brands";
+import { LANGUAGE_UI } from "../i18n/language-ui";
+import { HEADER_UI } from "../i18n/header-ui";
+import { LANGUAGES, type Language } from "../i18n/languages";
+import { getSiteNavigation } from "../routing/navigation";
+import { getConceptAlternateLinks, getConceptPath, getConceptUrl } from "../routing/routes";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WaitingExperience from "./WaitingExperience.astro";
+import SiteFooter from "./SiteFooter.astro";
+
+interface Props {
+    language: Language;
+    conceptId: ConceptId;
+}
+const { language, conceptId } = Astro.props;
+const locale = getConceptLocale(conceptId, language);
+const brand = getBrand(language);
+const homeUrl =
+    language === "es" ? "https://www.jjlmoya.es/" : `https://www.gamebob.dev/${language}/`;
+const labels = HEADER_UI[language];
+const languageUi = LANGUAGE_UI[language];
+const languageLinks = LANGUAGES.map(({ code, name }) => ({
+    code,
+    name,
+    href: import.meta.env.DEV ? getConceptPath(conceptId, code) : getConceptUrl(conceptId, code),
+    current: code === language,
+}));
+---
+
+<BaseLayout
+    language={language}
+    brand={brand}
+    title={`${locale.title} - ${BRANDS[brand].name}`}
+    description={locale.cardDescription}
+    canonical={getConceptUrl(conceptId, language)}
+    alternates={getConceptAlternateLinks(conceptId)}
+>
+    <Header
+        class="concepts-site-header"
+        identity={brand}
+        {homeUrl}
+        navigation={getSiteNavigation(language)}
+        {labels}
+    >
+        <LanguageTrigger slot="desktop-actions" label={languageUi.change} />
+        <LanguageTrigger slot="mobile-actions" label={languageUi.change} />
+    </Header>
+    <LanguageSheet links={languageLinks} title={languageUi.select} closeLabel={languageUi.close} />
+    {conceptId === "waiting" && <WaitingExperience {locale} indexUrl="../" />}
+    <SiteFooter {language} />
+</BaseLayout>

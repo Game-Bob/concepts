@@ -1,0 +1,17 @@
+---
+import type { GetStaticPaths } from "astro";
+import ConceptDetail from "../../components/ConceptDetail.astro";
+import { CONCEPTS, type ConceptId } from "../../concepts/registry";
+
+interface Props {
+    conceptId: ConceptId;
+}
+export const getStaticPaths = (() =>
+    CONCEPTS.map((concept) => ({
+        params: { concept: concept.slugs.es },
+        props: { conceptId: concept.id },
+    }))) satisfies GetStaticPaths;
+const { conceptId } = Astro.props;
+---
+
+<ConceptDetail language="es" {conceptId} />

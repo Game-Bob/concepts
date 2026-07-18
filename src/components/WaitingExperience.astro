@@ -1,0 +1,68 @@
+---
+import type { WaitingLocaleData } from "../concepts/waiting/locales";
+import "../styles/waiting-experience.css";
+
+interface Props {
+    locale: WaitingLocaleData;
+    indexUrl: string;
+}
+const { locale, indexUrl } = Astro.props;
+---
+
+<main
+    class="waiting"
+    data-waiting-experience
+    data-facts={JSON.stringify(locale.facts)}
+    data-statuses={JSON.stringify(locale.statuses)}
+>
+    <div class="waiting__grain" aria-hidden="true"></div>
+    <section class="waiting__state waiting__intro" data-waiting-intro>
+        <p class="waiting__eyebrow">{locale.cardSubtitle}</p>
+        <h1 class="waiting__title">{locale.title}</h1>
+        <div class="waiting__rule"></div>
+        <p class="waiting__description">{locale.description}</p>
+        <button class="waiting__button" type="button" data-waiting-start>{locale.start}</button>
+        <p class="waiting__note">({locale.attentionNote})</p>
+    </section>
+
+    <section class="waiting__state waiting__active" data-waiting-active hidden>
+        <div class="waiting__ticket">
+            <span>{locale.yourTurn}</span><strong data-waiting-ticket>001</strong>
+        </div>
+        <div class="waiting__circle">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+                <circle class="waiting__track" cx="50" cy="50" r="48"></circle>
+                <circle
+                    class="waiting__progress"
+                    cx="50"
+                    cy="50"
+                    r="48"
+                    pathLength="100"
+                    data-waiting-progress></circle>
+            </svg>
+            <p data-waiting-fact></p>
+        </div>
+        <p class="waiting__status" data-waiting-status>{locale.breathe}</p>
+    </section>
+
+    <section class="waiting__state waiting__penalty" data-waiting-penalty hidden>
+        <h2>{locale.connectionLost}</h2>
+        <p>{locale.penalty}</p>
+        <button type="button" data-waiting-retry
+            >{locale.retry} · <span data-waiting-lost-ticket>001</span></button
+        >
+    </section>
+
+    <section class="waiting__state waiting__success" data-waiting-success hidden>
+        <h2>{locale.arrived}</h2>
+        <div class="waiting__stats">
+            <p><strong data-waiting-final-time>00:00</strong><span>{locale.elapsed}</span></p>
+            <p><strong data-waiting-final-attempts>1</strong><span>{locale.attempts}</span></p>
+        </div>
+        <a href={indexUrl}>{locale.leave}</a>
+    </section>
+</main>
+
+<script>
+    import "../concepts/waiting/runtime";
+</script>

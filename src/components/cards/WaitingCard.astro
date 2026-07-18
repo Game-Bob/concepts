@@ -1,0 +1,28 @@
+---
+import { Icon } from "astro-icon/components";
+import type { WaitingLocaleData } from "../../concepts/waiting/locales";
+import "../../styles/cards/waiting-card.css";
+
+interface Props {
+    href: string;
+    locale: WaitingLocaleData;
+    number: string;
+}
+const { href, locale, number } = Astro.props;
+---
+
+<a class="waiting-card" href={href}>
+    <span class="waiting-card__number">{number}</span>
+    <div class="waiting-card__stage" aria-hidden="true">
+        <span class="waiting-card__orbit"></span>
+        <Icon name="mdi:hourglass" class="waiting-card__icon" />
+        <span class="waiting-card__shadow"></span>
+    </div>
+    <div class="waiting-card__copy">
+        <p>{locale.cardSubtitle}</p>
+        <h2>{locale.cardTitle}</h2>
+        <span></span>
+        <blockquote>{locale.cardDescription}</blockquote>
+    </div>
+    <span class="waiting-card__border" aria-hidden="true"></span>
+</a>

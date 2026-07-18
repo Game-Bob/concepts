@@ -1,0 +1,178 @@
+.waiting-card {
+    position: relative;
+    display: grid;
+    min-height: 30rem;
+    border: 0.0625rem solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+    padding: 1.5rem;
+    text-align: center;
+    text-decoration: none;
+    transition:
+        background 600ms ease,
+        border-color 600ms ease;
+}
+
+.waiting-card::before {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 35%, var(--waiting-card-glow), transparent 58%);
+    content: "";
+    opacity: 0.35;
+    transition: opacity 800ms ease;
+}
+
+.waiting-card:hover {
+    border-color: var(--waiting-card-accent);
+}
+
+.waiting-card:hover::before {
+    opacity: 0.7;
+}
+
+.waiting-card__number {
+    position: relative;
+    z-index: 2;
+    justify-self: end;
+    color: var(--color-muted);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+}
+
+.waiting-card__stage {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: 8rem;
+    aspect-ratio: 1;
+    place-self: center center;
+    place-items: center;
+}
+
+.waiting-card__orbit {
+    position: absolute;
+    inset: 0;
+    border: 0.0625rem solid var(--waiting-card-orbit);
+    border-radius: 50%;
+    opacity: 0.55;
+}
+
+.waiting-card__orbit::after {
+    position: absolute;
+    top: -0.2rem;
+    left: 50%;
+    width: 0.35rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--waiting-card-accent);
+    content: "";
+    transform: translateX(-50%);
+}
+
+.waiting-card__icon {
+    width: 4.5rem;
+    height: 4.5rem;
+    color: var(--waiting-card-accent);
+    filter: drop-shadow(0 0 1.25rem var(--waiting-card-shadow));
+    transform-origin: center;
+}
+
+.waiting-card:hover .waiting-card__icon,
+.waiting-card:focus-visible .waiting-card__icon {
+    animation: waiting-card-turn 5.5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.waiting-card__shadow {
+    position: absolute;
+    bottom: 1.1rem;
+    width: 3.4rem;
+    height: 0.25rem;
+    border-radius: 50%;
+    background: var(--waiting-card-shadow);
+    filter: blur(0.35rem);
+    opacity: 0.5;
+}
+
+.waiting-card__copy {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.waiting-card__copy p {
+    margin: 0 0 0.8rem;
+    color: var(--color-muted);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+}
+
+.waiting-card__copy h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.waiting-card__copy > span {
+    width: 3rem;
+    height: 0.0625rem;
+    margin: 1.4rem 0;
+    background: var(--color-border);
+}
+
+.waiting-card__copy blockquote {
+    max-width: 18rem;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.65;
+}
+
+.waiting-card__border {
+    position: absolute;
+    inset: 0.8rem;
+    border: 0.0625rem solid var(--color-border);
+    opacity: 0.35;
+    pointer-events: none;
+    transition:
+        border-color 600ms ease,
+        inset 600ms ease;
+}
+
+.waiting-card:hover .waiting-card__border {
+    inset: 0.65rem;
+    border-color: var(--waiting-card-accent);
+}
+
+@keyframes waiting-card-turn {
+    0%,
+    32% {
+        transform: rotate(0deg);
+    }
+
+    44%,
+    76% {
+        transform: rotate(180deg);
+    }
+
+    88%,
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .waiting-card:hover .waiting-card__icon,
+    .waiting-card:focus-visible .waiting-card__icon {
+        animation: none;
+    }
+}
