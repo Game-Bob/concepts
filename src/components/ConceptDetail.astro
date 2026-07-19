@@ -12,6 +12,7 @@ import { getConceptAlternateLinks, getConceptPath, getConceptUrl } from "../rout
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WaitingExperience from "./WaitingExperience.astro";
 import MeasurementExperience from "./MeasurementExperience.astro";
+import BoredomExperience from "./BoredomExperience.astro";
 import SiteFooter from "./SiteFooter.astro";
 
 interface Props {
@@ -60,6 +61,11 @@ const languageLinks = LANGUAGES.map(({ code, name }) => ({
     {
         conceptId === "measurement" && (
             <MeasurementExperience locale={getConceptLocale("measurement", language)} />
+        )
+    }
+    {
+        conceptId === "boredom" && (
+            <BoredomExperience locale={getConceptLocale("boredom", language)} indexUrl="../" />
         )
     }
     <SiteFooter {language} />

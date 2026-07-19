@@ -1,0 +1,77 @@
+---
+import type { BoredomLocaleData } from "../concepts/boredom/locales";
+import BoredomTableOfContents from "./BoredomTableOfContents.astro";
+import BoredomArticle1 from "./BoredomArticle1.astro";
+import BoredomArticle2 from "./BoredomArticle2.astro";
+import BoredomArticle3 from "./BoredomArticle3.astro";
+import BoredomArticle4 from "./BoredomArticle4.astro";
+import BoredomArticle5 from "./BoredomArticle5.astro";
+import BoredomArticle6 from "./BoredomArticle6.astro";
+import "../styles/boredom-experience.css";
+
+interface Props {
+    locale: BoredomLocaleData;
+    indexUrl: string;
+}
+const { locale, indexUrl } = Astro.props;
+const { texts } = locale;
+---
+
+<main class="boredom-experience" data-boredom-experience>
+    <div class="boredom-experience__container">
+        <div class="boredom-experience__staple" aria-hidden="true"></div>
+        <div class="boredom-experience__page boredom-experience__page--1" aria-hidden="true"></div>
+        <div class="boredom-experience__page boredom-experience__page--2" aria-hidden="true"></div>
+        <div class="boredom-experience__page boredom-experience__page--3" aria-hidden="true"></div>
+        <div class="boredom-experience__page boredom-experience__page--4" aria-hidden="true"></div>
+        <div class="boredom-experience__stain" aria-hidden="true"></div>
+        <div class="boredom-experience__postit boredom-experience__postit--1" aria-hidden="true">
+        </div>
+        <div class="boredom-experience__postit boredom-experience__postit--2" aria-hidden="true">
+        </div>
+        <div class="boredom-experience__postit boredom-experience__postit--3" aria-hidden="true">
+        </div>
+        <div class="boredom-experience__postit boredom-experience__postit--4" aria-hidden="true">
+        </div>
+        <div class="boredom-experience__postit boredom-experience__postit--5" aria-hidden="true">
+        </div>
+        <div class="boredom-experience__postit boredom-experience__postit--6" aria-hidden="true">
+        </div>
+        <div class="boredom-experience__postit boredom-experience__postit--7" aria-hidden="true">
+        </div>
+        <div class="boredom-experience__postit boredom-experience__postit--8" aria-hidden="true">
+        </div>
+
+        <h1>{texts.title}</h1>
+        <div class="boredom-experience__subtitle">{texts.subtitle}</div>
+
+        <BoredomTableOfContents {texts} />
+
+        <div class="boredom-experience__content">
+            <BoredomArticle1 {texts} />
+            <BoredomArticle2 {texts} />
+            <BoredomArticle3 {texts} />
+            <BoredomArticle4 {texts} />
+            <BoredomArticle5 {texts} />
+            <BoredomArticle6 {texts} />
+        </div>
+
+        <div class="boredom-experience__footer">
+            <p>{texts.docInfo}</p>
+            <div class="boredom-warning">
+                {texts.warningTitle}
+                <br /><br />
+                {texts.warningP1}
+                <br /><br />
+                {texts.warningP2}
+                <br /><br />
+                {texts.warningP3}
+            </div>
+            <a class="boredom-experience__back" href={indexUrl}>Volver al Índice Principal</a>
+        </div>
+    </div>
+</main>
+
+<script>
+    import "../concepts/boredom/runtime";
+</script>

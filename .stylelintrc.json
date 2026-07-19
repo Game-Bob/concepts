@@ -14,7 +14,7 @@
             }
         },
         {
-            "files": ["src/styles/global.css"],
+            "files": ["src/styles/global.css", "**/boredom-experience.css", "**/boredom-card.css"],
             "rules": {
                 "at-rule-disallowed-list": null,
                 "property-disallowed-list": null

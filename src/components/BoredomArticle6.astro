@@ -1,0 +1,68 @@
+---
+import type { BoredomTexts } from "../concepts/boredom/locales";
+
+interface Props {
+    texts: BoredomTexts;
+}
+const { texts } = Astro.props;
+---
+
+<div class="article" id="art-6">
+    <div class="article-title">{texts.art6Title}</div>
+
+    <div class="sub-article">
+        <div class="sub-article-title">{texts.sub61Title}</div>
+        <p>
+            <span class="section-title">{texts.sec611Title}</span>
+            {texts.sec611Text}
+        </p>
+        <p>
+            <span class="section-title">{texts.sec612Title}</span>
+            {texts.sec612Text}
+        </p>
+        <p>
+            <span class="section-title">{texts.infLeveTitle}</span>
+            {texts.infLeveText}
+        </p>
+        <p>
+            <span class="section-title">{texts.infGraveTitle}</span>
+            {texts.infGraveText}
+        </p>
+        <p>
+            <span class="section-title">{texts.infMuyGraveTitle}</span>
+            {texts.infMuyGraveText}
+        </p>
+    </div>
+
+    <div class="sub-article">
+        <div class="sub-article-title">{texts.sub62Title}</div>
+        <p>
+            <span class="section-title">{texts.sec621Title}</span>
+            {texts.sec621Text}
+        </p>
+        <p>
+            <span class="section-title">{texts.sec622Title}</span>
+            {texts.sec622Text}
+        </p>
+        <p>
+            <span class="section-title">{texts.sec623Title}</span>
+            {texts.sec623Text}
+        </p>
+    </div>
+
+    <div class="sub-article">
+        <div class="sub-article-title">{texts.sub63Title}</div>
+        <p>
+            <span class="section-title">{texts.sec631Title}</span>
+            {texts.sec631Text}
+        </p>
+        <p>
+            <span class="section-title">{texts.sec632Title}</span>
+            {texts.sec632Text}
+        </p>
+        <p>
+            <span class="section-title">{texts.sec633Title}</span>
+            {texts.sec633Text}
+        </p>
+    </div>
+</div>

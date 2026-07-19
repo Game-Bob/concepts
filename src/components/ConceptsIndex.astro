@@ -14,6 +14,7 @@ import { LANGUAGE_UI } from "../i18n/language-ui";
 import { HEADER_UI } from "../i18n/header-ui";
 import WaitingCard from "./cards/WaitingCard.astro";
 import MeasurementCard from "./cards/MeasurementCard.astro";
+import BoredomCard from "./cards/BoredomCard.astro";
 import SiteFooter from "./SiteFooter.astro";
 import "../styles/concepts-index.css";
 
@@ -80,6 +81,13 @@ const concepts = CONCEPTS.map((concept) => ({
                             <MeasurementCard
                                 href={concept.href}
                                 locale={getConceptLocale("measurement", language)}
+                                number={String(index + 1).padStart(2, "0")}
+                            />
+                        )}
+                        {concept.id === "boredom" && (
+                            <BoredomCard
+                                href={concept.href}
+                                locale={getConceptLocale("boredom", language)}
                                 number={String(index + 1).padStart(2, "0")}
                             />
                         )}

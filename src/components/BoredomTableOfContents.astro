@@ -1,0 +1,111 @@
+---
+import type { BoredomTexts } from "../concepts/boredom/locales";
+
+interface Props {
+    texts: BoredomTexts;
+}
+const { texts } = Astro.props;
+---
+
+<nav class="boredom-toc" id="boring-toc">
+    <div class="boredom-toc__title">{texts.tocTitle}</div>
+    <div id="toc-container">
+        <p class="boredom-toc__loading">{texts.tocLoading}</p>
+    </div>
+</nav>
+
+<script>
+    function getCleanText(el: Element | null): string {
+        return el && el.textContent ? el.textContent.trim() : "";
+    }
+
+    function createParagraphLink(
+        p: Element,
+        artIndex: number,
+        subIndex: number,
+        pIndex: number
+    ): HTMLLIElement {
+        const sectionTitleEl = p.querySelector(".section-title");
+        let pText = getCleanText(sectionTitleEl);
+        if (!pText && p.textContent) {
+            const rawText = p.textContent.trim();
+            pText = rawText.substring(0, 40) + (rawText.length > 40 ? "..." : "");
+        }
+        if (!p.id) {
+            p.id = `generated-p-${artIndex}-${subIndex}-${pIndex}`;
+        }
+        const pItem = document.createElement("li");
+        const pLink = document.createElement("a");
+        pLink.href = `#${p.id}`;
+        pLink.textContent = pText;
+        pItem.appendChild(pLink);
+        return pItem;
+    }
+
+    function createSubArticleLink(
+        subArt: Element,
+        artIndex: number,
+        subIndex: number
+    ): HTMLLIElement {
+        const subTitleEl = subArt.querySelector(".sub-article-title");
+        const subTitle = getCleanText(subTitleEl) || `Subartículo ${artIndex + 1}.${subIndex + 1}`;
+        if (!subArt.id) {
+            subArt.id = `generated-sub-${artIndex}-${subIndex}`;
+        }
+        const subItem = document.createElement("li");
+        const subLink = document.createElement("a");
+        subLink.href = `#${subArt.id}`;
+        subLink.textContent = subTitle;
+        subItem.appendChild(subLink);
+
+        const paragraphs = subArt.querySelectorAll("p");
+        if (paragraphs.length > 0) {
+            const pList = document.createElement("ul");
+            pList.className = "paragraph-list";
+            paragraphs.forEach((p, pIndex) => {
+                pList.appendChild(createParagraphLink(p, artIndex, subIndex, pIndex));
+            });
+            subItem.appendChild(pList);
+        }
+        return subItem;
+    }
+
+    function createArticleLink(article: Element, artIndex: number): HTMLLIElement {
+        const artTitleEl = article.querySelector(".article-title");
+        const artTitle = getCleanText(artTitleEl) || `Artículo ${artIndex + 1}`;
+        if (!article.id) {
+            article.id = `generated-art-${artIndex}`;
+        }
+        const artItem = document.createElement("li");
+        const artLink = document.createElement("a");
+        artLink.href = `#${article.id}`;
+        artLink.textContent = artTitle;
+        artItem.appendChild(artLink);
+
+        const subArticles = article.querySelectorAll(".sub-article");
+        if (subArticles.length > 0) {
+            const subList = document.createElement("ul");
+            subList.className = "sub-toc-list";
+            subArticles.forEach((subArt, subIndex) => {
+                subList.appendChild(createSubArticleLink(subArt, artIndex, subIndex));
+            });
+            artItem.appendChild(subList);
+        }
+        return artItem;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const tocContainer = document.getElementById("toc-container");
+        if (!tocContainer) {
+            return;
+        }
+        const articles = document.querySelectorAll(".article");
+        const tocList = document.createElement("ul");
+        tocList.className = "toc-list";
+        articles.forEach((article, artIndex) => {
+            tocList.appendChild(createArticleLink(article, artIndex));
+        });
+        tocContainer.innerHTML = "";
+        tocContainer.appendChild(tocList);
+    });
+</script>

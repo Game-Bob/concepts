@@ -1,0 +1,306 @@
+.boredom-card {
+    --bore-text: #333;
+    --bore-border: #999;
+    --bore-bg: #fafafa;
+    --bore-bg-hover: #f3f3f3;
+    --bore-text-muted: #666;
+    --bore-staple-light: #e0e0e0;
+    --bore-staple-dark: #b0b0b0;
+    --bore-staple-border: #999;
+    --bore-stain: rgb(139 90 43 / 0.08);
+    --bore-postit-y: #ff0;
+    --bore-postit-p: #ff69b4;
+    --bore-postit-b: #33b5e5;
+    --bore-postit-g: #00e676;
+    --bore-postit-o: #ff9100;
+    --bore-postit-v: #ba68c8;
+
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 30rem;
+    background: var(--bore-bg);
+    color: var(--bore-text);
+    font-family: serif;
+    padding: 2.5rem 1.5rem 2.2rem;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+    box-shadow:
+        0 4px 10px rgb(0 0 0 / 0.06),
+        0 1px 3px rgb(0 0 0 / 0.05);
+}
+
+.boredom-card:hover {
+    background: var(--bore-bg-hover);
+}
+
+.boredom-card__page {
+    position: absolute;
+    inset: 0;
+    background-color: var(--bore-bg);
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.05);
+    pointer-events: none;
+    transition: transform 0.3s ease;
+}
+
+.boredom-card__page--1 {
+    transform: translate(-4px, 3px) rotate(-1.5deg);
+    z-index: -4;
+}
+
+.boredom-card:hover .boredom-card__page--1 {
+    transform: translate(-7px, 5px) rotate(-2.5deg);
+}
+
+.boredom-card__page--2 {
+    transform: translate(3px, 4px) rotate(1deg);
+    z-index: -3;
+}
+
+.boredom-card:hover .boredom-card__page--2 {
+    transform: translate(6px, 7px) rotate(2deg);
+}
+
+.boredom-card__page--3 {
+    transform: translate(-2px, -3px) rotate(0.5deg);
+    z-index: -2;
+}
+
+.boredom-card:hover .boredom-card__page--3 {
+    transform: translate(-4px, -5px) rotate(1.2deg);
+}
+
+.boredom-card__page--4 {
+    transform: translate(4px, -2px) rotate(-0.8deg);
+    z-index: -1;
+}
+
+.boredom-card:hover .boredom-card__page--4 {
+    transform: translate(7px, -4px) rotate(-1.5deg);
+}
+
+.boredom-card__staple {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    width: 22px;
+    height: 4px;
+    background-color: var(--bore-border-light);
+    transform: rotate(-45deg);
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.boredom-card__stain {
+    position: absolute;
+    bottom: 15%;
+    right: 10%;
+    width: 70px;
+    height: 55px;
+    border-radius: 50%;
+    border: 3px double var(--bore-stain);
+    transform: rotate(12deg);
+    pointer-events: none;
+}
+
+.boredom-card__postit {
+    position: absolute;
+    box-shadow: 1px 1px 3px rgb(0 0 0 / 0.15);
+    border-left: 1px solid rgb(0 0 0 / 0.05);
+    pointer-events: none;
+    transition:
+        right 0.3s ease,
+        left 0.3s ease,
+        bottom 0.3s ease,
+        transform 0.3s ease;
+}
+
+.boredom-card__postit--1 {
+    right: -12px;
+    top: 140px;
+    width: 28px;
+    height: 20px;
+    background-color: var(--bore-postit-y);
+    transform: rotate(4deg);
+    z-index: -3;
+}
+
+.boredom-card:hover .boredom-card__postit--1 {
+    right: -15px;
+    transform: rotate(6deg);
+}
+
+.boredom-card__postit--2 {
+    right: -8px;
+    top: 70px;
+    width: 26px;
+    height: 22px;
+    background-color: var(--bore-postit-p);
+    transform: rotate(-3deg);
+    z-index: -4;
+}
+
+.boredom-card:hover .boredom-card__postit--2 {
+    right: -11px;
+    transform: rotate(-5deg);
+}
+
+.boredom-card__postit--3 {
+    left: -12px;
+    top: 190px;
+    width: 28px;
+    height: 18px;
+    background-color: var(--bore-postit-b);
+    transform: rotate(-6deg);
+    box-shadow: -1px 1px 3px rgb(0 0 0 / 0.15);
+    border-right: 1px solid rgb(0 0 0 / 0.05);
+    border-left: none;
+    z-index: -3;
+}
+
+.boredom-card:hover .boredom-card__postit--3 {
+    left: -15px;
+    transform: rotate(-8deg);
+}
+
+.boredom-card__postit--4 {
+    left: -10px;
+    top: 90px;
+    width: 24px;
+    height: 20px;
+    background-color: var(--bore-postit-g);
+    transform: rotate(5deg);
+    box-shadow: -1px 1px 3px rgb(0 0 0 / 0.15);
+    border-right: 1px solid rgb(0 0 0 / 0.05);
+    border-left: none;
+    z-index: -3;
+}
+
+.boredom-card:hover .boredom-card__postit--4 {
+    left: -13px;
+    transform: rotate(7deg);
+}
+
+.boredom-card__postit--5 {
+    bottom: -12px;
+    left: 80px;
+    width: 20px;
+    height: 26px;
+    background-color: var(--bore-postit-o);
+    transform: rotate(-2deg);
+    border-top: 1px solid rgb(0 0 0 / 0.05);
+    border-left: none;
+    z-index: -4;
+}
+
+.boredom-card:hover .boredom-card__postit--5 {
+    bottom: -15px;
+    transform: rotate(-4deg);
+}
+
+.boredom-card__postit--6 {
+    right: -10px;
+    top: 250px;
+    width: 26px;
+    height: 20px;
+    background-color: var(--bore-postit-v);
+    transform: rotate(7deg);
+    z-index: -3;
+}
+
+.boredom-card:hover .boredom-card__postit--6 {
+    right: -13px;
+    transform: rotate(9deg);
+}
+
+.boredom-card__postit--7 {
+    bottom: -10px;
+    left: 170px;
+    width: 22px;
+    height: 24px;
+    background-color: var(--bore-postit-y);
+    transform: rotate(3deg);
+    border-top: 1px solid rgb(0 0 0 / 0.05);
+    border-left: none;
+    z-index: -4;
+}
+
+.boredom-card:hover .boredom-card__postit--7 {
+    bottom: -13px;
+    transform: rotate(5deg);
+}
+
+.boredom-card__postit--8 {
+    left: -12px;
+    top: 290px;
+    width: 28px;
+    height: 22px;
+    background-color: var(--bore-postit-p);
+    transform: rotate(-4deg);
+    box-shadow: -1px 1px 3px rgb(0 0 0 / 0.15);
+    border-right: 1px solid rgb(0 0 0 / 0.05);
+    border-left: none;
+    z-index: -4;
+}
+
+.boredom-card:hover .boredom-card__postit--8 {
+    left: -15px;
+    transform: rotate(-6deg);
+}
+
+.boredom-card__number {
+    color: var(--bore-text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.boredom-card__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.boredom-card__copy p {
+    margin: 0 0 0.8rem;
+    color: var(--bore-text-muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.boredom-card__copy h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.boredom-card__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.boredom-card__footer > span {
+    width: 2rem;
+    height: 0.0625rem;
+    margin: 1rem 0;
+    background: var(--bore-border);
+}
+
+.boredom-card__footer blockquote {
+    max-width: 18rem;
+    margin: 0;
+    color: var(--bore-text-muted);
+    font-size: 0.95rem;
+    font-style: normal;
+    line-height: 1.5;
+}

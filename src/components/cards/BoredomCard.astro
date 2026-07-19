@@ -1,0 +1,37 @@
+---
+import type { BoredomLocaleData } from "../../concepts/boredom/locales";
+import "../../styles/cards/boredom-card.css";
+
+interface Props {
+    href: string;
+    locale: BoredomLocaleData;
+    number: string;
+}
+const { href, locale, number } = Astro.props;
+---
+
+<a class="boredom-card" href={href}>
+    <div class="boredom-card__staple" aria-hidden="true"></div>
+    <div class="boredom-card__page boredom-card__page--1" aria-hidden="true"></div>
+    <div class="boredom-card__page boredom-card__page--2" aria-hidden="true"></div>
+    <div class="boredom-card__page boredom-card__page--3" aria-hidden="true"></div>
+    <div class="boredom-card__page boredom-card__page--4" aria-hidden="true"></div>
+    <div class="boredom-card__stain" aria-hidden="true"></div>
+    <div class="boredom-card__postit boredom-card__postit--1" aria-hidden="true"></div>
+    <div class="boredom-card__postit boredom-card__postit--2" aria-hidden="true"></div>
+    <div class="boredom-card__postit boredom-card__postit--3" aria-hidden="true"></div>
+    <div class="boredom-card__postit boredom-card__postit--4" aria-hidden="true"></div>
+    <div class="boredom-card__postit boredom-card__postit--5" aria-hidden="true"></div>
+    <div class="boredom-card__postit boredom-card__postit--6" aria-hidden="true"></div>
+    <div class="boredom-card__postit boredom-card__postit--7" aria-hidden="true"></div>
+    <div class="boredom-card__postit boredom-card__postit--8" aria-hidden="true"></div>
+    <span class="boredom-card__number">{number}</span>
+    <div class="boredom-card__copy">
+        <p>{locale.cardSubtitle}</p>
+        <h2>{locale.cardTitle}</h2>
+    </div>
+    <div class="boredom-card__footer">
+        <span></span>
+        <blockquote>{locale.cardDescription}</blockquote>
+    </div>
+</a>
