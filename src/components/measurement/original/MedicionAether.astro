@@ -1,0 +1,208 @@
+---
+import type { MeasurementTexts } from "../../../concepts/measurement/locales";
+
+interface Props {
+    texts: MeasurementTexts;
+}
+
+const { texts } = Astro.props;
+---
+
+<section class="med-section med-section-local">
+    <div class="med-absolute med-inset-0 medicion-aether-bg">
+        <div class="med-absolute med-inset-0 medicion-aether-pulse"></div>
+        <svg class="med-w-full med-h-full medicion-aether-grid">
+            <defs>
+                <pattern id="interference" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="10" cy="10" r="10" fill="none" stroke="#404040" stroke-width="0.5"
+                    ></circle>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#interference)"></rect>
+        </svg>
+    </div>
+
+    <div class="med-container">
+        <div class="med-grid med-grid--reverse">
+            <div class="med-info-column">
+                <span class="med-tag med-tag-local">{texts["aether.001"]}</span>
+                <h2 class="med-text-4xl med-font-bold med-tracking-tight medicion-aether-title">
+                    {texts["aether.002"]}
+                </h2>
+
+                <p class="med-text-lg medicion-aether-body">
+                    {texts["aether.003"]}
+                </p>
+                <p class="med-text-lg medicion-aether-body">
+                    {texts["aether.004"]}
+                    <strong>{texts["aether.005"]}</strong>{texts["aether.006"]}
+                </p>
+
+                <div class="med-card med-card-local">
+                    <h3 class="med-font-bold med-mb-2 medicion-aether-card-title">
+                        {texts["aether.007"]}
+                    </h3>
+                    <p class="med-card-text med-card-text-local">
+                        {texts["aether.008"]}
+                    </p>
+                    <p class="med-mt-4 med-text-sm medicion-aether-card-note">
+                        {texts["aether.009"]}
+                        <strong>{texts["aether.010"]}</strong>
+                        {texts["aether.011"]}
+                    </p>
+                </div>
+            </div>
+
+            <div class="med-visual-column">
+                <div class="med-visual-sizer">
+                    <svg viewBox="0 0 200 200" class="med-w-full med-h-full">
+                        <g stroke="#ef4444" stroke-width="2" opacity="0.8">
+                            <line x1="20" y1="100" x2="100" y2="100" class="animate-beam-flow"
+                            ></line>
+
+                            <line x1="100" y1="100" x2="100" y2="20" class="animate-beam-flow"
+                            ></line>
+
+                            <line x1="100" y1="100" x2="180" y2="100" class="animate-beam-flow"
+                            ></line>
+
+                            <line x1="100" y1="20" x2="100" y2="100" opacity="0.5"></line>
+                            <line x1="180" y1="100" x2="100" y2="100" opacity="0.5"></line>
+
+                            <line x1="100" y1="100" x2="100" y2="180" opacity="0.5"></line>
+                        </g>
+
+                        <rect
+                            x="95"
+                            y="95"
+                            width="10"
+                            height="10"
+                            fill="#a3a3a3"
+                            transform="rotate(45 100 100)"
+                            stroke="white"
+                            stroke-width="1"></rect>
+
+                        <rect x="90" y="15" width="20" height="5" fill="#d4d4d4"></rect>
+
+                        <rect x="175" y="90" width="5" height="20" fill="#d4d4d4"></rect>
+
+                        <circle
+                            cx="100"
+                            cy="180"
+                            r="10"
+                            fill="#262626"
+                            stroke="#ef4444"
+                            stroke-width="2"></circle>
+
+                        <text
+                            x="100"
+                            y="140"
+                            fill="#525252"
+                            font-size="8"
+                            text-anchor="middle"
+                            opacity="0"
+                        >
+                            {texts["aether.012"]}
+                            <animate
+                                attributeName="opacity"
+                                values="0;1;0"
+                                dur="2s"
+                                repeatCount="indefinite"></animate>
+                        </text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .med-section-local {
+        background-color: #000000;
+        color: #e5e5e5;
+    }
+
+    .med-tag-local {
+        color: #525252;
+        border-color: #525252;
+    }
+
+    .med-card-text-local {
+        color: #d4d4d4;
+    }
+
+    .med-card-local {
+        background-color: color-mix(in srgb, #171717 50%, transparent);
+        border-color: #262626;
+    }
+
+    .medicion-aether-bg {
+        opacity: 0.2;
+    }
+
+    .medicion-aether-pulse {
+        background: radial-gradient(circle at center, #262626, #000000);
+        animation: pulseSlow 5s ease-in-out infinite;
+    }
+
+    .medicion-aether-grid {
+        opacity: 0.3;
+    }
+
+    .medicion-aether-title {
+        color: #ffffff;
+    }
+
+    .medicion-aether-body {
+        color: #a3a3a3;
+        line-height: 1.625;
+    }
+
+    .medicion-aether-card-title {
+        color: #ffffff;
+    }
+
+    .medicion-aether-card-note {
+        color: #d4d4d4;
+        line-height: 1.625;
+    }
+
+    @keyframes beamFlow {
+        0% {
+            stroke-dasharray: 0, 100;
+            stroke-dashoffset: 0;
+        }
+        100% {
+            stroke-dasharray: 100, 0;
+            stroke-dashoffset: -100;
+        }
+    }
+    .animate-beam-flow {
+        stroke-dasharray: 5 5;
+        animation: beamFlow 1s linear infinite;
+    }
+
+    @keyframes pulseSlow {
+        0%,
+        100% {
+            opacity: 0.2;
+        }
+        50% {
+            opacity: 0.4;
+        }
+    }
+    .animate-pulse-slow {
+        animation: pulseSlow 5s ease-in-out infinite;
+    }
+    .med-visual-sizer {
+        position: relative;
+        width: 16rem;
+        height: 16rem;
+    }
+    @media (min-width: 768px) {
+        .med-visual-sizer {
+            width: 20rem;
+            height: 20rem;
+        }
+    }
+</style>

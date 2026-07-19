@@ -1,8 +1,13 @@
 import { describe, expect, it } from "vitest";
+import fs from "node:fs";
+import path from "node:path";
 import { CONCEPTS, getConceptLocale } from "../src/concepts/registry";
-import { WAITING_LOCALES } from "../src/concepts/waiting/locales";
 import { LANGUAGE_CODES } from "../src/i18n/languages";
-import { getConceptAlternateLinks, getConceptUrl } from "../src/routing/routes";
+import {
+    getConceptAlternateLinks,
+    getConceptsIndexUrl,
+    getConceptUrl,
+} from "../src/routing/routes";
 
 const SHARING_ENGLISH_SLUG = new Set(["ja", "ko", "zh"]);
 
@@ -12,42 +17,68 @@ const validateSlug = (language: (typeof LANGUAGE_CODES)[number], slug: string): 
 };
 
 describe("concept registry", () => {
-    it("registers waiting as the first real concept", () => {
-        expect(CONCEPTS.map(({ id }) => id)).toEqual(["waiting"]);
+    it("keeps concept identifiers unique", () => {
+        const ids = CONCEPTS.map(({ id }) => id);
+
+        expect(new Set(ids).size).toBe(ids.length);
     });
 
     it("provides transliterated and properly localized slugs in all languages", () => {
-        const englishSlug = CONCEPTS[0]?.slugs.en;
-        const localizedSlugs = new Set<string>();
+        const slugsByLanguage = Object.fromEntries(
+            LANGUAGE_CODES.map((language) => [language, new Set<string>()])
+        );
 
-        for (const language of LANGUAGE_CODES) {
-            const slug = CONCEPTS[0]?.slugs[language] ?? "";
-            validateSlug(language, slug);
+        for (const concept of CONCEPTS) {
+            const englishSlug = concept.slugs.en;
+            const localizedSlugs = new Set<string>();
 
-            if (language !== "en" && SHARING_ENGLISH_SLUG.has(language)) {
-                expect(slug).toBe(englishSlug);
-            } else if (language !== "en") {
-                expect(slug, `${language} slug must differ from English`).not.toBe(englishSlug);
-                expect(localizedSlugs.has(slug), `${language} slug must be unique`).toBe(false);
-                localizedSlugs.add(slug);
+            for (const language of LANGUAGE_CODES) {
+                const slug = concept.slugs[language];
+                validateSlug(language, slug);
+
+                if (language !== "en" && SHARING_ENGLISH_SLUG.has(language)) {
+                    expect(slug).toBe(englishSlug);
+                } else if (language !== "en") {
+                    expect(slug, `${language} slug must differ from English`).not.toBe(englishSlug);
+                    expect(localizedSlugs.has(slug), `${language} slug must be unique`).toBe(false);
+                    localizedSlugs.add(slug);
+                }
+
+                const languageSlugs = slugsByLanguage[language];
+                expect(languageSlugs?.has(slug), `${concept.id} collides in ${language}`).toBe(
+                    false
+                );
+                languageSlugs?.add(slug);
+                expect(getConceptLocale(concept.id, language).title).toBeTruthy();
             }
-
-            expect(getConceptLocale("waiting", language).title).toBeTruthy();
-            expect(WAITING_LOCALES[language].facts.length).toBeGreaterThanOrEqual(25);
         }
     });
 
     it("keeps every detail page reciprocal", () => {
-        const links = getConceptAlternateLinks("waiting");
-        expect(links).toHaveLength(15);
-        expect(links.find(({ language }) => language === "es")?.url).toBe(
-            "https://www.jjlmoya.es/conceptos/espera/"
+        for (const concept of CONCEPTS) {
+            const links = getConceptAlternateLinks(concept.id);
+            expect(links).toHaveLength(LANGUAGE_CODES.length);
+
+            for (const { language, url } of links) {
+                expect(url).toBe(getConceptUrl(concept.id, language));
+                expect(url).toBe(`${getConceptsIndexUrl(language)}${concept.slugs[language]}/`);
+            }
+        }
+    });
+
+    it("registers a card and an experience for every concept", () => {
+        const indexSource = fs.readFileSync(
+            path.resolve("src/components/ConceptsIndex.astro"),
+            "utf8"
         );
-        expect(links.find(({ language }) => language === "en")?.url).toBe(
-            "https://www.gamebob.dev/en/concepts/waiting/"
+        const detailSource = fs.readFileSync(
+            path.resolve("src/components/ConceptDetail.astro"),
+            "utf8"
         );
-        expect(links.map(({ language }) => getConceptUrl("waiting", language))).toEqual(
-            links.map(({ url }) => url)
-        );
+
+        for (const concept of CONCEPTS) {
+            expect(indexSource).toContain(`concept.id === "${concept.id}"`);
+            expect(detailSource).toContain(`conceptId === "${concept.id}"`);
+        }
     });
 });

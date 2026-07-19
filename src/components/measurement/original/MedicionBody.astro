@@ -1,0 +1,56 @@
+---
+import type { MeasurementTexts } from "../../../concepts/measurement/locales";
+
+interface Props {
+    texts: MeasurementTexts;
+}
+
+const { texts } = Astro.props;
+---
+
+<section class="med-section med-cuerpo">
+    <div class="med-absolute med-inset-0 med-opacity-5 med-pointer-events-none"></div>
+
+    <div class="med-cuerpo-content">
+        <div class="med-cuerpo-texts">
+            <h2>
+                {texts["body.001"]}
+            </h2>
+
+            <p>
+                {texts["body.002"]}
+            </p>
+            <p>
+                {texts["body.003"]}
+            </p>
+        </div>
+
+        <div class="med-cuerpo-cards">
+            <div class="med-cuerpo-card">
+                <h3>{texts["body.004"]}</h3>
+                <p class="med-cuerpo-sub">{texts["body.005"]}</p>
+                <div class="med-cuerpo-divider"></div>
+                <p>
+                    {texts["body.006"]}
+                </p>
+                <div class="med-cuerpo-value">
+                    <span>{texts["body.007"]}</span>
+                    <span>{texts["body.008"]}</span>
+                </div>
+            </div>
+
+            <div class="med-cuerpo-card">
+                <h3>{texts["body.009"]}</h3>
+                <p class="med-cuerpo-sub">{texts["body.010"]}</p>
+                <div class="med-cuerpo-divider"></div>
+                <p>
+                    {texts["body.011"]}
+                </p>
+                <div class="med-cuerpo-value">
+                    <span>{texts["body.012"]}</span>
+                    <span>{texts["body.013"]}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

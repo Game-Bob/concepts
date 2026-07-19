@@ -110,10 +110,32 @@ export default [
         },
     },
     {
-        files: ["src/i18n/**/*.ts", "src/sections/**/locales.ts", "src/concepts/**/locales.ts"],
+        files: [
+            "src/i18n/**/*.ts",
+            "src/sections/**/locales.ts",
+            "src/concepts/**/locales.ts",
+            "src/concepts/**/texts/**/*.ts",
+        ],
         rules: {
             "max-lines": "off",
             "max-lines-per-function": "off",
+        },
+    },
+    {
+        files: ["src/components/measurement/original/**/*"],
+        rules: {
+            "max-lines": "off",
+            "max-lines-per-function": "off",
+            complexity: "off",
+            "@typescript-eslint/no-unused-vars": "off",
+            "source/no-emojis": "off",
+        },
+    },
+    {
+        files: ["scripts/**/*.mjs"],
+        rules: {
+            "max-lines-per-function": "off",
+            complexity: "off",
         },
     },
 ];

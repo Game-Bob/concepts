@@ -63,6 +63,16 @@ class WaitingExperience {
         this.elements = getElements(root);
         this.facts = parseList(root.dataset.facts);
         this.statuses = parseList(root.dataset.statuses);
+        if (typeof localStorage !== "undefined") {
+            const stored = localStorage.getItem("waiting-experience:attempts");
+            if (stored) {
+                const parsed = parseInt(stored, 10);
+                if (!isNaN(parsed)) {
+                    this.attempts = parsed;
+                    this.ticket = parsed;
+                }
+            }
+        }
     }
 
     initialize(): void {
@@ -96,7 +106,7 @@ class WaitingExperience {
 
     private clearTimers(): void {
         window.clearTimeout(this.stepTimer);
-        window.clearInterval(this.factTimer);
+        window.clearTimeout(this.factTimer);
         window.clearInterval(this.statusTimer);
     }
 
@@ -110,6 +120,15 @@ class WaitingExperience {
         this.factIndex += 1;
     }
 
+    private scheduleNextFact(): void {
+        const delay = Math.random() * 30000 + 30000;
+        this.factTimer = window.setTimeout(() => {
+            if (!this.active) return;
+            this.updateFact();
+            this.scheduleNextFact();
+        }, delay);
+    }
+
     private updateStatus(): void {
         const status = this.statuses[Math.floor(Math.random() * this.statuses.length)];
         if (status) this.elements.status.textContent = status;
@@ -120,6 +139,9 @@ class WaitingExperience {
         this.progress = 0;
         this.startedAt = Date.now();
         this.factIndex = 0;
+        if (typeof localStorage !== "undefined") {
+            localStorage.setItem("waiting-experience:attempts", this.attempts.toString());
+        }
         const shuffled = [...this.facts];
         for (let i = shuffled.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -134,7 +156,7 @@ class WaitingExperience {
         this.elements.circle.style.strokeDashoffset = "100";
         this.show(this.elements.waiting);
         this.updateFact();
-        this.factTimer = window.setInterval(() => this.updateFact(), 8000);
+        this.scheduleNextFact();
         this.statusTimer = window.setInterval(() => this.updateStatus(), 5000);
         this.step();
     }
@@ -166,6 +188,9 @@ class WaitingExperience {
     private retry(): void {
         this.ticket += 1;
         this.attempts += 1;
+        if (typeof localStorage !== "undefined") {
+            localStorage.setItem("waiting-experience:attempts", this.attempts.toString());
+        }
         this.start();
     }
 }

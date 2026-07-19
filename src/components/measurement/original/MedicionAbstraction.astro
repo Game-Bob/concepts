@@ -1,0 +1,125 @@
+---
+import type { MeasurementTexts } from "../../../concepts/measurement/locales";
+
+interface Props {
+    texts: MeasurementTexts;
+}
+
+const { texts } = Astro.props;
+---
+
+<section class="med-section med-section-local">
+    <div
+        class="med-absolute med-inset-0 medicion-abstraction-bg med-overflow-hidden med-pointer-events-none"
+    >
+        <div class="data-stream" style="left: 10%">{texts["abstraction.001"]}</div>
+        <div class="data-stream" style="left: 30%; animation-delay: 1s">
+            {texts["abstraction.002"]}
+        </div>
+        <div class="data-stream" style="left: 50%; animation-delay: 2s">
+            {texts["abstraction.003"]}
+        </div>
+        <div class="data-stream" style="left: 70%; animation-delay: 0.5s">
+            {texts["abstraction.004"]}
+        </div>
+        <div class="data-stream" style="left: 90%; animation-delay: 1.5s">
+            {texts["abstraction.005"]}
+        </div>
+    </div>
+
+    <div class="med-container med-text-center">
+        <div class="med-mb-16">
+            <span
+                class="med-font-mono med-text-xs med-tracking-widest med-uppercase med-mb-4 med-block medicion-abstraction-tag"
+                >{texts["abstraction.006"]}</span
+            >
+            <h2 class="med-text-4xl med-font-bold med-mb-8 medicion-abstraction-heading">
+                {texts["abstraction.007"]}
+            </h2>
+            <p class="med-text-lg medicion-abstraction-body">
+                {texts["abstraction.008"]}
+            </p>
+        </div>
+
+        <div class="medicion-abstraction-card med-inline-block">
+            <p
+                class="med-text-sm medicion-abstraction-card-title med-mb-4 med-font-bold med-uppercase med-tracking-widest"
+            >
+                {texts["abstraction.009"]}
+            </p>
+            <code class="med-text-2xl medicion-abstraction-code med-block med-mb-6 med-font-bold">
+                {texts["abstraction.010"]}
+            </code>
+            <p class="med-text-sm medicion-abstraction-card-note med-mx-auto">
+                {texts["abstraction.011"]}
+                <strong>{texts["abstraction.012"]}</strong>{texts["abstraction.013"]}
+            </p>
+        </div>
+    </div>
+</section>
+
+<style>
+    .med-section-local {
+        background-color: #000000;
+        color: #ffffff;
+    }
+
+    .medicion-abstraction-bg {
+        opacity: 0.1;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .medicion-abstraction-tag {
+        color: #15803d;
+    }
+
+    .medicion-abstraction-heading {
+        color: #4ade80;
+    }
+
+    .medicion-abstraction-body {
+        color: rgba(22, 163, 74, 0.8);
+        line-height: 1.625;
+    }
+
+    .medicion-abstraction-card {
+        background-color: #000000;
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        padding: 2.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 50px rgba(0, 255, 0, 0.1);
+        text-align: center;
+    }
+
+    .medicion-abstraction-card-title {
+        color: #16a34a;
+    }
+
+    .medicion-abstraction-code {
+        color: #4ade80;
+    }
+
+    .medicion-abstraction-card-note {
+        color: #166534;
+        max-width: 28rem;
+    }
+
+    .data-stream {
+        position: absolute;
+        top: -100%;
+        font-size: 20px;
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        animation: fall 5s linear infinite;
+        white-space: nowrap;
+        color: #0f0;
+        text-shadow: 0 0 5px #0f0;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(200vh);
+        }
+    }
+</style>

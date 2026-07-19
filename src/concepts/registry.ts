@@ -1,24 +1,28 @@
 import type { Language } from "../i18n/languages";
-import { WAITING_LOCALES, WAITING_SLUGS } from "./waiting/locales";
+import { MEASUREMENT_CONCEPT } from "./measurement/locales";
+import { WAITING_CONCEPT } from "./waiting/locales";
 
-export type ConceptId = "waiting";
+const CONCEPT_MODULES = [WAITING_CONCEPT, MEASUREMENT_CONCEPT] as const;
 
-export type ConceptDefinition = {
-    readonly id: ConceptId;
-    readonly slugs: Record<Language, string>;
-};
+type RegisteredConcept = (typeof CONCEPT_MODULES)[number];
 
-export const CONCEPTS = [
-    { id: "waiting", slugs: WAITING_SLUGS },
-] as const satisfies readonly ConceptDefinition[];
+export type ConceptId = RegisteredConcept["id"];
 
-export const getConcept = (id: ConceptId): ConceptDefinition => {
-    const concept = CONCEPTS.find((entry) => entry.id === id);
-    if (!concept) throw new Error(`Unknown concept: ${id}`);
-    return concept;
-};
+type ConceptById<Id extends ConceptId> = Extract<RegisteredConcept, { readonly id: Id }>;
+type ConceptLocaleById<Id extends ConceptId> = ConceptById<Id>["locales"][Language];
 
-export const getConceptLocale = (id: ConceptId, language: Language) => {
-    if (id === "waiting") return WAITING_LOCALES[language];
-    throw new Error(`Missing locale loader for concept: ${id}`);
+const CONCEPTS_BY_ID = Object.fromEntries(
+    CONCEPT_MODULES.map((concept) => [concept.id, concept])
+) as { readonly [Id in ConceptId]: ConceptById<Id> };
+
+export const CONCEPTS = CONCEPT_MODULES;
+
+export const getConcept = <Id extends ConceptId>(id: Id): ConceptById<Id> => CONCEPTS_BY_ID[id];
+
+export const getConceptLocale = <Id extends ConceptId>(
+    id: Id,
+    language: Language
+): ConceptLocaleById<Id> => {
+    const concept = getConcept(id);
+    return concept.locales[language] as ConceptLocaleById<Id>;
 };

@@ -1,0 +1,4 @@
+interface:
+    display_name: "Crear o migrar concepto"
+    short_description: "Crear conceptos artísticos sin romper contratos"
+    default_prompt: "Usa $create-concept para crear o migrar un concepto en el repositorio concepts."

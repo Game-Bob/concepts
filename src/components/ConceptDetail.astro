@@ -11,6 +11,7 @@ import { getSiteNavigation } from "../routing/navigation";
 import { getConceptAlternateLinks, getConceptPath, getConceptUrl } from "../routing/routes";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WaitingExperience from "./WaitingExperience.astro";
+import MeasurementExperience from "./MeasurementExperience.astro";
 import SiteFooter from "./SiteFooter.astro";
 
 interface Props {
@@ -51,6 +52,15 @@ const languageLinks = LANGUAGES.map(({ code, name }) => ({
         <LanguageTrigger slot="mobile-actions" label={languageUi.change} />
     </Header>
     <LanguageSheet links={languageLinks} title={languageUi.select} closeLabel={languageUi.close} />
-    {conceptId === "waiting" && <WaitingExperience {locale} indexUrl="../" />}
+    {
+        conceptId === "waiting" && (
+            <WaitingExperience locale={getConceptLocale("waiting", language)} indexUrl="../" />
+        )
+    }
+    {
+        conceptId === "measurement" && (
+            <MeasurementExperience locale={getConceptLocale("measurement", language)} />
+        )
+    }
     <SiteFooter {language} />
 </BaseLayout>

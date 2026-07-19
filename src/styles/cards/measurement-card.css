@@ -1,0 +1,132 @@
+.concept-card {
+    --bg-surface: var(--color-surface);
+    --bg-muted: var(--color-page);
+    --border-base: var(--color-border);
+    --primary: var(--color-accent);
+    --text-base: var(--color-text);
+    --text-muted: var(--color-muted);
+
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 24rem;
+    margin: 0 auto;
+    overflow: hidden;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-base);
+    text-decoration: none;
+    box-sizing: border-box;
+    transition:
+        background-color 0.5s ease,
+        border-color 0.5s ease;
+}
+
+.concept-card:hover {
+    background-color: var(--bg-muted);
+    border-color: var(--primary);
+}
+
+.card-glow {
+    position: absolute;
+    inset: 0;
+    opacity: 0.1;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.concept-card:hover .card-glow {
+    opacity: 0.2;
+}
+
+.card-content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    min-height: 25rem;
+    box-sizing: border-box;
+}
+
+.card-icon-container {
+    margin-bottom: 2rem;
+    color: var(--text-base);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0.8;
+}
+
+.concept-card:hover .card-icon-container {
+    transform: scale(1.1);
+}
+
+.card-icon {
+    width: 4rem;
+    height: 4rem;
+}
+
+.card-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--text-base);
+    margin: 0 0 0.75rem;
+    text-transform: uppercase;
+}
+
+.card-subtitle {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--text-muted);
+    margin: 0 0 1.5rem;
+    opacity: 0.6;
+}
+
+.card-line {
+    width: 3rem;
+    height: 1px;
+    background-color: var(--border-base);
+    margin-bottom: 1.5rem;
+}
+
+.card-desc {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.card-border {
+    position: absolute;
+    inset: 1rem;
+    border: 1px solid var(--border-base);
+    pointer-events: none;
+    transition:
+        border-color 0.5s ease,
+        opacity 0.5s ease;
+    opacity: 0.3;
+}
+
+.concept-card:hover .card-border {
+    border-color: var(--primary);
+    opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .concept-card,
+    .card-glow,
+    .card-icon-container,
+    .card-border {
+        transition: none;
+    }
+}

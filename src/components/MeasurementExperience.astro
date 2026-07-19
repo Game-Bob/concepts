@@ -1,0 +1,149 @@
+---
+import MedicionIntro from "./measurement/original/MedicionIntro.astro";
+import MedicionBody from "./measurement/original/MedicionBody.astro";
+import MedicionGrain from "./measurement/original/MedicionGrain.astro";
+import MedicionGeometry from "./measurement/original/MedicionGeometry.astro";
+import MedicionBalance from "./measurement/original/MedicionBalance.astro";
+import MedicionNilometer from "./measurement/original/MedicionNilometer.astro";
+import MedicionCalendar from "./measurement/original/MedicionCalendar.astro";
+import MedicionZero from "./measurement/original/MedicionZero.astro";
+import MedicionCubit from "./measurement/original/MedicionCubit.astro";
+import MedicionGnomon from "./measurement/original/MedicionGnomon.astro";
+import MedicionEratosthenes from "./measurement/original/MedicionEratosthenes.astro";
+import MedicionClepsydra from "./measurement/original/MedicionClepsydra.astro";
+import MedicionPulse from "./measurement/original/MedicionPulse.astro";
+import MedicionAntikythera from "./measurement/original/MedicionAntikythera.astro";
+import MedicionAstrolabe from "./measurement/original/MedicionAstrolabe.astro";
+import MedicionCompass from "./measurement/original/MedicionCompass.astro";
+import MedicionHarmony from "./measurement/original/MedicionHarmony.astro";
+import MedicionPhi from "./measurement/original/MedicionPhi.astro";
+import MedicionPi from "./measurement/original/MedicionPi.astro";
+import MedicionDensity from "./measurement/original/MedicionDensity.astro";
+import MedicionTimeSubjective from "./measurement/original/MedicionTimeSubjective.astro";
+import MedicionCandle from "./measurement/original/MedicionCandle.astro";
+import MedicionPerspective from "./measurement/original/MedicionPerspective.astro";
+import MedicionSpectrum from "./measurement/original/MedicionSpectrum.astro";
+import MedicionKnots from "./measurement/original/MedicionKnots.astro";
+import MedicionPressure from "./measurement/original/MedicionPressure.astro";
+import MedicionElasticity from "./measurement/original/MedicionElasticity.astro";
+import MedicionTemperature from "./measurement/original/MedicionTemperature.astro";
+import MedicionLongitude from "./measurement/original/MedicionLongitude.astro";
+import MedicionChaos from "./measurement/original/MedicionChaos.astro";
+import MedicionRevolution from "./measurement/original/MedicionRevolution.astro";
+import MedicionDecimalTime from "./measurement/original/MedicionDecimalTime.astro";
+import MedicionTheExpedition from "./measurement/original/MedicionTheExpedition.astro";
+import MedicionKilogram from "./measurement/original/MedicionKilogram.astro";
+import MedicionMohs from "./measurement/original/MedicionMohs.astro";
+import MedicionParallax from "./measurement/original/MedicionParallax.astro";
+import MedicionDoppler from "./measurement/original/MedicionDoppler.astro";
+import MedicionPendulum from "./measurement/original/MedicionPendulum.astro";
+import MedicionElectricity from "./measurement/original/MedicionElectricity.astro";
+import MedicionAnemometer from "./measurement/original/MedicionAnemometer.astro";
+import MedicionPhrenology from "./measurement/original/MedicionPhrenology.astro";
+import MedicionCandela from "./measurement/original/MedicionCandela.astro";
+import MedicionAether from "./measurement/original/MedicionAether.astro";
+import MedicionGalton from "./measurement/original/MedicionGalton.astro";
+import MedicionMoney from "./measurement/original/MedicionMoney.astro";
+import MedicionPH from "./measurement/original/MedicionPH.astro";
+import MedicionRadiation from "./measurement/original/MedicionRadiation.astro";
+import MedicionCarbon from "./measurement/original/MedicionCarbon.astro";
+import MedicionScoville from "./measurement/original/MedicionScoville.astro";
+import MedicionSound from "./measurement/original/MedicionSound.astro";
+import MedicionRichter from "./measurement/original/MedicionRichter.astro";
+import MedicionDoomsday from "./measurement/original/MedicionDoomsday.astro";
+import MedicionBit from "./measurement/original/MedicionBit.astro";
+import MedicionAtomicTime from "./measurement/original/MedicionAtomicTime.astro";
+import MedicionLight from "./measurement/original/MedicionLight.astro";
+import MedicionVoyager from "./measurement/original/MedicionVoyager.astro";
+import MedicionMarsClimate from "./measurement/original/MedicionMarsClimate.astro";
+import MedicionAbstraction from "./measurement/original/MedicionAbstraction.astro";
+import MedicionQuantifiedSelf from "./measurement/original/MedicionQuantifiedSelf.astro";
+import MedicionInteractive from "./measurement/original/MedicionInteractive.astro";
+import MedicionCoastline from "./measurement/original/MedicionCoastline.astro";
+import MedicionHeisenberg from "./measurement/original/MedicionHeisenberg.astro";
+import MedicionMapTerritory from "./measurement/original/MedicionMapTerritory.astro";
+import "../styles/measurement-experience.css";
+import type { MeasurementLocaleData } from "../concepts/measurement/locales";
+
+interface Props {
+    locale: MeasurementLocaleData;
+}
+
+const { locale } = Astro.props;
+---
+
+<main class="medicion-main">
+    <MedicionIntro texts={locale.texts} />
+
+    <MedicionBody texts={locale.texts} />
+    <MedicionGrain texts={locale.texts} />
+    <MedicionGnomon texts={locale.texts} />
+    <MedicionNilometer texts={locale.texts} />
+    <MedicionCubit texts={locale.texts} />
+    <MedicionBalance texts={locale.texts} />
+    <MedicionCalendar texts={locale.texts} />
+    <MedicionMoney texts={locale.texts} />
+
+    <MedicionHarmony texts={locale.texts} />
+    <MedicionPhi texts={locale.texts} />
+    <MedicionPi texts={locale.texts} />
+    <MedicionGeometry texts={locale.texts} />
+    <MedicionPulse texts={locale.texts} />
+    <MedicionDensity texts={locale.texts} />
+    <MedicionEratosthenes texts={locale.texts} />
+    <MedicionClepsydra texts={locale.texts} />
+    <MedicionAntikythera texts={locale.texts} />
+    <MedicionZero texts={locale.texts} />
+
+    <MedicionAstrolabe texts={locale.texts} />
+    <MedicionCompass texts={locale.texts} />
+    <MedicionCandle texts={locale.texts} />
+    <MedicionTimeSubjective texts={locale.texts} />
+
+    <MedicionPerspective texts={locale.texts} />
+    <MedicionSpectrum texts={locale.texts} />
+    <MedicionKnots texts={locale.texts} />
+    <MedicionPressure texts={locale.texts} />
+    <MedicionElasticity texts={locale.texts} />
+    <MedicionTemperature texts={locale.texts} />
+    <MedicionLongitude texts={locale.texts} />
+
+    <MedicionChaos texts={locale.texts} />
+    <MedicionRevolution texts={locale.texts} />
+    <MedicionDecimalTime texts={locale.texts} />
+    <MedicionTheExpedition texts={locale.texts} />
+    <MedicionKilogram texts={locale.texts} />
+
+    <MedicionPhrenology texts={locale.texts} />
+    <MedicionGalton texts={locale.texts} />
+    <MedicionMohs texts={locale.texts} />
+    <MedicionElectricity texts={locale.texts} />
+    <MedicionParallax texts={locale.texts} />
+    <MedicionDoppler texts={locale.texts} />
+    <MedicionAnemometer texts={locale.texts} />
+    <MedicionPendulum texts={locale.texts} />
+    <MedicionAether texts={locale.texts} />
+    <MedicionCandela texts={locale.texts} />
+
+    <MedicionRadiation texts={locale.texts} />
+    <MedicionPH texts={locale.texts} />
+    <MedicionScoville texts={locale.texts} />
+    <MedicionSound texts={locale.texts} />
+    <MedicionRichter texts={locale.texts} />
+    <MedicionDoomsday texts={locale.texts} />
+    <MedicionBit texts={locale.texts} />
+    <MedicionCarbon texts={locale.texts} />
+    <MedicionAtomicTime texts={locale.texts} />
+    <MedicionHeisenberg texts={locale.texts} />
+
+    <MedicionLight texts={locale.texts} />
+    <MedicionVoyager texts={locale.texts} />
+    <MedicionMarsClimate texts={locale.texts} />
+    <MedicionCoastline texts={locale.texts} />
+    <MedicionMapTerritory texts={locale.texts} />
+
+    <MedicionAbstraction texts={locale.texts} />
+
+    <MedicionQuantifiedSelf texts={locale.texts} />
+    <MedicionInteractive texts={locale.texts} />
+</main>

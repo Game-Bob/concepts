@@ -1050,3 +1050,9 @@ export const WAITING_LOCALES = {
 } as const satisfies Record<Language, WaitingLocale>;
 
 export type WaitingLocaleData = (typeof WAITING_LOCALES)[Language];
+
+export const WAITING_CONCEPT = {
+    id: "waiting",
+    slugs: WAITING_SLUGS,
+    locales: WAITING_LOCALES,
+} as const;

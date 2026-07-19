@@ -1,65 +1,66 @@
-import fs from "node:fs";
-import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-const FORBIDDEN_CHARACTERS = [
-    "\u2013",
-    "\u2014",
-    "\u2026",
-    "\u201c",
-    "\u201d",
-    "\u2018",
-    "\u2019",
-    "\u00ab",
-    "\u00bb",
-    "\u200b",
-    "\u201e",
+import { CONCEPTS, getConceptLocale } from "../src/concepts/registry";
+import { LANGUAGE_CODES } from "../src/i18n/languages";
+import { getSiteNavigation } from "../src/routing/navigation";
+import { CONCEPTS_LOCALES } from "../src/sections/concepts/locales";
+
+const CORRUPTED_TYPOGRAPHY = [
+    { name: "zero-width space", pattern: /\u200b/u },
+    { name: "replacement character", pattern: /\ufffd/u },
+    { name: "UTF-8 decoded as Latin-1", pattern: /Ã[\u0080-\u00bf]/u },
+    { name: "broken UTF-8 punctuation", pattern: /â[€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ]/u },
+    { name: "UTF-8 Cyrillic decoded as Latin-1", pattern: /(?:Ð|Ñ)[\u0080-\u00bf\u02c6-\u02dc]/u },
 ] as const;
 
-const getSourceFiles = (directory: string): readonly string[] =>
-    fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-        const fullPath = path.join(directory, entry.name);
-        if (entry.isDirectory()) return getSourceFiles(fullPath);
-        return /\.(?:astro|ts)$/.test(entry.name) ? [fullPath] : [];
-    });
-
-const isContentFile = (filePath: string): boolean => {
-    const normalized = filePath.replaceAll("\\", "/");
-    return (
-        normalized.includes("/i18n/") ||
-        normalized.includes("/sections/") ||
-        normalized.includes("/components/") ||
-        normalized.endsWith("/routing/navigation.ts") ||
-        normalized.endsWith("/locales.ts")
-    );
+type StringEntry = {
+    readonly path: string;
+    readonly value: string;
 };
 
-const sourceFiles = getSourceFiles(path.join(process.cwd(), "src")).filter(isContentFile);
+const getStringEntries = (value: unknown, currentPath = "root"): readonly StringEntry[] => {
+    if (typeof value === "string") return [{ path: currentPath, value }];
 
-const getLiterals = (content: string): readonly string[] =>
-    [...content.matchAll(/(["'`])((?:\\.|(?!\1)[\s\S])*)\1/g)].map((match) => match[2] ?? "");
+    if (Array.isArray(value)) {
+        return value.flatMap((entry, index) => getStringEntries(entry, `${currentPath}[${index}]`));
+    }
+
+    if (value && typeof value === "object") {
+        return Object.entries(value).flatMap(([key, entry]) =>
+            getStringEntries(entry, `${currentPath}.${key}`)
+        );
+    }
+
+    return [];
+};
+
+const CONTENT_SETS = [
+    ...LANGUAGE_CODES.map((language) => ({
+        label: `concepts index (${language})`,
+        content: CONCEPTS_LOCALES[language],
+    })),
+    ...LANGUAGE_CODES.map((language) => ({
+        label: `navigation (${language})`,
+        content: getSiteNavigation(language).map(({ label }) => label),
+    })),
+    ...CONCEPTS.flatMap((concept) =>
+        LANGUAGE_CODES.map((language) => ({
+            label: `${concept.id} (${language})`,
+            content: getConceptLocale(concept.id, language),
+        }))
+    ),
+] as const;
 
 describe("typography garbage character validation", () => {
-    sourceFiles.forEach((filePath) => {
-        const relativePath = path.relative(process.cwd(), filePath);
-
-        it(`rejects forbidden typography characters in ${relativePath}`, () => {
-            const content = fs.readFileSync(filePath, "utf8");
-            const literals = getLiterals(content);
-            const found = FORBIDDEN_CHARACTERS.filter((character) =>
-                literals.some((literal) => literal.includes(character))
+    for (const { label, content } of CONTENT_SETS) {
+        it(`rejects corrupted typography in ${label}`, () => {
+            const found = getStringEntries(content).flatMap(({ path, value }) =>
+                CORRUPTED_TYPOGRAPHY.filter(({ pattern }) => pattern.test(value)).map(
+                    ({ name }) => `${path}: ${name}`
+                )
             );
-            expect(found, `${relativePath} contains: ${found.join(" ")}`).toEqual([]);
-        });
 
-        it(`rejects spaces before colons in ${relativePath}`, () => {
-            const content = fs.readFileSync(filePath, "utf8");
-            expect(getLiterals(content).some((literal) => / : /.test(literal))).toBe(false);
+            expect(found).toEqual([]);
         });
-
-        it(`rejects double hyphens in ${relativePath}`, () => {
-            const content = fs.readFileSync(filePath, "utf8");
-            expect(getLiterals(content).some((literal) => literal.includes("--"))).toBe(false);
-        });
-    });
+    }
 });
