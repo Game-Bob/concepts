@@ -59,3 +59,11 @@
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
     list-style: none;
 }
+
+.concepts-index__grid li {
+    display: flex;
+}
+
+.concepts-index__grid li > * {
+    flex: 1;
+}

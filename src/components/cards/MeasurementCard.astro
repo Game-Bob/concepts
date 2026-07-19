@@ -1,5 +1,4 @@
 ---
-import { Icon } from "astro-icon/components";
 import type { MeasurementLocaleData } from "../../concepts/measurement/locales";
 import "../../styles/cards/measurement-card.css";
 
@@ -13,6 +12,25 @@ const { href, locale, number } = Astro.props;
 ---
 
 <a {href} class="concept-card" data-color="6, 182, 212" data-number={number}>
+    <div class="tape-border tape-top" aria-hidden="true"></div>
+    <div class="tape-border tape-bottom" aria-hidden="true"></div>
+    <div class="tape-border tape-left" aria-hidden="true"></div>
+    <div class="tape-border tape-right" aria-hidden="true"></div>
+
+    <div class="card-science-bg" aria-hidden="true">
+        <span class="science-unit u-1">c = 299,792,458 m/s</span>
+        <span class="science-unit u-2">h = 6.626×10⁻³⁴ J·s</span>
+        <span class="science-unit u-3">Kelvin (K)</span>
+        <span class="science-unit u-4">kg (Planck)</span>
+        <span class="science-unit u-5">mol</span>
+        <span class="science-unit u-6">cd (Candela)</span>
+        <span class="science-unit u-7">Pascal (Pa)</span>
+        <span class="science-unit u-8">Decibel (dB)</span>
+        <span class="science-unit u-9">1 ly = 9.46×10¹² km</span>
+        <span class="science-unit u-10">µm / nm</span>
+    </div>
+
+    <span class="card-number">{number}</span>
     <div
         class="card-glow"
         style="background: radial-gradient(circle at center, rgb(6 182 212), transparent 70%);"
@@ -21,7 +39,66 @@ const { href, locale, number } = Astro.props;
 
     <div class="card-content">
         <div class="card-icon-container">
-            <Icon name="mdi:ruler" class="card-icon" />
+            <svg viewBox="0 0 100 100" class="card-icon" aria-hidden="true">
+                <circle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    stroke="rgba(6, 182, 212, 0.15)"
+                    stroke-width="1"
+                    stroke-dasharray="3,3"
+                    fill="none"></circle>
+
+                <circle
+                    cx="45"
+                    cy="50"
+                    r="16"
+                    fill="rgba(6, 182, 212, 0.1)"
+                    stroke="rgb(6 182 212)"
+                    stroke-width="1.5"
+                    class="measured-object"></circle>
+
+                <path
+                    d="M15,35 L85,35 L85,42 L15,42 Z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"></path>
+                <path
+                    d="M20,35 L20,70 Q20,72 23,70 L28,50 L28,35 Z"
+                    fill="currentColor"
+                    opacity="0.8"></path>
+
+                <line x1="30" y1="35" x2="30" y2="40" stroke="currentColor" stroke-width="1"></line>
+                <line x1="40" y1="35" x2="40" y2="40" stroke="currentColor" stroke-width="1"></line>
+                <line x1="50" y1="35" x2="50" y2="40" stroke="currentColor" stroke-width="1"></line>
+                <line x1="60" y1="35" x2="60" y2="40" stroke="currentColor" stroke-width="1"></line>
+                <line x1="70" y1="35" x2="70" y2="40" stroke="currentColor" stroke-width="1"></line>
+                <line x1="80" y1="35" x2="80" y2="40" stroke="currentColor" stroke-width="1"></line>
+
+                <g class="caliper-slider">
+                    <path d="M57,32 L69,32 L69,70 Q69,72 66,70 L61,50 L57,50 Z" fill="currentColor"
+                    ></path>
+                    <line x1="61" y1="32" x2="61" y2="35" stroke="currentColor" stroke-width="0.8"
+                    ></line>
+                    <line x1="63" y1="32" x2="63" y2="35" stroke="currentColor" stroke-width="0.8"
+                    ></line>
+                    <line x1="65" y1="32" x2="65" y2="35" stroke="currentColor" stroke-width="0.8"
+                    ></line>
+                </g>
+
+                <g class="dimension-line" opacity="0.5">
+                    <line
+                        x1="20"
+                        y1="75"
+                        x2="61"
+                        y2="75"
+                        stroke="rgb(6 182 212)"
+                        stroke-width="1"
+                        stroke-dasharray="2,2"></line>
+                    <path d="M20,75 L24,72 L24,78 Z" fill="rgb(6 182 212)"></path>
+                    <path d="M61,75 L57,72 L57,78 Z" fill="rgb(6 182 212)"></path>
+                </g>
+            </svg>
         </div>
 
         <div class="card-text-container">
