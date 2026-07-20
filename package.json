@@ -25,7 +25,8 @@
         "@iconify-json/mdi": "1.2.3",
         "@jjlmoya/identity": "file:../identity",
         "astro": "7.1.1",
-        "astro-icon": "1.1.5"
+        "astro-icon": "1.1.5",
+        "html2canvas": "^1.4.1"
     },
     "devDependencies": {
         "@astrojs/check": "0.9.9",

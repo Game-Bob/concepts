@@ -13,6 +13,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import WaitingExperience from "./WaitingExperience.astro";
 import MeasurementExperience from "./MeasurementExperience.astro";
 import BoredomExperience from "./BoredomExperience.astro";
+import LibraryExperience from "./LibraryExperience.astro";
 import SiteFooter from "./SiteFooter.astro";
 
 interface Props {
@@ -66,6 +67,11 @@ const languageLinks = LANGUAGES.map(({ code, name }) => ({
     {
         conceptId === "boredom" && (
             <BoredomExperience locale={getConceptLocale("boredom", language)} indexUrl="../" />
+        )
+    }
+    {
+        conceptId === "library" && (
+            <LibraryExperience locale={getConceptLocale("library", language)} indexUrl="../" />
         )
     }
     <SiteFooter {language} />

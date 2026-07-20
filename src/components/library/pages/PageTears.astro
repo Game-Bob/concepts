@@ -1,0 +1,140 @@
+---
+interface Props {
+    side: "left" | "right";
+    texts: {
+        title: string;
+        sublabel: string;
+        quote: string;
+    };
+}
+const { side, texts } = Astro.props;
+---
+
+{
+    side === "left" ? (
+        <div class="lb-page-visual-container">
+            <div class="lb-page-tears-shadow" />
+
+            <div class="lb-page-tears-drop-wrap animate-drop">
+                <svg width="40" height="60" viewBox="0 0 40 60" class="lb-page-tears-svg">
+                    <path d="M20,0 C20,0 0,30 0,45 C0,55 10,60 20,60 C30,60 40,55 40,45 C40,30 20,0 20,0 Z" />
+                </svg>
+            </div>
+
+            <div class="lb-page-tears-ripple ripple-1" />
+            <div class="lb-page-tears-ripple ripple-2" />
+        </div>
+    ) : (
+        <div class="lb-page-text-container">
+            <h3 class="lb-page-title-colored lb-page-title-blue">{texts.title}</h3>
+
+            <div>
+                <div class="lb-page-counter-small" id="tears-count">
+                    0
+                </div>
+                <div class="lb-page-counter-label">{texts.sublabel}</div>
+            </div>
+
+            <p class="lb-page-quote">{texts.quote}</p>
+        </div>
+    )
+}
+
+<style>
+    .lb-page-tears-shadow {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 33.333%;
+        background-color: rgba(30, 58, 138, 0.2);
+        filter: blur(24px);
+        animation: lb-pulse 2s infinite;
+    }
+
+    .lb-page-tears-drop-wrap {
+        position: absolute;
+        top: 25%;
+    }
+
+    .lb-page-tears-svg {
+        color: rgba(191, 219, 254, 0.4);
+        fill: currentColor;
+        filter: drop-shadow(0 0 10px rgba(191, 219, 254, 0.3));
+    }
+
+    .lb-page-tears-ripple {
+        position: absolute;
+        bottom: 25%;
+        width: 8rem;
+        height: 2rem;
+        border: 1px solid rgba(191, 219, 254, 0.2);
+        border-radius: 9999px;
+        animation: lb-ripple 3s infinite ease-out;
+        animation-delay: 2.4s;
+        opacity: 0;
+    }
+
+    .lb-page-tears-ripple.ripple-2 {
+        border-color: rgba(191, 219, 254, 0.1);
+        animation-delay: 2.9s;
+    }
+
+    .animate-drop {
+        animation: lb-drop 3s infinite ease-in;
+    }
+
+    @keyframes lb-drop {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 0;
+        }
+        20% {
+            opacity: 1;
+        }
+        80% {
+            transform: translateY(200px) scale(0.9);
+            opacity: 1;
+        }
+        95%,
+        100% {
+            transform: translateY(220px) scale(1.2, 0.5);
+            opacity: 0;
+        }
+    }
+
+    @keyframes lb-ripple {
+        0% {
+            transform: scale(0.1);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(2);
+            opacity: 0;
+        }
+    }
+
+    @keyframes lb-pulse {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+    }
+</style>
+
+<script>
+    import { calculateTearsStats } from "../../../utils/libraryLogic";
+
+    const countEl = document.getElementById("tears-count");
+
+    document.addEventListener("update-life-stats", (e: any) => {
+        const { stats } = e.detail;
+        if (!countEl || !stats) return;
+
+        const { litersTears } = calculateTearsStats(stats.daysAlive);
+        countEl.innerText = litersTears.toFixed(1).replace(".", ",");
+    });
+</script>

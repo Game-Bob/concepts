@@ -1,0 +1,136 @@
+---
+interface Props {
+    side: "left" | "right";
+    texts: {
+        title: string;
+        sublabel: string;
+        quote: string;
+    };
+}
+const { side, texts } = Astro.props;
+---
+
+{
+    side === "left" ? (
+        <div class="lb-page-visual-container">
+            <div class="lb-page-moon-wrapper">
+                <div class="lb-page-moon-crater crater-1" />
+                <div class="lb-page-moon-crater crater-2" />
+                <div class="lb-page-moon-crater crater-3" />
+
+                <div class="lb-page-moon-phase-shadow animate-moon-phase" />
+            </div>
+        </div>
+    ) : (
+        <div class="lb-page-text-container">
+            <h3 class="lb-page-title-colored lb-page-title-sub">{texts.title}</h3>
+
+            <div>
+                <div class="lb-page-counter-small" id="moon-count">
+                    0
+                </div>
+                <div class="lb-page-counter-label">{texts.sublabel}</div>
+            </div>
+
+            <p class="lb-page-quote">
+                {texts.quote.split("{count}")[0]}
+                <span id="moon-count-text" class="lb-page-moon-highlight">
+                    0 VECES
+                </span>
+                {texts.quote.split("{count}")[1] || ""}
+            </p>
+        </div>
+    )
+}
+
+<style>
+    .lb-page-moon-wrapper {
+        position: relative;
+        width: 12rem;
+        height: 12rem;
+        border-radius: 9999px;
+        background-color: #e7e5e4;
+        box-shadow: 0 0 50px rgba(231, 229, 228, 0.2);
+        overflow: hidden;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .lb-page-moon-crater {
+        position: absolute;
+        border-radius: 9999px;
+        background-color: #d6d3d1;
+    }
+
+    .lb-page-moon-crater.crater-1 {
+        top: 2.5rem;
+        left: 2.5rem;
+        width: 2rem;
+        height: 2rem;
+        opacity: 0.5;
+    }
+
+    .lb-page-moon-crater.crater-2 {
+        bottom: 3rem;
+        right: 3rem;
+        width: 3rem;
+        height: 3rem;
+        opacity: 0.4;
+    }
+
+    .lb-page-moon-crater.crater-3 {
+        top: 50%;
+        left: 50%;
+        width: 1.5rem;
+        height: 1.5rem;
+        opacity: 0.6;
+    }
+
+    .lb-page-moon-phase-shadow {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 9999px;
+        transform-origin: left;
+        mix-blend-mode: multiply;
+    }
+
+    .lb-page-moon-highlight {
+        color: #a8a29e;
+    }
+
+    .animate-moon-phase {
+        animation: lb-moon-phase 10s linear infinite;
+    }
+
+    @keyframes lb-moon-phase {
+        0% {
+            transform: translateX(100%);
+        }
+        50% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+</style>
+
+<script>
+    import { calculateMoonStats } from "../../../utils/libraryLogic";
+
+    const countEl = document.getElementById("moon-count");
+    const textEl = document.getElementById("moon-count-text");
+
+    document.addEventListener("update-life-stats", (e: any) => {
+        const { stats } = e.detail;
+        if (!countEl || !stats) return;
+
+        const { fullMoons } = calculateMoonStats(stats.daysAlive);
+        countEl.innerText = fullMoons.toLocaleString();
+        if (textEl) {
+            const label = textEl.innerText.split(" ").slice(1).join(" ");
+            textEl.innerText = `${fullMoons.toLocaleString()} ${label || "VECES"}`;
+        }
+    });
+</script>

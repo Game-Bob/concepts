@@ -1,0 +1,238 @@
+---
+interface Props {
+    side: "left" | "right";
+    texts: {
+        title: string;
+        sublabel: string;
+        quote: string;
+    };
+}
+const { side, texts } = Astro.props;
+---
+
+{
+    side === "left" ? (
+        <div class="lb-page-visual-container">
+            <div class="lb-page-sleep-wrapper">
+                <div class="lb-page-sleep-dial">
+                    <div class="lb-page-sleep-bg-circle" />
+                    <div class="lb-page-sleep-conic" />
+                    <div class="lb-page-sleep-stars">
+                        <div class="lb-page-sleep-star star-1" />
+                        <div class="lb-page-sleep-star star-2" />
+                        <div class="lb-page-sleep-star star-3" />
+                        <div class="lb-page-sleep-star star-4" />
+                    </div>
+                    <div class="lb-page-sleep-inner-circle">
+                        <div class="lb-page-sleep-center-text">
+                            <span class="lb-page-sleep-pct">~33%</span>
+                            <span class="lb-page-sleep-label">Inconsciente</span>
+                        </div>
+                    </div>
+                    <div class="lb-page-sleep-outer-dashed animate-spin-slow" />
+                </div>
+            </div>
+        </div>
+    ) : (
+        <div class="lb-page-text-container">
+            <h3 class="lb-page-title-colored lb-page-title-blue">{texts.title}</h3>
+
+            <div>
+                <div class="lb-page-counter-small" id="sleep-hours">
+                    0
+                </div>
+                <div class="lb-page-counter-label">{texts.sublabel}</div>
+            </div>
+
+            <p class="lb-page-quote">{texts.quote}</p>
+        </div>
+    )
+}
+
+<style>
+    .lb-page-sleep-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .lb-page-sleep-dial {
+        position: relative;
+        width: 16rem;
+        height: 16rem;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    @media (min-width: 768px) {
+        .lb-page-sleep-dial {
+            width: 18rem;
+            height: 18rem;
+        }
+    }
+
+    .lb-page-sleep-bg-circle {
+        position: absolute;
+        inset: 0;
+        border-radius: 9999px;
+        border: 1px solid #292524;
+        background-color: #0c0a09;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .lb-page-sleep-conic {
+        position: absolute;
+        inset: 0;
+        border-radius: 9999px;
+        opacity: 0.8;
+        background: conic-gradient(from 180deg, #172554 0deg, #3b82f6 120deg, transparent 120deg);
+    }
+
+    .lb-page-sleep-stars {
+        position: absolute;
+        inset: 0;
+        border-radius: 9999px;
+        overflow: hidden;
+        clip-path: polygon(50% 50%, 50% 100%, 0% 75%, 0% 25%, 15% 0%);
+        transform: rotate(180deg);
+    }
+
+    .lb-page-sleep-star {
+        position: absolute;
+        border-radius: 9999px;
+        background-color: #ffffff;
+        animation: lb-pulse 2s infinite;
+    }
+
+    .lb-page-sleep-star.star-1 {
+        top: 50%;
+        left: 50%;
+        width: 4px;
+        height: 4px;
+    }
+
+    .lb-page-sleep-star.star-2 {
+        top: 75%;
+        left: 33.333%;
+        width: 2px;
+        height: 2px;
+        animation-delay: 75ms;
+        background-color: #bfdbfe;
+    }
+
+    .lb-page-sleep-star.star-3 {
+        top: 66.666%;
+        left: 25%;
+        width: 4px;
+        height: 4px;
+        animation-delay: 150ms;
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .lb-page-sleep-star.star-4 {
+        top: 33.333%;
+        left: 50%;
+        width: 2px;
+        height: 2px;
+        animation-delay: 300ms;
+    }
+
+    .lb-page-sleep-inner-circle {
+        position: absolute;
+        inset: 1.5rem;
+        border-radius: 9999px;
+        background-color: #0c0a09;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #292524;
+        z-index: 10;
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+
+    @media (min-width: 768px) {
+        .lb-page-sleep-inner-circle {
+            inset: 2rem;
+        }
+    }
+
+    .lb-page-sleep-center-text {
+        text-align: center;
+    }
+
+    .lb-page-sleep-pct {
+        display: block;
+        font-size: 1.875rem;
+        font-weight: bold;
+        color: #bfdbfe;
+        font-variant-numeric: normal;
+    }
+
+    @media (min-width: 768px) {
+        .lb-page-sleep-pct {
+            font-size: 2.25rem;
+        }
+    }
+
+    .lb-page-sleep-label {
+        display: block;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: rgba(96, 165, 250, 0.6);
+        margin-top: 0.25rem;
+    }
+
+    @media (min-width: 768px) {
+        .lb-page-sleep-label {
+            font-size: 0.75rem;
+        }
+    }
+
+    .lb-page-sleep-outer-dashed {
+        position: absolute;
+        top: -1rem;
+        right: -1rem;
+        bottom: -1rem;
+        left: -1rem;
+        border-radius: 9999px;
+        border: 1px dashed rgba(59, 130, 246, 0.1);
+        pointer-events: none;
+        animation: lb-spin-slow 60s linear infinite;
+    }
+
+    @keyframes lb-spin-slow {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes lb-pulse {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+    }
+</style>
+
+<script>
+    import { calculateSleepStats } from "../../../utils/libraryLogic";
+    const hoursEl = document.getElementById("sleep-hours");
+
+    document.addEventListener("update-life-stats", (e: any) => {
+        const { stats } = e.detail;
+        if (!hoursEl || !stats) return;
+        const { hoursSlept } = calculateSleepStats(stats.hoursAlive);
+        hoursEl.innerText = hoursSlept.toLocaleString();
+    });
+</script>

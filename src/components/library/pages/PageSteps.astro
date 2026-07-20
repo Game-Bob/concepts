@@ -1,0 +1,172 @@
+---
+interface Props {
+    side: "left" | "right";
+    texts: {
+        title: string;
+        sublabel: string;
+        quote: string;
+    };
+}
+const { side, texts } = Astro.props;
+---
+
+{
+    side === "left" ? (
+        <div class="lb-page-visual-container">
+            <div class="lb-page-steps-wrapper">
+                <div class="lb-page-steps-track">
+                    <div class="lb-page-steps-feet">
+                        <svg class="lb-page-steps-icon step-r r-1" viewBox="0 0 100 250">
+                            <path
+                                fill="currentColor"
+                                d="M30,0 C50,0 70,20 70,50 L70,180 C70,220 50,250 30,250 C10,250 0,220 0,180 L0,50 C0,20 10,0 30,0 Z"
+                            />
+                        </svg>
+
+                        <svg class="lb-page-steps-icon step-l l-1" viewBox="0 0 100 250">
+                            <path
+                                fill="currentColor"
+                                d="M30,0 C50,0 70,20 70,50 L70,180 C70,220 50,250 30,250 C10,250 0,220 0,180 L0,50 C0,20 10,0 30,0 Z"
+                            />
+                        </svg>
+
+                        <svg class="lb-page-steps-icon step-r r-2" viewBox="0 0 100 250">
+                            <path
+                                fill="currentColor"
+                                d="M30,0 C50,0 70,20 70,50 L70,180 C70,220 50,250 30,250 C10,250 0,220 0,180 L0,50 C0,20 10,0 30,0 Z"
+                            />
+                        </svg>
+
+                        <svg class="lb-page-steps-icon step-l l-2" viewBox="0 0 100 250">
+                            <path
+                                fill="currentColor"
+                                d="M30,0 C50,0 70,20 70,50 L70,180 C70,220 50,250 30,250 C10,250 0,220 0,180 L0,50 C0,20 10,0 30,0 Z"
+                            />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    ) : (
+        <div class="lb-page-text-container">
+            <h3 class="lb-page-title-colored lb-page-title-orange">{texts.title}</h3>
+
+            <div>
+                <div class="lb-page-counter-small" id="steps-count">
+                    0
+                </div>
+                <div class="lb-page-counter-label">{texts.sublabel}</div>
+            </div>
+
+            <p class="lb-page-quote">
+                <span id="steps-km" class="lb-page-steps-highlight">
+                    0 KM
+                </span>{" "}
+                {texts.quote}
+            </p>
+        </div>
+    )
+}
+
+<style>
+    .lb-page-steps-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lb-page-steps-track {
+        position: relative;
+        width: 8rem;
+        height: 16rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        overflow: hidden;
+    }
+
+    .lb-page-steps-feet {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .lb-page-steps-icon {
+        position: absolute;
+        width: 2rem;
+        height: 3rem;
+        color: #e7e5e4;
+        opacity: 0;
+    }
+
+    .lb-page-steps-icon.step-r.r-1 {
+        bottom: 1rem;
+        right: 2rem;
+        animation: lb-step-appear 4s ease-in-out infinite;
+        animation-delay: 0s;
+    }
+
+    .lb-page-steps-icon.step-l.l-1 {
+        bottom: 5rem;
+        left: 2rem;
+        animation: lb-step-appear 4s ease-in-out infinite;
+        animation-delay: 1s;
+    }
+
+    .lb-page-steps-icon.step-r.r-2 {
+        bottom: 9rem;
+        right: 2rem;
+        animation: lb-step-appear 4s ease-in-out infinite;
+        animation-delay: 2s;
+    }
+
+    .lb-page-steps-icon.step-l.l-2 {
+        bottom: 13rem;
+        left: 2rem;
+        animation: lb-step-appear 4s ease-in-out infinite;
+        animation-delay: 3s;
+    }
+
+    .lb-page-steps-highlight {
+        color: #fb923c;
+    }
+
+    @keyframes lb-step-appear {
+        0% {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        20%,
+        80% {
+            opacity: 0.6;
+            transform: scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+    }
+</style>
+
+<script>
+    import { calculateStepsStats } from "../../../utils/libraryLogic";
+
+    const countEl = document.getElementById("steps-count");
+    const kmEl = document.getElementById("steps-km");
+
+    document.addEventListener("update-life-stats", (e: any) => {
+        const { stats } = e.detail;
+        if (!countEl || !stats) return;
+
+        const { stepsTaken } = calculateStepsStats(stats.daysAlive);
+        const km = (stepsTaken * 0.762) / 1000;
+
+        countEl.innerText = stepsTaken.toLocaleString();
+        if (kmEl) kmEl.innerText = `${Math.floor(km).toLocaleString()} KM`;
+    });
+</script>

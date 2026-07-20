@@ -1,0 +1,114 @@
+---
+interface Props {
+    side: "left" | "right";
+    texts: {
+        title: string;
+        sublabel: string;
+        quote: string;
+        days: string;
+        hours: string;
+    };
+}
+const { side, texts } = Astro.props;
+---
+
+{
+    side === "left" ? (
+        <div class="lb-page-visual-container">
+            <div class="lb-page-blinks-eye-wrap">
+                <div class="lb-page-blinks-lid animate-blink" />
+            </div>
+        </div>
+    ) : (
+        <div class="lb-page-text-container">
+            <h3 class="lb-page-title-colored lb-page-title-purple">{texts.title}</h3>
+
+            <div>
+                <div class="lb-page-counter-small" id="blinks-count">
+                    0
+                </div>
+                <div class="lb-page-counter-label">{texts.sublabel}</div>
+            </div>
+
+            <p class="lb-page-quote">
+                {texts.quote.split("{time}")[0]}
+                <span
+                    id="darkness-time"
+                    class="lb-page-blinks-highlight"
+                    data-days={texts.days}
+                    data-hours={texts.hours}
+                >
+                    0 {texts.days}
+                </span>
+                {texts.quote.split("{time}")[1] || ""}
+            </p>
+        </div>
+    )
+}
+
+<style>
+    .lb-page-blinks-eye-wrap {
+        position: relative;
+        width: 8rem;
+        height: 8rem;
+        border: 4px solid rgba(231, 229, 228, 0.2);
+        border-radius: 9999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .lb-page-blinks-lid {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(231, 229, 228, 0.1);
+        transform-origin: top;
+    }
+
+    .lb-page-blinks-highlight {
+        color: #c084fc;
+    }
+
+    .animate-blink {
+        animation: lb-blink 4s infinite;
+    }
+
+    @keyframes lb-blink {
+        0%,
+        90%,
+        100% {
+            transform: scaleY(0);
+        }
+        95% {
+            transform: scaleY(1);
+        }
+    }
+</style>
+
+<script>
+    import { calculateBlinkStats } from "../../../utils/libraryLogic";
+
+    const countEl = document.getElementById("blinks-count");
+    const timeEl = document.getElementById("darkness-time");
+
+    document.addEventListener("update-life-stats", (e: any) => {
+        const { stats } = e.detail;
+        if (!countEl || !stats) return;
+
+        const { totalBlinks, darknessDays, darknessHours } = calculateBlinkStats(
+            stats.minutesAlive
+        );
+
+        countEl.innerText = Math.floor(totalBlinks).toLocaleString();
+
+        const daysLabel = timeEl?.getAttribute("data-days") || "DÍAS";
+        const hoursLabel = timeEl?.getAttribute("data-hours") || "HORAS";
+
+        let timeString = "";
+        if (darknessDays > 0) timeString = `${darknessDays} ${daysLabel}`;
+        else timeString = `${darknessHours} ${hoursLabel}`;
+
+        if (timeEl) timeEl.innerText = timeString;
+    });
+</script>

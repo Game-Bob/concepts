@@ -1,0 +1,163 @@
+---
+import type { LibraryLocaleData } from "../concepts/library/locales";
+import DeathDialogue from "./library/DeathDialogue.astro";
+import DeathInput from "./library/DeathInput.astro";
+import BookNavigation from "./library/BookNavigation.astro";
+import PageIntro from "./library/pages/PageIntro.astro";
+import PageFinal from "./library/pages/PageFinal.astro";
+import LibrarySpread from "./library/LibrarySpread.astro";
+import { PAGES_MAP } from "../utils/libraryPagesMap";
+import "../styles/library-experience.css";
+
+interface Props {
+    locale: LibraryLocaleData;
+    indexUrl: string;
+}
+
+const { locale } = Astro.props;
+const { texts } = locale;
+
+const pages = PAGES_MAP.map((pageData, i) => {
+    return {
+        index: i + 1,
+        LeftComponent: pageData.left as (_props: {
+            side: string;
+            texts: Record<string, unknown>;
+        }) => unknown,
+        RightComponent: pageData.right as (_props: {
+            side: string;
+            texts: Record<string, unknown>;
+        }) => unknown,
+        pageTexts: pageData.getTexts(texts) as Record<string, unknown>,
+    };
+});
+---
+
+<main class="library-experience" data-library-experience>
+    <svg class="lb-svg-defs">
+        <defs>
+            <filter id="ink-paper">
+                <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise"
+                ></feTurbulence>
+                <feColorMatrix
+                    type="matrix"
+                    values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.1 0"
+                    in="noise"
+                    result="coloredNoise"></feColorMatrix>
+                <feComposite operator="in" in="coloredNoise" in2="SourceGraphic" result="composite"
+                ></feComposite>
+                <feBlend mode="multiply" in="composite" in2="SourceGraphic"></feBlend>
+            </filter>
+            <filter id="rough-edge">
+                <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" result="noise"
+                ></feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="2"></feDisplacementMap>
+            </filter>
+        </defs>
+    </svg>
+
+    <div id="intro-flow" class="lb-intro-flow">
+        <div id="dialogue-wrapper" class="lb-dialogue-wrapper">
+            <div id="death-dialogue-0" class="lb-dialogue-item active">
+                <DeathDialogue text={texts.introGreeting} speed={40} autoStart={true} />
+            </div>
+            <div id="death-dialogue-1" class="lb-dialogue-item">
+                <DeathDialogue text={texts.intro1} speed={40} autoStart={false} />
+            </div>
+            <div id="death-dialogue-2" class="lb-dialogue-item">
+                <DeathDialogue text={texts.intro3} speed={40} autoStart={false} />
+            </div>
+            <div id="death-dialogue-3" class="lb-dialogue-item">
+                <DeathDialogue text={texts.confirmation} speed={40} autoStart={false} />
+            </div>
+        </div>
+
+        <DeathInput months={[...texts.months]} nextLabel={texts.next} />
+    </div>
+
+    <div id="library-book" class="lb-book">
+        <div id="book-inner-content" class="lb-inner">
+            <div class="lb-spine-glow"></div>
+            <div class="lb-spine-line"></div>
+
+            <div class="lb-spread active" data-index="0">
+                <div class="lb-page lb-page-left">
+                    <div class="lb-page-content">
+                        <PageIntro side="left" texts={texts.pageIntro} />
+                    </div>
+                </div>
+                <div class="lb-page lb-page-right">
+                    <div class="lb-page-content">
+                        <PageIntro side="right" texts={texts.pageIntro} />
+                    </div>
+                </div>
+            </div>
+
+            {
+                pages.map(({ index, LeftComponent, RightComponent, pageTexts }) => (
+                    <LibrarySpread
+                        index={index}
+                        LeftComponent={LeftComponent}
+                        RightComponent={RightComponent}
+                        pageTexts={pageTexts}
+                        tornTitle={texts.pageTorn.title}
+                        tornPrice={texts.pageTorn.price}
+                    />
+                ))
+            }
+
+            <div class="lb-spread" data-index="17">
+                <div class="lb-page lb-page-left">
+                    <div class="lb-page-content">
+                        <PageFinal side="left" texts={texts.pageFinal} />
+                    </div>
+                </div>
+                <div class="lb-page lb-page-right">
+                    <div class="lb-page-content">
+                        <PageFinal side="right" texts={texts.pageFinal} />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button id="share-tear-btn" class="lb-share-btn" title={texts.shareTitle}>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="lb-share-icon"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
+                ></path>
+            </svg>
+        </button>
+
+        <BookNavigation />
+        <div
+            id="torn-messages-data"
+            data-messages={JSON.stringify(texts.tornMessages)}
+            class="hidden"
+        >
+        </div>
+    </div>
+
+    <div id="tear-warning-modal" class="lb-modal lb-modal-fade lb-hidden">
+        <div class="lb-modal-content" id="tear-warning-content">
+            <h3 class="lb-modal-title">{texts.warningTitle}</h3>
+            <p class="lb-modal-text" set:html={texts.warningText} />
+            <div class="lb-modal-buttons">
+                <button id="cancel-tear" class="lb-btn lb-btn-cancel">{texts.cancelTear}</button>
+                <button id="confirm-tear" class="lb-btn lb-btn-confirm">{texts.confirmTear}</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    import "../scripts/libraryExperience";
+</script>

@@ -1,0 +1,77 @@
+---
+import BrandMark from "@jjlmoya/identity/brand-mark";
+
+interface Props {
+    side: "left" | "right";
+    texts: {
+        title: string;
+        sublabel: string;
+        quote: string;
+    };
+}
+const { side, texts } = Astro.props;
+---
+
+{
+    side === "left" ? (
+        <div class="lb-page-visual-container">
+            <div class="lb-page-cats-wrapper">
+                <div class="lb-page-cats-glow" />
+                <div class="lb-page-cats-logo-wrap">
+                    <BrandMark identity="gamebob" href="" />
+                </div>
+            </div>
+        </div>
+    ) : (
+        <div class="lb-page-text-container">
+            <h3 class="lb-page-title-colored lb-page-title-orange">{texts.title}</h3>
+
+            <div>
+                <div class="lb-page-counter">&infin;</div>
+                <div class="lb-page-sublabel">{texts.sublabel}</div>
+            </div>
+
+            <p class="lb-page-quote" set:html={texts.quote}></p>
+        </div>
+    )
+}
+
+<style>
+    .lb-page-cats-wrapper {
+        position: relative;
+        width: 16rem;
+        height: 16rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lb-page-cats-glow {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(234, 179, 8, 0.1);
+        filter: blur(64px);
+        border-radius: 9999px;
+        animation: lb-pulse 2s infinite;
+    }
+
+    .lb-page-cats-logo-wrap {
+        width: 100%;
+        height: 100%;
+        opacity: 0.8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: scale(2);
+    }
+
+    @keyframes lb-pulse {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+    }
+</style>

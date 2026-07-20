@@ -1,0 +1,53 @@
+---
+import "../../styles/death-dialogue.css";
+
+interface Props {
+    text: string;
+    onComplete?: () => void;
+    speed?: number;
+    delay?: number;
+    autoStart?: boolean;
+    mode?: "char" | "word";
+}
+
+const { text, speed = 50, delay = 0, autoStart = true, mode = "char" } = Astro.props;
+---
+
+<div
+    class="dd-container"
+    data-auto-start={autoStart.toString()}
+    data-speed={speed}
+    data-delay={delay}
+>
+    <p class="dd-text">
+        {
+            text.split(/<br\s*\/?>/i).map((part, index, array) => (
+                <>
+                    {mode === "char"
+                        ? part
+                              .toUpperCase()
+                              .split("")
+                              .map((char) => (
+                                  <span class="dd-unit dd-unit-char dd-hidden">
+                                      {char === " " ? " " : char}
+                                  </span>
+                              ))
+                        : part
+                              .toUpperCase()
+                              .split(" ")
+                              .map((word, wIndex, wArray) => (
+                                  <span class="dd-unit dd-unit-word dd-hidden">
+                                      {word}
+                                      {wIndex < wArray.length - 1 ? " " : ""}
+                                  </span>
+                              ))}
+                    {index < array.length - 1 && <br />}
+                </>
+            ))
+        }
+    </p>
+</div>
+
+<script>
+    import "../../scripts/deathDialogue";
+</script>

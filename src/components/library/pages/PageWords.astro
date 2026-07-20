@@ -1,0 +1,279 @@
+---
+interface Props {
+    side: "left" | "right";
+    texts: {
+        title: string;
+        sublabel: string;
+        quote: string;
+        wordsLabel: string;
+        floatWords: string[];
+    };
+}
+const { side, texts } = Astro.props;
+---
+
+{
+    side === "left" ? (
+        <div class="lb-page-visual-container">
+            <div class="lb-page-words-wrapper">
+                <div class="lb-page-words-bg">
+                    <span class="lb-page-words-item item-1">{texts.floatWords[0] || "HOLA"}</span>
+                    <span class="lb-page-words-item item-2">{texts.floatWords[1] || "ADIÓS"}</span>
+                    <span class="lb-page-words-item item-3">
+                        {texts.floatWords[2] || "POR QUÉ"}
+                    </span>
+                    <span class="lb-page-words-item item-4">{texts.floatWords[3] || "TIEMPO"}</span>
+                    <span class="lb-page-words-item item-5">{texts.floatWords[4] || "VIDA"}</span>
+                    <span class="lb-page-words-item item-6">{texts.floatWords[5] || "MUERTE"}</span>
+                    <span class="lb-page-words-item item-7">{texts.floatWords[6] || "AMOR"}</span>
+                </div>
+
+                <div class="lb-page-words-center-wrap">
+                    <div class="lb-page-words-float float-1">{texts.floatWords[7] || "SÍ"}</div>
+                    <div class="lb-page-words-float float-2">{texts.floatWords[8] || "NO"}</div>
+                    <div class="lb-page-words-float float-3">{texts.floatWords[9] || "HOY"}</div>
+                    <div class="lb-page-words-float float-4">{texts.floatWords[10] || "NUNCA"}</div>
+                    <div class="lb-page-words-float float-5">{texts.floatWords[11] || "JAMÁS"}</div>
+                    <div class="lb-page-words-float float-6">
+                        {texts.floatWords[12] || "QUIZÁS"}
+                    </div>
+                    <div class="lb-page-words-float float-7">
+                        {texts.floatWords[13] || "SIEMPRE"}
+                    </div>
+                </div>
+
+                <div class="lb-page-words-overlay">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="lb-page-words-icon">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    ) : (
+        <div class="lb-page-text-container">
+            <h3 class="lb-page-title-colored lb-page-title-amber">{texts.title}</h3>
+
+            <div>
+                <div class="lb-page-counter-small" id="words-count">
+                    0
+                </div>
+                <div class="lb-page-counter-label">{texts.sublabel}</div>
+            </div>
+
+            <p class="lb-page-quote">
+                {texts.quote.split("{words}")[0]}
+                <span id="words-count-text" class="lb-page-words-highlight">
+                    0 {texts.wordsLabel}
+                </span>
+                {texts.quote.split("{words}")[1] || ""}
+            </p>
+        </div>
+    )
+}
+
+<style>
+    .lb-page-words-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lb-page-words-bg {
+        position: absolute;
+        inset: 0;
+        opacity: 0.15;
+        filter: blur(1px);
+        font-family: serif;
+    }
+
+    .lb-page-words-item {
+        position: absolute;
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #e7e5e4;
+    }
+
+    .lb-page-words-item.item-1 {
+        top: 10%;
+        left: 10%;
+        transform: rotate(-15deg);
+    }
+    .lb-page-words-item.item-2 {
+        top: 20%;
+        right: 15%;
+        transform: rotate(10deg);
+    }
+    .lb-page-words-item.item-3 {
+        bottom: 20%;
+        left: 15%;
+        transform: rotate(5deg);
+    }
+    .lb-page-words-item.item-4 {
+        bottom: 15%;
+        right: 10%;
+        transform: rotate(-20deg);
+    }
+    .lb-page-words-item.item-5 {
+        top: 45%;
+        left: 8%;
+        transform: rotate(30deg);
+    }
+    .lb-page-words-item.item-6 {
+        top: 50%;
+        right: 8%;
+        transform: rotate(-10deg);
+    }
+    .lb-page-words-item.item-7 {
+        bottom: 45%;
+        left: 45%;
+        transform: rotate(-5deg);
+    }
+
+    .lb-page-words-center-wrap {
+        position: relative;
+        width: 12rem;
+        height: 12rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lb-page-words-float {
+        position: absolute;
+        font-family: serif;
+        font-weight: bold;
+        color: #f59e0b;
+        text-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+    }
+
+    .lb-page-words-float.float-1 {
+        font-size: 1.5rem;
+        animation: lb-pop-1 4s ease-in-out infinite;
+    }
+    .lb-page-words-float.float-2 {
+        font-size: 1.75rem;
+        animation: lb-pop-2 5s ease-in-out infinite;
+    }
+    .lb-page-words-float.float-3 {
+        font-size: 1.25rem;
+        animation: lb-pop-3 6s ease-in-out infinite;
+    }
+    .lb-page-words-float.float-4 {
+        font-size: 1.125rem;
+        animation: lb-pop-4 4.5s ease-in-out infinite;
+    }
+    .lb-page-words-float.float-5 {
+        font-size: 1.35rem;
+        animation: lb-pop-5 5.5s ease-in-out infinite;
+    }
+    .lb-page-words-float.float-6 {
+        font-size: 1.25rem;
+        top: 15%;
+        left: 20%;
+        animation: lb-pop-3 5.2s ease-in-out infinite;
+    }
+    .lb-page-words-float.float-7 {
+        font-size: 1.4rem;
+        bottom: 15%;
+        right: 20%;
+        animation: lb-pop-1 4.8s ease-in-out infinite;
+    }
+
+    .lb-page-words-overlay {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+    }
+
+    .lb-page-words-icon {
+        width: 4rem;
+        height: 4rem;
+        color: rgba(245, 158, 11, 0.15);
+        filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.05));
+    }
+
+    .lb-page-words-highlight {
+        color: #fbbf24;
+    }
+
+    @keyframes lb-pop-1 {
+        0%,
+        100% {
+            transform: scale(1) translate(0, 0);
+            opacity: 0.4;
+        }
+        50% {
+            transform: scale(1.15) translate(5px, -5px);
+            opacity: 0.8;
+        }
+    }
+    @keyframes lb-pop-2 {
+        0%,
+        100% {
+            transform: scale(1) translate(0, 0);
+            opacity: 0.3;
+        }
+        50% {
+            transform: scale(1.1) translate(-5px, 5px);
+            opacity: 0.7;
+        }
+    }
+    @keyframes lb-pop-3 {
+        0%,
+        100% {
+            transform: scale(1) rotate(0deg);
+            opacity: 0.5;
+        }
+        50% {
+            transform: scale(1.2) rotate(15deg);
+            opacity: 0.9;
+        }
+    }
+    @keyframes lb-pop-4 {
+        0%,
+        100% {
+            transform: scale(1) rotate(0deg);
+            opacity: 0.4;
+        }
+        50% {
+            transform: scale(1.15) rotate(-10deg);
+            opacity: 0.8;
+        }
+    }
+    @keyframes lb-pop-5 {
+        0%,
+        100% {
+            transform: scale(1) rotate(-3deg);
+            opacity: 0.3;
+        }
+        50% {
+            transform: scale(1.1) rotate(-6deg);
+            opacity: 0.6;
+        }
+    }
+</style>
+
+<script>
+    import { calculateWordsStats } from "../../../utils/libraryLogic";
+
+    const countEl = document.getElementById("words-count");
+    const countTextEl = document.getElementById("words-count-text");
+
+    document.addEventListener("update-life-stats", (e: any) => {
+        const { stats } = e.detail;
+        if (!countEl || !stats) return;
+
+        const { wordsSpoken } = calculateWordsStats(stats.minutesAlive);
+        countEl.innerText = Math.floor(wordsSpoken).toLocaleString();
+        if (countTextEl) {
+            const label = countTextEl.innerText.split(" ").slice(1).join(" ");
+            countTextEl.innerText = `${Math.floor(wordsSpoken).toLocaleString()} ${label}`;
+        }
+    });
+</script>

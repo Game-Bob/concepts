@@ -1,0 +1,32 @@
+---
+import type { LibraryLocaleData } from "../../concepts/library/locales";
+import "../../styles/cards/library-card.css";
+
+interface Props {
+    href: string;
+    locale: LibraryLocaleData;
+    number: string;
+}
+const { href, locale, number } = Astro.props;
+---
+
+<a class="library-card" href={href}>
+    <div class="library-card__double-card">
+        <span class="library-card__number">{number}</span>
+        <div class="library-card__copy">
+            <p>{locale.cardSubtitle}</p>
+            <h2>{locale.cardTitle}</h2>
+        </div>
+        <div class="library-card__footer">
+            <span></span>
+            <blockquote>{locale.cardDescription}</blockquote>
+        </div>
+        <span class="library-card__border" aria-hidden="true"></span>
+    </div>
+    <img
+        src="/images/death-reading.webp"
+        class="library-card__death-img"
+        alt=""
+        aria-hidden="true"
+    />
+</a>

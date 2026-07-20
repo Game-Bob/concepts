@@ -1,0 +1,291 @@
+---
+interface Props {
+    side: "left" | "right";
+    texts: {
+        title: string;
+        sublabel: string;
+        quote: string;
+        bottlesLabel: string;
+    };
+}
+const { side, texts } = Astro.props;
+---
+
+{
+    side === "left" ? (
+        <div class="lb-page-visual-container">
+            <div class="lb-page-water-wrapper">
+                <div class="lb-page-water-glow" />
+
+                <div class="lb-page-water-glass">
+                    <div class="lb-page-water-glass-shine-l" />
+                    <div class="lb-page-water-glass-shine-r" />
+
+                    <div class="lb-page-water-fluid">
+                        <div class="lb-page-water-wave-1" />
+                        <div class="lb-page-water-wave-2" />
+
+                        <div class="lb-page-water-bubbles">
+                            <div class="lb-page-water-bubble bubble-1" />
+                            <div class="lb-page-water-bubble bubble-2" />
+                            <div class="lb-page-water-bubble bubble-3" />
+                            <div class="lb-page-water-bubble bubble-4" />
+                            <div class="lb-page-water-bubble bubble-5" />
+                        </div>
+                    </div>
+
+                    <div class="lb-page-water-ice ice-1" />
+                    <div class="lb-page-water-ice ice-2" />
+                </div>
+            </div>
+        </div>
+    ) : (
+        <div class="lb-page-text-container">
+            <h3 class="lb-page-title-colored lb-page-title-blue">{texts.title}</h3>
+
+            <div>
+                <div class="lb-page-counter-small" id="water-count">
+                    0
+                </div>
+                <div class="lb-page-counter-label">{texts.sublabel}</div>
+            </div>
+
+            <p class="lb-page-quote">
+                {texts.quote.split("{bottles}")[0]}
+                <span id="water-bottles" class="lb-page-water-highlight">
+                    0 {texts.bottlesLabel}
+                </span>
+                {texts.quote.split("{bottles}")[1] || ""}
+            </p>
+        </div>
+    )
+}
+
+<style>
+    .lb-page-water-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lb-page-water-glow {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(59, 130, 246, 0.05);
+        filter: blur(48px);
+        border-radius: 9999px;
+    }
+
+    .lb-page-water-glass {
+        width: 10rem;
+        height: 14rem;
+        border-left: 4px solid rgba(231, 229, 228, 0.2);
+        border-right: 4px solid rgba(231, 229, 228, 0.2);
+        border-bottom: 8px solid rgba(231, 229, 228, 0.3);
+        border-radius: 0 0 1rem 1rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .lb-page-water-glass-shine-l {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0.75rem;
+        width: 4px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 9999px;
+    }
+
+    .lb-page-water-glass-shine-r {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0.75rem;
+        width: 8px;
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 9999px;
+    }
+
+    .lb-page-water-fluid {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 70%;
+        background-color: rgba(59, 130, 246, 0.2);
+    }
+
+    .lb-page-water-wave-1,
+    .lb-page-water-wave-2 {
+        position: absolute;
+        top: -1.5rem;
+        width: 200%;
+        height: 3rem;
+        background-color: rgba(59, 130, 246, 0.2);
+        border-radius: 40%;
+    }
+
+    .lb-page-water-wave-1 {
+        left: -50%;
+        animation: lb-wave-1 8s linear infinite;
+    }
+
+    .lb-page-water-wave-2 {
+        left: -30%;
+        background-color: rgba(59, 130, 246, 0.15);
+        border-radius: 35%;
+        animation: lb-wave-2 10s linear infinite;
+    }
+
+    .lb-page-water-bubbles {
+        position: absolute;
+        inset: 0;
+    }
+
+    .lb-page-water-bubble {
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 9999px;
+        bottom: -10px;
+    }
+
+    .lb-page-water-bubble.bubble-1 {
+        width: 6px;
+        height: 6px;
+        left: 20%;
+        animation: lb-bubble 4s infinite;
+    }
+    .lb-page-water-bubble.bubble-2 {
+        width: 10px;
+        height: 10px;
+        left: 40%;
+        animation: lb-bubble 6s infinite;
+        animation-delay: 1s;
+    }
+    .lb-page-water-bubble.bubble-3 {
+        width: 4px;
+        height: 4px;
+        left: 60%;
+        animation: lb-bubble 5s infinite;
+        animation-delay: 0.5s;
+    }
+    .lb-page-water-bubble.bubble-4 {
+        width: 8px;
+        height: 8px;
+        left: 80%;
+        animation: lb-bubble 7s infinite;
+        animation-delay: 2s;
+    }
+    .lb-page-water-bubble.bubble-5 {
+        width: 5px;
+        height: 5px;
+        left: 50%;
+        animation: lb-bubble 5.5s infinite;
+        animation-delay: 1.5s;
+    }
+
+    .lb-page-water-ice {
+        position: absolute;
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 0.25rem;
+        backdrop-filter: blur(2px);
+    }
+
+    .lb-page-water-ice.ice-1 {
+        bottom: 25%;
+        left: 20%;
+        transform: rotate(15deg);
+        animation: lb-float-ice-1 6s ease-in-out infinite;
+    }
+
+    .lb-page-water-ice.ice-2 {
+        bottom: 40%;
+        right: 15%;
+        transform: rotate(-30deg);
+        animation: lb-float-ice-2 8s ease-in-out infinite;
+    }
+
+    .lb-page-water-highlight {
+        color: #60a5fa;
+    }
+
+    @keyframes lb-wave-1 {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes lb-wave-2 {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(-360deg);
+        }
+    }
+    @keyframes lb-bubble {
+        0% {
+            transform: translateY(0);
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+        }
+        90% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-120px);
+            opacity: 0;
+        }
+    }
+    @keyframes lb-float-ice-1 {
+        0%,
+        100% {
+            transform: rotate(15deg) translateY(0);
+        }
+        50% {
+            transform: rotate(20deg) translateY(-8px);
+        }
+    }
+    @keyframes lb-float-ice-2 {
+        0%,
+        100% {
+            transform: rotate(-30deg) translateY(0);
+        }
+        50% {
+            transform: rotate(-25deg) translateY(-6px);
+        }
+    }
+</style>
+
+<script>
+    import { calculateWaterStats } from "../../../utils/libraryLogic";
+
+    const countEl = document.getElementById("water-count");
+    const bottlesEl = document.getElementById("water-bottles");
+
+    document.addEventListener("update-life-stats", (e: any) => {
+        const { stats } = e.detail;
+        if (!countEl || !stats) return;
+
+        const { litersDrunk } = calculateWaterStats(stats.daysAlive);
+        const bottles = litersDrunk / 0.5;
+
+        countEl.innerText = litersDrunk.toLocaleString();
+        if (bottlesEl) {
+            const label = bottlesEl.innerText.split(" ").slice(1).join(" ");
+            bottlesEl.innerText = `${Math.floor(bottles).toLocaleString()} ${label || "BOTELLAS"}`;
+        }
+    });
+</script>

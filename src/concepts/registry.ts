@@ -2,8 +2,14 @@ import type { Language } from "../i18n/languages";
 import { MEASUREMENT_CONCEPT } from "./measurement/locales";
 import { WAITING_CONCEPT } from "./waiting/locales";
 import { BOREDOM_CONCEPT } from "./boredom/locales";
+import { LIBRARY_CONCEPT } from "./library/locales";
 
-const CONCEPT_MODULES = [WAITING_CONCEPT, MEASUREMENT_CONCEPT, BOREDOM_CONCEPT] as const;
+const CONCEPT_MODULES = [
+    WAITING_CONCEPT,
+    MEASUREMENT_CONCEPT,
+    BOREDOM_CONCEPT,
+    LIBRARY_CONCEPT,
+] as const;
 
 type RegisteredConcept = (typeof CONCEPT_MODULES)[number];
 

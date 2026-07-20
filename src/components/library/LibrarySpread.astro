@@ -1,0 +1,57 @@
+---
+interface Props {
+    index: number;
+    LeftComponent: (_props: { side: string; texts: Record<string, unknown> }) => unknown;
+    RightComponent: (_props: { side: string; texts: Record<string, unknown> }) => unknown;
+    pageTexts: Record<string, unknown>;
+    tornTitle: string;
+    tornPrice: string;
+}
+
+const { index, LeftComponent, RightComponent, pageTexts, tornTitle, tornPrice } = Astro.props;
+---
+
+<div class="lb-spread" data-index={index}>
+    <div class="lb-page lb-page-left">
+        <div class="lb-page-content">
+            <LeftComponent side="left" texts={pageTexts} />
+        </div>
+        <div class="lb-page-torn lb-torn-visual-wrapper hidden">
+            <div class="lb-torn-visual">
+                <div class="lb-torn-edge"></div>
+                <div class="lb-torn-void"></div>
+            </div>
+        </div>
+    </div>
+    <div class="lb-page lb-page-right">
+        <div class="lb-page-content">
+            <RightComponent side="right" texts={pageTexts} />
+        </div>
+        <div class="lb-page-torn lb-torn-content-wrapper hidden">
+            <div class="lb-torn-wrap">
+                <div class="lb-torn-tear-icon">
+                    <svg viewBox="0 0 40 40" fill="none" width="40" height="40">
+                        <path
+                            d="M20 4L28 16L20 36L12 16L20 4Z"
+                            stroke="#57534e"
+                            stroke-width="1.5"
+                            fill="none"></path>
+                        <path
+                            d="M20 10V22"
+                            stroke="#57534e"
+                            stroke-width="1.5"
+                            stroke-linecap="round"></path>
+                        <path
+                            d="M14 18L20 22L26 18"
+                            stroke="#57534e"
+                            stroke-width="1"
+                            stroke-linecap="round"></path>
+                    </svg>
+                </div>
+                <h3 class="lb-torn-title">{tornTitle}</h3>
+                <p class="lb-torn-sub lb-torn-dynamic-message"></p>
+                <p class="lb-torn-price">{tornPrice}</p>
+            </div>
+        </div>
+    </div>
+</div>

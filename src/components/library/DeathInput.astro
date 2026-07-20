@@ -1,0 +1,64 @@
+---
+import "../../styles/death-input.css";
+
+interface Props {
+    months: string[];
+    nextLabel: string;
+}
+
+const { months, nextLabel } = Astro.props;
+const birthYearStart = 1900;
+const birthYearEnd = new Date().getFullYear();
+---
+
+<div id="death-input-container" class="di-container hidden opacity-0">
+    <div id="year-section" class="di-year-section">
+        <div class="di-slider-wrapper">
+            <div class="di-gradient-overlay"></div>
+            <div class="di-glow-center"></div>
+            <div class="di-border-center"></div>
+
+            <div id="year-slider" class="di-slider no-scrollbar">
+                <div class="di-scroll-spacer" aria-hidden="true"></div>
+                {
+                    Array.from(
+                        { length: birthYearEnd - birthYearStart + 1 },
+                        (_, i) => birthYearStart + i
+                    )
+                        .reverse()
+                        .map((year) => (
+                            <div class="year-item di-year-item" data-year={year}>
+                                <div class="book-spine di-spine-inactive">
+                                    <div class="di-book-spine-overlay" />
+                                    <span class="di-book-text di-text-inactive writing-vertical">
+                                        {year}
+                                    </span>
+                                </div>
+                            </div>
+                        ))
+                }
+                <div class="di-scroll-spacer" aria-hidden="true"></div>
+            </div>
+        </div>
+
+        <button id="year-confirm-btn" class="di-confirm-btn">
+            {nextLabel}
+        </button>
+    </div>
+
+    <div id="month-section" class="di-month-section di-hidden-interaction">
+        <div class="di-month-grid">
+            {
+                months.map((month, index) => (
+                    <button class="month-btn di-month-btn" data-month={index}>
+                        {month}
+                    </button>
+                ))
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    import "../../scripts/deathInput";
+</script>

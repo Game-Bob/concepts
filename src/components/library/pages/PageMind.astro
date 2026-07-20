@@ -1,0 +1,304 @@
+---
+interface Props {
+    side: "left" | "right";
+    texts: {
+        title: string;
+        sublabel: string;
+        quote: string;
+    };
+}
+const { side, texts } = Astro.props;
+---
+
+{
+    side === "left" ? (
+        <div class="lb-page-visual-container">
+            <div class="lb-page-mind-wrapper">
+                <div class="lb-page-mind-glow" />
+
+                <div class="lb-page-mind-sphere-wrap">
+                    <div class="lb-page-mind-ping" />
+
+                    <svg class="lb-page-mind-svg">
+                        <defs>
+                            <filter id="glow-purple">
+                                <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                        </defs>
+
+                        <path
+                            d="M144,144 Q100,100 80,140 T40,180"
+                            stroke="#c084fc"
+                            stroke-width="1"
+                            fill="none"
+                            class="animate-synapse-1"
+                            filter="url(#glow-purple)"
+                        />
+                        <path
+                            d="M144,144 Q110,180 90,200"
+                            stroke="#a855f7"
+                            stroke-width="0.5"
+                            fill="none"
+                            class="animate-synapse-2"
+                            filter="url(#glow-purple)"
+                        />
+
+                        <path
+                            d="M144,144 Q180,90 220,110 T280,140"
+                            stroke="#d8b4fe"
+                            stroke-width="1"
+                            fill="none"
+                            class="animate-synapse-3"
+                            filter="url(#glow-purple)"
+                        />
+                        <path
+                            d="M144,144 Q200,200 240,180"
+                            stroke="#9333ea"
+                            stroke-width="0.5"
+                            fill="none"
+                            class="animate-synapse-1"
+                            style="animation-delay: 1s;"
+                            filter="url(#glow-purple)"
+                        />
+
+                        <circle
+                            cx="80"
+                            cy="140"
+                            r="2"
+                            fill="#fff"
+                            class="animate-flash"
+                            style="animation-delay: 0.5s;"
+                        />
+                        <circle
+                            cx="220"
+                            cy="110"
+                            r="2"
+                            fill="#fff"
+                            class="animate-flash"
+                            style="animation-delay: 1.2s;"
+                        />
+                        <circle
+                            cx="90"
+                            cy="200"
+                            r="1.5"
+                            fill="#fff"
+                            class="animate-flash"
+                            style="animation-delay: 2.5s;"
+                        />
+                    </svg>
+
+                    <div class="lb-page-mind-idea idea-1" />
+                    <div class="lb-page-mind-idea idea-2" />
+                    <div class="lb-page-mind-idea idea-3" />
+                </div>
+            </div>
+        </div>
+    ) : (
+        <div class="lb-page-text-container">
+            <h3 class="lb-page-title-colored lb-page-title-purple">{texts.title}</h3>
+
+            <div>
+                <div class="lb-page-counter-small" id="mind-count">
+                    0
+                </div>
+                <div class="lb-page-counter-label">{texts.sublabel}</div>
+            </div>
+
+            <p class="lb-page-quote">{texts.quote}</p>
+        </div>
+    )
+}
+
+<style>
+    .lb-page-mind-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lb-page-mind-glow {
+        position: absolute;
+        width: 16rem;
+        height: 14rem;
+        background-color: rgba(120, 53, 89, 0.1);
+        border-radius: 50%;
+        filter: blur(64px);
+        animation: lb-pulse-slow 6s ease-in-out infinite;
+    }
+
+    .lb-page-mind-sphere-wrap {
+        position: relative;
+        width: 18rem;
+        height: 18rem;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .lb-page-mind-ping {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 4px;
+        height: 4px;
+        background-color: #c084fc;
+        border-radius: 9999px;
+        box-shadow: 0 0 10px #a855f7;
+        animation: lb-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .lb-page-mind-svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        opacity: 0.8;
+    }
+
+    .lb-page-mind-idea {
+        position: absolute;
+        background-color: #e9d5ff;
+        border-radius: 9999px;
+        animation: lb-float-idea 5s ease-in-out infinite;
+    }
+
+    .lb-page-mind-idea.idea-1 {
+        top: 2.5rem;
+        left: 5rem;
+        width: 4px;
+        height: 4px;
+        --tx: 20px;
+        --ty: -30px;
+    }
+
+    .lb-page-mind-idea.idea-2 {
+        bottom: 5rem;
+        right: 2.5rem;
+        width: 6px;
+        height: 6px;
+        animation-delay: 2s;
+        background-color: #d8b4fe;
+        --tx: -15px;
+        --ty: -40px;
+    }
+
+    .lb-page-mind-idea.idea-3 {
+        top: 5rem;
+        right: 5rem;
+        width: 4px;
+        height: 4px;
+        animation-delay: 4s;
+        background-color: #ffffff;
+        --tx: 10px;
+        --ty: -20px;
+    }
+
+    .animate-synapse-1 {
+        stroke-dasharray: 200;
+        animation: lb-synapse-flow 3s linear infinite;
+    }
+
+    .animate-synapse-2 {
+        stroke-dasharray: 200;
+        animation: lb-synapse-flow 4s linear infinite;
+    }
+
+    .animate-synapse-3 {
+        stroke-dasharray: 200;
+        animation: lb-synapse-flow 2.5s linear infinite;
+    }
+
+    .animate-flash {
+        animation: lb-flash 3s ease-out infinite;
+    }
+
+    @keyframes lb-synapse-flow {
+        0% {
+            stroke-dasharray: 0, 1000;
+            stroke-dashoffset: 0;
+            opacity: 0.2;
+        }
+        50% {
+            stroke-dasharray: 100, 1000;
+            stroke-dashoffset: -50;
+            opacity: 1;
+        }
+        100% {
+            stroke-dasharray: 0, 1000;
+            stroke-dashoffset: -200;
+            opacity: 0.2;
+        }
+    }
+
+    @keyframes lb-flash {
+        0%,
+        100% {
+            opacity: 0;
+            transform: scale(1);
+        }
+        5% {
+            opacity: 1;
+            transform: scale(1.5);
+        }
+        10% {
+            opacity: 0;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes lb-float-idea {
+        0% {
+            transform: translate(0, 0) scale(1);
+            opacity: 0;
+        }
+        20%,
+        80% {
+            opacity: 0.8;
+        }
+        100% {
+            transform: translate(var(--tx, 20px), var(--ty, -30px)) scale(0);
+            opacity: 0;
+        }
+    }
+
+    @keyframes lb-pulse-slow {
+        0%,
+        100% {
+            opacity: 0.3;
+            transform: scale(1);
+        }
+        50% {
+            opacity: 0.5;
+            transform: scale(1.1);
+        }
+    }
+
+    @keyframes lb-ping {
+        75%,
+        100% {
+            transform: scale(5);
+            opacity: 0;
+        }
+    }
+</style>
+
+<script>
+    import { calculateMindStats } from "../../../utils/libraryLogic";
+
+    const countEl = document.getElementById("mind-count");
+
+    document.addEventListener("update-life-stats", (e: any) => {
+        const { stats } = e.detail;
+        if (!countEl || !stats) return;
+
+        const { thoughts } = calculateMindStats(stats.daysAlive);
+        countEl.innerText = Math.floor(thoughts).toLocaleString();
+    });
+</script>
