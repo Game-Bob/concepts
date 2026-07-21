@@ -27,7 +27,7 @@ function cleanElementOklch(element: HTMLElement, props: string[]) {
             } else if (prop === "backgroundColor") {
                 element.style.backgroundColor = "#0c0a09";
             } else {
-                const styleObj = element.style as Record<string, string>;
+                const styleObj = element.style as unknown as Record<string, string>;
                 styleObj[prop] = getSafeColorValue(prop);
             }
         }

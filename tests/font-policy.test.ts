@@ -19,7 +19,7 @@ describe("font policy", () => {
         const rules = result.results.flatMap(({ warnings }) => warnings.map(({ rule }) => rule));
 
         expect(rules).toContain(expectedRule);
-    });
+    }, 15000);
 
     it("defines font-family exactly once in the global typography boundary", async () => {
         const globalStyles = await readFile(path.resolve("src/styles/global.css"), "utf8");

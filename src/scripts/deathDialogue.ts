@@ -5,7 +5,10 @@ function revealUnitSequentially(
     container: Element
 ) {
     if (i < units.length) {
-        units[i].classList.remove("dd-hidden");
+        const unit = units[i];
+        if (unit) {
+            unit.classList.remove("dd-hidden");
+        }
         setTimeout(() => revealUnitSequentially(units, i + 1, speed, container), speed);
     } else {
         const event = new CustomEvent("dialogue-complete", {

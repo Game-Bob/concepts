@@ -56,7 +56,7 @@ function setupSpineState(el: Element, isActive: boolean) {
     }
 }
 
-function findClosestYearItem(yearSlider: HTMLElement, yearItems: NodeListOf<Element>) {
+function findClosestYearItem(yearSlider: HTMLElement, yearItems: NodeListOf<Element>): HTMLElement | null {
     const sliderRect = yearSlider.getBoundingClientRect();
     const center = sliderRect.left + sliderRect.width / 2;
     let closestItem: HTMLElement | null = null;

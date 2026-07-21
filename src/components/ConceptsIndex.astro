@@ -71,34 +71,10 @@ const concepts = CONCEPTS.map((concept) => ({
             {
                 concepts.map((concept, index) => (
                     <li>
-                        {concept.id === "waiting" && (
-                            <WaitingCard
-                                href={concept.href}
-                                locale={getConceptLocale("waiting", language)}
-                                number={String(index + 1).padStart(2, "0")}
-                            />
-                        )}
-                        {concept.id === "measurement" && (
-                            <MeasurementCard
-                                href={concept.href}
-                                locale={getConceptLocale("measurement", language)}
-                                number={String(index + 1).padStart(2, "0")}
-                            />
-                        )}
-                        {concept.id === "boredom" && (
-                            <BoredomCard
-                                href={concept.href}
-                                locale={getConceptLocale("boredom", language)}
-                                number={String(index + 1).padStart(2, "0")}
-                            />
-                        )}
-                        {concept.id === "library" && (
-                            <LibraryCard
-                                href={concept.href}
-                                locale={getConceptLocale("library", language)}
-                                number={String(index + 1).padStart(2, "0")}
-                            />
-                        )}
+                        {concept.id === "waiting" && <WaitingCard href={concept.href} locale={getConceptLocale("waiting", language)} number={String(index + 1).padStart(2, "0")} />}
+                        {concept.id === "measurement" && <MeasurementCard href={concept.href} locale={getConceptLocale("measurement", language)} number={String(index + 1).padStart(2, "0")} />}
+                        {concept.id === "boredom" && <BoredomCard href={concept.href} locale={getConceptLocale("boredom", language)} number={String(index + 1).padStart(2, "0")} />}
+                        {concept.id === "library" && <LibraryCard href={concept.href} locale={getConceptLocale("library", language)} number={String(index + 1).padStart(2, "0")} />}
                     </li>
                 ))
             }
