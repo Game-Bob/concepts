@@ -1,0 +1,89 @@
+---
+import type { Language } from "../i18n/languages";
+import type { WheatLocaleData } from "../concepts/wheat/types";
+import TrigoCalorieFarmer from "./wheat/TrigoCalorieFarmer.astro";
+import TrigoCalorieHunter from "./wheat/TrigoCalorieHunter.astro";
+import TrigoDeepTime from "./wheat/TrigoDeepTime.astro";
+import TrigoDocumentation from "./wheat/TrigoDocumentation.astro";
+import TrigoEpilogue from "./wheat/TrigoEpilogue.astro";
+import TrigoFuture from "./wheat/TrigoFuture.astro";
+import TrigoGrindingRoutine from "./wheat/TrigoGrindingRoutine.astro";
+import TrigoHeader from "./wheat/TrigoHeader.astro";
+import TrigoModernMap from "./wheat/TrigoModernMap.astro";
+import TrigoPopulationGraph from "./wheat/TrigoPopulationGraph.astro";
+import TrigoPositiveBeer from "./wheat/TrigoPositiveBeer.astro";
+import TrigoPositiveCity from "./wheat/TrigoPositiveCity.astro";
+import TrigoPositiveDocumentation from "./wheat/TrigoPositiveDocumentation.astro";
+import TrigoPositiveExpansion from "./wheat/TrigoPositiveExpansion.astro";
+import TrigoPositiveKnowledge from "./wheat/TrigoPositiveKnowledge.astro";
+import TrigoPositiveLaw from "./wheat/TrigoPositiveLaw.astro";
+import TrigoPositiveSecurity from "./wheat/TrigoPositiveSecurity.astro";
+import TrigoPositiveSpecialization from "./wheat/TrigoPositiveSpecialization.astro";
+import TrigoPositiveTrade from "./wheat/TrigoPositiveTrade.astro";
+import TrigoPositiveWriting from "./wheat/TrigoPositiveWriting.astro";
+import TrigoRachis from "./wheat/TrigoRachis.astro";
+import TrigoSkeletonCompare from "./wheat/TrigoSkeletonCompare.astro";
+import TrigoSocialContract from "./wheat/TrigoSocialContract.astro";
+import TrigoSurplus from "./wheat/TrigoSurplus.astro";
+import TrigoTableOfContents from "./wheat/TrigoTableOfContents.astro";
+import TrigoTeamChoice from "./wheat/TrigoTeamChoice.astro";
+import TrigoTrap from "./wheat/TrigoTrap.astro";
+import TrigoWorkHoursChart from "./wheat/TrigoWorkHoursChart.astro";
+import "../styles/wheat-experience.css";
+
+interface Props {
+    language: Language;
+    locale: WheatLocaleData;
+}
+
+const { language, locale } = Astro.props;
+const { texts } = locale;
+---
+
+<div class="wheat-experience" data-wheat-experience data-language={language}>
+    <TrigoTableOfContents texts={texts.tableOfContents} />
+    <main class="trigo-main">
+        <TrigoPositiveDocumentation texts={texts.positiveDocumentation} />
+        <TrigoTeamChoice id="dilema-luz" texts={texts.choice} />
+        <TrigoPositiveExpansion texts={texts.positiveExpansion} />
+        <TrigoPositiveKnowledge texts={texts.positiveKnowledge} />
+        <TrigoPositiveSpecialization texts={texts.positiveSpecialization} common={texts.common} />
+        <TrigoPositiveLaw texts={texts.positiveLaw} common={texts.common} />
+        <TrigoPositiveBeer texts={texts.positiveBeer} common={texts.common} />
+        <TrigoPositiveTrade texts={texts.positiveTrade} />
+        <TrigoPositiveWriting texts={texts.positiveWriting} common={texts.common} />
+        <TrigoPositiveCity texts={texts.positiveCity} common={texts.common} />
+        <TrigoPositiveSecurity texts={texts.positiveSecurity} common={texts.common} />
+        <TrigoHeader texts={texts.header} />
+        <TrigoDeepTime texts={texts.deepTime} common={texts.common} />
+        <TrigoRachis texts={texts.rachis} common={texts.common} />
+        <TrigoTrap texts={texts.trap} common={texts.common} />
+        <TrigoGrindingRoutine texts={texts.grinding} />
+        <TrigoSkeletonCompare texts={texts.skeleton} common={texts.common} />
+        <TrigoCalorieHunter texts={texts.calorieHunter} />
+        <TrigoCalorieFarmer texts={texts.calorieFarmer} />
+        <TrigoSurplus texts={texts.surplus} common={texts.common} />
+        <TrigoSocialContract texts={texts.socialContract} common={texts.common} />
+        <TrigoPopulationGraph texts={texts.population} common={texts.common} />
+        <TrigoWorkHoursChart texts={texts.workHours} common={texts.common} />
+        <TrigoModernMap texts={texts.modernMap} />
+        <TrigoFuture texts={texts.future} />
+        <TrigoEpilogue texts={texts.epilogue} />
+        <TrigoDocumentation texts={texts.documentation} />
+        <TrigoTeamChoice id="dilema-sombra" texts={texts.choice} />
+    </main>
+    <div class="trigo-splash" data-wheat-splash aria-hidden="true">
+        <div class="trigo-splash-content">
+            <span class="trigo-splash-sun"></span>
+            <p>{texts.header.title}</p>
+            <span class="trigo-splash-dots"><i></i><i></i><i></i></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    import { initializeWheatExperience } from "../concepts/wheat/runtime";
+
+    const cleanup = initializeWheatExperience();
+    document.addEventListener("astro:before-swap", cleanup, { once: true });
+</script>

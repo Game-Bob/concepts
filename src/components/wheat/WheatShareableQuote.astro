@@ -1,0 +1,116 @@
+---
+interface Props {
+    quote: string;
+    shareLabel: string;
+    className?: string;
+}
+
+const { quote, shareLabel, className = "" } = Astro.props;
+---
+
+<button
+    type="button"
+    class={`shareable-quote ${className}`}
+    data-share-btn
+    data-share-text={`${quote} #HistoriaDelTrigo`}
+    aria-label={shareLabel}
+>
+    <span class="shareable-quote-text">{quote}</span>
+    <span class="shareable-quote-tooltip" aria-hidden="true">
+        <span class="shareable-quote-badge">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z"
+                ></path>
+            </svg>
+            {shareLabel}
+        </span>
+        <span class="shareable-quote-arrow"></span>
+    </span>
+</button>
+
+<style>
+    .shareable-quote {
+        position: relative;
+        display: inline-block;
+        margin: 0 -0.25rem;
+        padding: 0 0.25rem;
+        border: 0;
+        border-radius: 0.25rem;
+        background: transparent;
+        color: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        text-align: inherit;
+        cursor: pointer;
+    }
+
+    .shareable-quote-text {
+        text-decoration: underline;
+        text-decoration-color: rgb(245 158 11 / 0.5);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+        transition:
+            background-color 0.15s ease,
+            text-decoration-color 0.15s ease;
+    }
+
+    .shareable-quote:hover .shareable-quote-text,
+    .shareable-quote:focus-visible .shareable-quote-text {
+        background-color: rgb(245 158 11 / 0.1);
+        text-decoration-color: rgb(245 158 11);
+    }
+
+    .shareable-quote-tooltip {
+        position: absolute;
+        z-index: 50;
+        bottom: 100%;
+        left: 50%;
+        padding-bottom: 0.5rem;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateX(-50%);
+        transition: opacity 0.3s ease;
+        white-space: nowrap;
+    }
+
+    .shareable-quote:hover .shareable-quote-tooltip,
+    .shareable-quote:focus-visible .shareable-quote-tooltip {
+        opacity: 1;
+    }
+
+    .shareable-quote-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.375rem 0.75rem;
+        border: 1px solid var(--wheat-stone-800);
+        border-radius: 9999px;
+        background: #000;
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        color: var(--wheat-white);
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
+
+    .shareable-quote-badge svg {
+        width: 0.75rem;
+        height: 0.75rem;
+    }
+
+    .shareable-quote-arrow {
+        position: absolute;
+        bottom: 0.25rem;
+        left: 50%;
+        width: 0.5rem;
+        height: 0.5rem;
+        margin-left: -0.25rem;
+        border-right: 1px solid var(--wheat-stone-800);
+        border-bottom: 1px solid var(--wheat-stone-800);
+        background: #000;
+        transform: rotate(45deg);
+    }
+</style>

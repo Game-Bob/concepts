@@ -7,6 +7,7 @@ import LibraryCard from "./cards/LibraryCard.astro";
 import MeasurementCard from "./cards/MeasurementCard.astro";
 import NuanceCard from "./cards/NuanceCard.astro";
 import WaitingCard from "./cards/WaitingCard.astro";
+import WheatCard from "./cards/WheatCard.astro";
 
 interface Props {
     conceptId: ConceptId;
@@ -41,5 +42,10 @@ const { conceptId, href, language, number } = Astro.props;
 {
     conceptId === "library" && (
         <LibraryCard {href} locale={getConceptLocale("library", language)} {number} />
+    )
+}
+{
+    conceptId === "wheat" && (
+        <WheatCard {href} locale={getConceptLocale("wheat", language)} {number} />
     )
 }

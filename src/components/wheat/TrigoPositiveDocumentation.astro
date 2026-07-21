@@ -1,0 +1,114 @@
+---
+import type { WheatTexts } from "../../concepts/wheat/types";
+interface Props {
+    texts: WheatTexts["positiveDocumentation"];
+}
+const { texts } = Astro.props;
+---
+
+<section
+    id="positive-documentation"
+    class="wheat-relative wheat-font-mono wheat-pos-doc wheat-py-24"
+>
+    <div class="wheat-container wheat-container--narrow wheat-px-6 wheat-w-full">
+        <h3
+            class="wheat-text-xs wheat-uppercase wheat-tracking-widest wheat-pos-doc-header wheat-mb-12 wheat-pb-4"
+        >
+            {texts.title}
+        </h3><div class="wheat-pos-doc-list">
+            {
+                texts.references.map((reference, index) => (
+                    <>
+                        <div class="wheat-pos-doc-item">
+                            <>
+                                <div class="wheat-pos-doc-label wheat-uppercase wheat-tracking-widest">
+                                    {reference.category}
+                                </div>
+                                <div class="wheat-pos-doc-content">
+                                    <>
+                                        <p class:list={[!true && "wheat-mb-2"]}>
+                                            <strong class:list={[!true && "wheat-doc-author"]}>
+                                                {reference.authors}
+                                            </strong>{" "}
+                                            {reference.year} <em>{reference.title}</em>{" "}
+                                            {reference.publisher}
+                                        </p>
+                                        <p class:list={[!true && "wheat-opacity-60"]}>
+                                            {reference.description}
+                                        </p>
+                                    </>
+                                </div>
+                            </>
+                        </div>
+                        {index < texts.references.length - 1 && (
+                            <div class="wheat-pos-doc-divider" />
+                        )}
+                    </>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .wheat-pos-doc {
+        color: var(--wheat-stone-600);
+        border-bottom: 1px solid var(--wheat-stone-900);
+        min-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .wheat-pos-doc-header {
+        color: rgb(6 95 70 / 0.6);
+        border-bottom: 1px solid rgb(6 95 70 / 0.1);
+        font-size: 0.75rem;
+    }
+
+    .wheat-pos-doc-list > * + * {
+        margin-top: 2rem;
+    }
+
+    .wheat-pos-doc-item {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1rem;
+    }
+
+    .wheat-pos-doc-label {
+        color: rgb(6 95 70 / 0.8);
+    }
+
+    .wheat-pos-doc-content {
+        font-size: 0.875rem;
+        line-height: 1.625;
+    }
+
+    .wheat-pos-doc-content strong {
+        color: var(--wheat-stone-500);
+        font-weight: bold;
+    }
+
+    .wheat-pos-doc-content em {
+        font-style: italic;
+    }
+
+    .wheat-pos-doc-content p + p {
+        opacity: 0.6;
+        margin-top: 0.5rem;
+    }
+
+    .wheat-pos-doc-divider {
+        width: 100%;
+        height: 1px;
+        background-color: rgb(6 95 70 / 0.05);
+    }
+
+    @media (width >= 768px) {
+        .wheat-pos-doc-item {
+            grid-template-columns: 200px 1fr;
+            gap: 2rem;
+        }
+    }
+</style>

@@ -1,0 +1,99 @@
+---
+import type { WheatTexts } from "../../concepts/wheat/types";
+
+interface Props {
+    texts: WheatTexts["grinding"];
+}
+
+const { texts } = Astro.props;
+---
+
+<section
+    id="rutina"
+    class="wheat-relative wheat-font-serif wheat-min-h-screen wheat-flex wheat-items-center wheat-justify-center wheat-py-12 wheat-py-24@md wheat-overflow-hidden wheat-grinding"
+>
+    <div
+        class="wheat-absolute wheat-inset-0 wheat-opacity-10 wheat-pointer-events-none wheat-grinding-bg"
+    >
+        <div class="wheat-grinding-line"></div>
+        <div class="wheat-grinding-line"></div>
+        <div class="wheat-grinding-line"></div>
+        <div class="wheat-grinding-line"></div>
+        <div class="wheat-grinding-line"></div>
+        <div class="wheat-grinding-line"></div>
+        <div class="wheat-grinding-line"></div>
+        <div class="wheat-grinding-line"></div>
+    </div>
+
+    <div
+        class="wheat-container wheat-container--narrow wheat-text-center wheat-relative wheat-grinding-content"
+    >
+        <div class="wheat-space-y-6 wheat-space-y-8@md">
+            <span
+                class="trigo-chapter wheat-grinding-chapter wheat-text-xs wheat-text-sm@md wheat-tracking-widest wheat-uppercase"
+            >
+                {texts.chapter}
+            </span>
+            <h2 class="wheat-text-3xl wheat-text-4xl@md wheat-font-bold wheat-grinding-title">
+                {texts.title}
+            </h2>
+            <div
+                class="wheat-space-y-4 wheat-space-y-6@md wheat-text-base wheat-text-lg@md wheat-leading-relaxed wheat-grinding-desc wheat-max-w-2xl wheat-mx-auto"
+            >
+                <p>
+                    {texts.firstParagraph}
+                </p>
+                <p>
+                    {texts.secondParagraph}
+                </p>
+                <p>{texts.conclusion}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .wheat-grinding {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-grinding-bg {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .wheat-grinding-line {
+        width: 100%;
+        height: 1px;
+        background-color: rgb(120 53 4 / 0.5);
+    }
+
+    .wheat-grinding-content {
+        z-index: 10;
+    }
+
+    .wheat-grinding-chapter {
+        color: var(--wheat-stone-400);
+    }
+
+    .wheat-grinding-title {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-grinding-desc {
+        color: var(--wheat-stone-300);
+    }
+
+    @media (width >= 768px) {
+        .wheat-space-y-8\@md > * + * {
+            margin-top: 2rem;
+        }
+
+        .wheat-space-y-6\@md > * + * {
+            margin-top: 1.5rem;
+        }
+    }
+</style>

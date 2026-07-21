@@ -1,0 +1,90 @@
+---
+import type { WheatTexts } from "../../concepts/wheat/types";
+
+interface Props {
+    texts: WheatTexts["future"];
+}
+
+const { texts } = Astro.props;
+---
+
+<section
+    id="futuro"
+    class="wheat-relative wheat-font-serif wheat-min-h-screen wheat-flex wheat-items-center wheat-justify-center wheat-py-12 wheat-py-24@md wheat-future"
+>
+    <div class="wheat-container wheat-container--narrow wheat-text-center">
+        <span
+            class="trigo-chapter wheat-future-chapter wheat-text-xs wheat-text-sm@md wheat-tracking-widest wheat-uppercase wheat-block wheat-mb-4"
+        >
+            {texts.chapter}
+        </span>
+        <h2 class="wheat-text-3xl wheat-text-5xl@md wheat-font-bold wheat-mb-8 wheat-future-title">
+            {texts.title}
+        </h2>
+
+        <div class="wheat-grid wheat-grid--cols-2 wheat-gap-8 wheat-text-left wheat-mb-12">
+            <div class="wheat-p-6 wheat-rounded wheat-border wheat-future-card">
+                <h3
+                    class="wheat-text-xl wheat-font-bold wheat-future-card-title wheat-future-card-title--genetic wheat-mb-2"
+                >
+                    {texts.geneEditingTitle}
+                </h3>
+                <p class="wheat-future-card-desc wheat-leading-relaxed">
+                    {texts.geneEditingText}
+                </p>
+            </div>
+            <div class="wheat-p-6 wheat-rounded wheat-border wheat-future-card">
+                <h3
+                    class="wheat-text-xl wheat-font-bold wheat-future-card-title wheat-future-card-title--vertical wheat-mb-2"
+                >
+                    {texts.verticalFarmsTitle}
+                </h3>
+                <p class="wheat-future-card-desc wheat-leading-relaxed">
+                    {texts.verticalFarmsText}
+                </p>
+            </div>
+        </div>
+
+        <p
+            class="wheat-text-xl wheat-text-2xl@md wheat-leading-relaxed wheat-future-quote wheat-max-w-2xl wheat-mx-auto wheat-italic"
+        >
+            {texts.conclusion}
+        </p>
+    </div>
+</section>
+
+<style>
+    .wheat-future {
+        color: var(--wheat-stone-200);
+        border-top: 1px solid var(--wheat-stone-900);
+    }
+
+    .wheat-future-chapter {
+        color: rgb(217 119 6 / 0.6);
+    }
+
+    .wheat-future-title {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-future-card {
+        background-color: rgb(var(--wheat-stone-900-rgb) / 0.5);
+        border-color: var(--wheat-stone-900);
+    }
+
+    .wheat-future-card-title--genetic {
+        color: var(--wheat-emerald-500);
+    }
+
+    .wheat-future-card-title--vertical {
+        color: var(--color-accent);
+    }
+
+    .wheat-future-card-desc {
+        color: var(--wheat-stone-400);
+    }
+
+    .wheat-future-quote {
+        color: var(--wheat-stone-300);
+    }
+</style>

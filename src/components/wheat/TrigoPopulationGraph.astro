@@ -1,0 +1,139 @@
+---
+import type { WheatTexts } from "../../concepts/wheat/types";
+
+interface Props {
+    texts: WheatTexts["population"];
+    common: WheatTexts["common"];
+}
+
+const { texts, common } = Astro.props;
+---
+
+<section
+    id="demografia"
+    class="wheat-relative wheat-font-serif wheat-min-h-screen wheat-flex wheat-items-center wheat-justify-center wheat-py-12 wheat-py-24@md wheat-overflow-hidden wheat-demografia"
+>
+    <div class="wheat-container wheat-container--wide wheat-px-6 wheat-w-full">
+        <div class="wheat-text-center wheat-mb-12">
+            <span
+                class="trigo-chapter wheat-demo-chapter wheat-text-xs wheat-text-sm@md wheat-tracking-widest wheat-uppercase wheat-block wheat-mb-4"
+            >
+                {texts.chapter}
+            </span>
+            <h2
+                class="wheat-text-3xl wheat-text-5xl@md wheat-font-bold wheat-mb-6 wheat-demo-title"
+            >
+                {texts.title}
+            </h2>
+            <p class="wheat-demo-desc wheat-max-w-2xl wheat-mx-auto">
+                {texts.description}
+            </p>
+        </div>
+
+        <div
+            class="wheat-relative wheat-w-full wheat-demo-chart-container wheat-p-4 wheat-p-8@md wheat-rounded-lg"
+        >
+            <canvas
+                id="populationChart"
+                data-wheat-population-chart
+                data-chart-label={texts.chartLabel}
+                data-chart-dates={JSON.stringify(texts.chartDates)}
+                data-millions-suffix={common.millionsSuffix}></canvas>
+        </div>
+
+        <div class="wheat-grid wheat-grid--cols-3 wheat-demo-stats-grid wheat-mt-12">
+            <div
+                class="wheat-text-center wheat-p-6 wheat-demo-stat-card wheat-rounded wheat-border"
+            >
+                <div class="wheat-text-3xl wheat-font-bold wheat-demo-stat-val wheat-mb-2">
+                    {texts.paleolithic.value}
+                </div>
+                <div
+                    class="wheat-text-xs wheat-text-sm@md wheat-demo-stat-label wheat-uppercase wheat-tracking-widest"
+                >
+                    {texts.paleolithic.label}
+                </div>
+            </div>
+            <div
+                class="wheat-text-center wheat-p-6 wheat-demo-stat-card wheat-rounded wheat-border"
+            >
+                <div class="wheat-text-3xl wheat-font-bold wheat-demo-stat-val wheat-mb-2">
+                    {texts.romanEmpire.value}
+                </div>
+                <div
+                    class="wheat-text-xs wheat-text-sm@md wheat-demo-stat-label wheat-uppercase wheat-tracking-widest"
+                >
+                    {texts.romanEmpire.label}
+                </div>
+            </div>
+            <div
+                class="wheat-text-center wheat-p-6 wheat-demo-stat-card wheat-rounded wheat-border"
+            >
+                <div class="wheat-text-3xl wheat-font-bold wheat-demo-stat-val wheat-mb-2">
+                    {texts.present.value}
+                </div>
+                <div
+                    class="wheat-text-xs wheat-text-sm@md wheat-demo-stat-label wheat-uppercase wheat-tracking-widest"
+                >
+                    {texts.present.label}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .wheat-demografia {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-demo-chapter {
+        color: rgb(217 119 6 / 0.6);
+    }
+
+    .wheat-demo-title {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-demo-desc {
+        color: var(--wheat-stone-400);
+    }
+
+    .wheat-demo-chart-container {
+        height: 400px;
+        background-color: var(--wheat-stone-900);
+        border: 1px solid rgb(146 64 14 / 0.2);
+        box-sizing: border-box;
+    }
+
+    .wheat-demo-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 2rem;
+        width: 100%;
+    }
+
+    .wheat-demo-stat-card {
+        background-color: var(--wheat-stone-900);
+        border-color: rgb(146 64 14 / 0.1);
+    }
+
+    .wheat-demo-stat-val {
+        color: var(--wheat-amber-500);
+    }
+
+    .wheat-demo-stat-label {
+        color: var(--wheat-stone-400);
+    }
+
+    @media (width >= 768px) {
+        .wheat-demo-chart-container {
+            height: 500px;
+            padding: 2rem;
+        }
+
+        .wheat-demo-stats-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+</style>

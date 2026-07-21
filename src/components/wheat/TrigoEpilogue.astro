@@ -1,0 +1,58 @@
+---
+import type { WheatTexts } from "../../concepts/wheat/types";
+
+interface Props {
+    texts: WheatTexts["epilogue"];
+}
+
+const { texts } = Astro.props;
+---
+
+<section
+    id="epilogo"
+    class="wheat-relative wheat-font-serif wheat-py-12 wheat-py-24@md wheat-flex wheat-items-center wheat-justify-center wheat-min-h-screen wheat-epilogue"
+>
+    <div class="wheat-container wheat-container--narrow">
+        <div
+            class="wheat-epilogue-card wheat-p-8 wheat-p-12@md wheat-rounded-lg wheat-border wheat-text-center"
+        >
+            <span
+                class="trigo-chapter wheat-epilogue-chapter wheat-text-xs wheat-text-sm@md wheat-tracking-widest wheat-uppercase wheat-block wheat-mb-4"
+            >
+                {texts.chapter}
+            </span>
+
+            <p
+                class="wheat-text-lg wheat-text-xl@md wheat-leading-relaxed wheat-epilogue-text wheat-italic"
+            >
+                {texts.text}
+            </p>
+        </div>
+    </div>
+</section>
+
+<style>
+    .wheat-epilogue {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-epilogue-card {
+        background: linear-gradient(to bottom, var(--wheat-stone-900), var(--wheat-stone-950));
+        border-color: rgb(146 64 14 / 0.2);
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    }
+
+    .wheat-epilogue-chapter {
+        color: rgb(217 119 6 / 0.6);
+    }
+
+    .wheat-epilogue-text {
+        color: var(--wheat-stone-300);
+    }
+
+    @media (width >= 768px) {
+        .wheat-p-12\@md {
+            padding: 3rem;
+        }
+    }
+</style>

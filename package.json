@@ -26,6 +26,7 @@
         "@jjlmoya/identity": "file:../identity",
         "astro": "7.1.1",
         "astro-icon": "1.1.5",
+        "chart.js": "^4.5.1",
         "html2canvas": "^1.4.1"
     },
     "devDependencies": {

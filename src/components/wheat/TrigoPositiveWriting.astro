@@ -1,0 +1,131 @@
+---
+import ShareableQuote from "./WheatShareableQuote.astro";
+
+import type { WheatTexts } from "../../concepts/wheat/types";
+
+interface Props {
+    texts: WheatTexts["positiveWriting"];
+    common: WheatTexts["common"];
+}
+
+const { texts, common } = Astro.props;
+---
+
+<section
+    id="positive-writing"
+    class="wheat-relative wheat-font-serif wheat-min-h-screen wheat-flex wheat-items-center wheat-justify-center wheat-py-12 wheat-py-24@md wheat-pos-writing"
+>
+    <div
+        class="wheat-container wheat-container--wide wheat-px-6 wheat-grid wheat-grid--cols-2 wheat-items-center wheat-gap-16"
+    >
+        <div
+            class="wheat-relative wheat-pos-writing-visual wheat-rounded-lg wheat-border wheat-p-8 wheat-flex wheat-items-center wheat-justify-center"
+        >
+            <div class="wheat-absolute wheat-inset-0 wheat-overflow-hidden wheat-opacity-30">
+                <div
+                    class="wheat-absolute wheat-pos-writing-matrix wheat-font-mono wheat-pointer-events-none select-none"
+                >
+                    {texts.binary}
+                </div>
+            </div>
+
+            <div class="wheat-relative wheat-pos-writing-glyph-wrapper wheat-text-center">
+                <div
+                    class="wheat-text-6xl wheat-text-8xl@md wheat-font-bold wheat-pos-writing-glyph wheat-mb-4"
+                >
+                    {texts.symbol}
+                </div>
+                <div class="wheat-text-xs wheat-pos-writing-glyph-sub wheat-uppercase">
+                    {texts.symbolCaption}
+                </div>
+            </div>
+        </div>
+
+        <div class="wheat-pos-writing-content wheat-space-y-8">
+            <span
+                class="wheat-text-xs wheat-text-sm@md wheat-tracking-widest wheat-uppercase wheat-block trigo-positive-chapter"
+            >
+                {texts.chapter}
+            </span>
+            <h2 class="wheat-text-3xl wheat-text-5xl@md wheat-font-bold wheat-pos-writing-title">
+                {texts.title}
+            </h2>
+            <p class="wheat-text-lg wheat-pos-writing-desc-primary wheat-leading-relaxed">
+                <ShareableQuote quote={texts.quote} shareLabel={common.shareIdea} />
+            </p>
+            <p class="wheat-text-base wheat-pos-writing-desc-secondary wheat-leading-relaxed">
+                {texts.firstParagraph}
+                <strong class="wheat-font-bold wheat-pos-writing-strong">{texts.historyWord}</strong
+                >.
+            </p>
+            <p class="wheat-text-base wheat-pos-writing-desc-secondary wheat-leading-relaxed">
+                {texts.secondParagraph}
+            </p>
+        </div>
+    </div>
+</section>
+
+<style>
+    .wheat-pos-writing {
+        color: var(--wheat-stone-200);
+        border-bottom: 1px solid rgb(var(--wheat-emerald-500-rgb) / 0.1);
+    }
+
+    .wheat-pos-writing-visual {
+        height: 50vh;
+        background-color: var(--wheat-stone-950);
+        border-color: rgb(var(--wheat-emerald-500-rgb) / 0.2);
+    }
+
+    .wheat-pos-writing-matrix {
+        top: 0;
+        left: 0;
+        font-size: 10px;
+        color: var(--wheat-emerald-800);
+        line-height: 1;
+        white-space: pre;
+    }
+
+    .wheat-pos-writing-glyph-wrapper {
+        z-index: 10;
+    }
+
+    .wheat-pos-writing-glyph {
+        color: var(--wheat-emerald-500);
+    }
+
+    .wheat-pos-writing-glyph-sub {
+        color: rgb(var(--wheat-emerald-500-rgb) / 0.6);
+        letter-spacing: 0.5em;
+    }
+
+    .wheat-pos-writing-title {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-pos-writing-desc-primary {
+        color: var(--wheat-stone-300);
+    }
+
+    .wheat-pos-writing-desc-secondary {
+        color: var(--wheat-stone-400);
+    }
+
+    .wheat-pos-writing-strong {
+        color: var(--wheat-stone-200);
+    }
+
+    @media (width >= 768px) {
+        .wheat-pos-writing-content {
+            order: 2;
+        }
+
+        .wheat-pos-writing-visual {
+            order: 1;
+        }
+
+        .wheat-space-y-8 > * + * {
+            margin-top: 2rem;
+        }
+    }
+</style>

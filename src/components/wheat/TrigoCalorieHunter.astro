@@ -1,0 +1,142 @@
+---
+import type { WheatTexts } from "../../concepts/wheat/types";
+
+interface Props {
+    texts: WheatTexts["calorieHunter"];
+}
+
+const { texts } = Astro.props;
+---
+
+<section
+    id="calorias-cazador"
+    class="wheat-relative wheat-font-serif wheat-min-h-screen wheat-flex wheat-items-center wheat-justify-center wheat-py-12 wheat-py-24@md wheat-calorie-hunter"
+>
+    <div class="wheat-container wheat-container--narrow">
+        <div class="wheat-text-center wheat-mb-16">
+            <span
+                class="trigo-chapter wheat-calorie-chapter wheat-text-xs wheat-text-sm@md wheat-tracking-widest wheat-uppercase wheat-block wheat-mb-4"
+            >
+                {texts.chapter}
+            </span>
+            <h2
+                class="wheat-text-3xl wheat-text-5xl@md wheat-font-bold wheat-mb-6 wheat-calorie-title"
+            >
+                {texts.title}
+            </h2>
+            <p class="wheat-calorie-desc wheat-max-w-2xl wheat-mx-auto">
+                {texts.introduction}
+            </p>
+        </div>
+
+        <div class="wheat-calorie-card wheat-p-8 wheat-rounded-lg wheat-mx-auto">
+            <div class="wheat-space-y-4">
+                <h3 class="wheat-text-xl wheat-font-bold wheat-calorie-card-title">
+                    {texts.figureTitle}
+                </h3>
+                <div class="wheat-space-y-6">
+                    <div>
+                        <div class="wheat-flex wheat-justify-between wheat-text-sm wheat-mb-1">
+                            <span class="wheat-calorie-label">{texts.workLabel}</span>
+                            <span class="wheat-font-bold wheat-calorie-val">{texts.workValue}</span>
+                        </div>
+                        <div class="wheat-w-full wheat-calorie-bar-bg wheat-rounded-full">
+                            <div class="wheat-calorie-bar-fill wheat-calorie-bar-fill--hunter-work">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="wheat-flex wheat-justify-between wheat-text-sm wheat-mb-1">
+                            <span class="wheat-calorie-label">{texts.nutritionLabel}</span>
+                            <span class="wheat-font-bold wheat-calorie-val"
+                                >{texts.nutritionValue}</span
+                            >
+                        </div>
+                        <div class="wheat-w-full wheat-calorie-bar-bg wheat-rounded-full">
+                            <div class="wheat-calorie-bar-fill wheat-calorie-bar-fill--hunter-nut">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="wheat-flex wheat-justify-between wheat-text-sm wheat-mb-1">
+                            <span class="wheat-calorie-label">{texts.densityLabel}</span>
+                            <span class="wheat-font-bold wheat-calorie-val"
+                                >{texts.densityValue}</span
+                            >
+                        </div>
+                        <div class="wheat-w-full wheat-calorie-bar-bg wheat-rounded-full">
+                            <div class="wheat-calorie-bar-fill wheat-calorie-bar-fill--hunter-pop">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .wheat-calorie-hunter {
+        color: var(--wheat-stone-200);
+        border-top: 1px solid rgb(120 53 4 / 0.1);
+    }
+
+    .wheat-calorie-chapter {
+        color: rgb(217 119 6 / 0.6);
+    }
+
+    .wheat-calorie-title {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-calorie-desc {
+        color: var(--wheat-stone-400);
+    }
+
+    .wheat-calorie-card {
+        background-color: var(--wheat-stone-950);
+        border: 1px solid rgb(120 53 4 / 0.1);
+        max-width: 42rem;
+    }
+
+    .wheat-calorie-card-title {
+        color: rgb(34 197 94 / 0.8);
+    }
+
+    .wheat-calorie-label {
+        color: var(--wheat-stone-400);
+    }
+
+    .wheat-calorie-val {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-calorie-bar-bg {
+        background-color: var(--wheat-stone-800);
+        height: 0.5rem;
+        overflow: hidden;
+    }
+
+    .wheat-calorie-bar-fill {
+        background-color: rgb(34 197 94 / 0.5);
+        height: 100%;
+    }
+
+    .wheat-calorie-bar-fill--hunter-work {
+        width: 30%;
+    }
+
+    .wheat-calorie-bar-fill--hunter-nut {
+        width: 90%;
+    }
+
+    .wheat-calorie-bar-fill--hunter-pop {
+        width: 5%;
+    }
+
+    @media (width >= 768px) {
+        .wheat-space-y-6 > * + * {
+            margin-top: 1.5rem;
+        }
+    }
+</style>
