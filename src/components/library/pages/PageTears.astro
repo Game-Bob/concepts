@@ -47,7 +47,7 @@ const { side, texts } = Astro.props;
         right: 0;
         bottom: 0;
         height: 33.333%;
-        background-color: rgba(30, 58, 138, 0.2);
+        background-color: rgb(30 58 138 / 0.2);
         filter: blur(24px);
         animation: lb-pulse 2s infinite;
     }
@@ -58,9 +58,9 @@ const { side, texts } = Astro.props;
     }
 
     .lb-page-tears-svg {
-        color: rgba(191, 219, 254, 0.4);
-        fill: currentColor;
-        filter: drop-shadow(0 0 10px rgba(191, 219, 254, 0.3));
+        color: rgb(191 219 254 / 0.4);
+        fill: var(--library-current-color);
+        filter: drop-shadow(0 0 10px rgb(191 219 254 / 0.3));
     }
 
     .lb-page-tears-ripple {
@@ -68,7 +68,7 @@ const { side, texts } = Astro.props;
         bottom: 25%;
         width: 8rem;
         height: 2rem;
-        border: 1px solid rgba(191, 219, 254, 0.2);
+        border: 1px solid rgb(191 219 254 / 0.2);
         border-radius: 9999px;
         animation: lb-ripple 3s infinite ease-out;
         animation-delay: 2.4s;
@@ -76,7 +76,7 @@ const { side, texts } = Astro.props;
     }
 
     .lb-page-tears-ripple.ripple-2 {
-        border-color: rgba(191, 219, 254, 0.1);
+        border-color: rgb(191 219 254 / 0.1);
         animation-delay: 2.9s;
     }
 
@@ -89,13 +89,16 @@ const { side, texts } = Astro.props;
             transform: translateY(0) scale(1);
             opacity: 0;
         }
+
         20% {
             opacity: 1;
         }
+
         80% {
             transform: translateY(200px) scale(0.9);
             opacity: 1;
         }
+
         95%,
         100% {
             transform: translateY(220px) scale(1.2, 0.5);
@@ -108,6 +111,7 @@ const { side, texts } = Astro.props;
             transform: scale(0.1);
             opacity: 1;
         }
+
         100% {
             transform: scale(2);
             opacity: 0;
@@ -119,6 +123,7 @@ const { side, texts } = Astro.props;
         100% {
             opacity: 1;
         }
+
         50% {
             opacity: 0.5;
         }
@@ -126,12 +131,12 @@ const { side, texts } = Astro.props;
 </style>
 
 <script>
-    import { calculateTearsStats } from "../../../utils/libraryLogic";
+    import { calculateTearsStats, getLifeStatsUpdate } from "../../../utils/libraryLogic";
 
     const countEl = document.getElementById("tears-count");
 
-    document.addEventListener("update-life-stats", (e: any) => {
-        const { stats } = e.detail;
+    document.addEventListener("update-life-stats", (event) => {
+        const { stats } = getLifeStatsUpdate(event);
         if (!countEl || !stats) return;
 
         const { litersTears } = calculateTearsStats(stats.daysAlive);

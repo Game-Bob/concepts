@@ -2,7 +2,7 @@
 import Header from "@jjlmoya/identity/header";
 import LanguageSheet from "@jjlmoya/identity/language-sheet";
 import LanguageTrigger from "@jjlmoya/identity/language-trigger";
-import { getConceptLocale, type ConceptId } from "../concepts/registry";
+import { getConcept, getConceptLocale, type ConceptId } from "../concepts/registry";
 import { BRANDS, getBrand } from "../identity/brands";
 import { LANGUAGE_UI } from "../i18n/language-ui";
 import { HEADER_UI } from "../i18n/header-ui";
@@ -14,6 +14,7 @@ import WaitingExperience from "./WaitingExperience.astro";
 import MeasurementExperience from "./MeasurementExperience.astro";
 import BoredomExperience from "./BoredomExperience.astro";
 import LibraryExperience from "./LibraryExperience.astro";
+import NuanceExperience from "./NuanceExperience.astro";
 import SiteFooter from "./SiteFooter.astro";
 
 interface Props {
@@ -22,6 +23,10 @@ interface Props {
 }
 const { language, conceptId } = Astro.props;
 const locale = getConceptLocale(conceptId, language);
+const concept = getConcept(conceptId);
+const socialImageProps = "socialImage" in concept ? { image: concept.socialImage } : {};
+const description =
+    "useDetailedDescription" in concept ? locale.description : locale.cardDescription;
 const brand = getBrand(language);
 const homeUrl =
     language === "es" ? "https://www.jjlmoya.es/" : `https://www.gamebob.dev/${language}/`;
@@ -39,9 +44,10 @@ const languageLinks = LANGUAGES.map(({ code, name }) => ({
     language={language}
     brand={brand}
     title={`${locale.title} - ${BRANDS[brand].name}`}
-    description={locale.cardDescription}
+    {description}
     canonical={getConceptUrl(conceptId, language)}
     alternates={getConceptAlternateLinks(conceptId)}
+    {...socialImageProps}
 >
     <Header
         class="concepts-site-header"
@@ -54,6 +60,11 @@ const languageLinks = LANGUAGES.map(({ code, name }) => ({
         <LanguageTrigger slot="mobile-actions" label={languageUi.change} />
     </Header>
     <LanguageSheet links={languageLinks} title={languageUi.select} closeLabel={languageUi.close} />
+    {
+        conceptId === "nuance" && (
+            <NuanceExperience locale={getConceptLocale("nuance", language)} indexUrl="../" />
+        )
+    }
     {
         conceptId === "waiting" && (
             <WaitingExperience locale={getConceptLocale("waiting", language)} indexUrl="../" />

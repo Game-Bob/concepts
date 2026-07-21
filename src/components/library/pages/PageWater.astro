@@ -74,7 +74,7 @@ const { side, texts } = Astro.props;
     .lb-page-water-glow {
         position: absolute;
         inset: 0;
-        background-color: rgba(59, 130, 246, 0.05);
+        background-color: rgb(59 130 246 / 0.05);
         filter: blur(48px);
         border-radius: 9999px;
     }
@@ -82,13 +82,13 @@ const { side, texts } = Astro.props;
     .lb-page-water-glass {
         width: 10rem;
         height: 14rem;
-        border-left: 4px solid rgba(231, 229, 228, 0.2);
-        border-right: 4px solid rgba(231, 229, 228, 0.2);
-        border-bottom: 8px solid rgba(231, 229, 228, 0.3);
+        border-left: 4px solid rgb(231 229 228 / 0.2);
+        border-right: 4px solid rgb(231 229 228 / 0.2);
+        border-bottom: 8px solid rgb(231 229 228 / 0.3);
         border-radius: 0 0 1rem 1rem;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
     }
 
     .lb-page-water-glass-shine-l {
@@ -97,7 +97,7 @@ const { side, texts } = Astro.props;
         bottom: 0;
         left: 0.75rem;
         width: 4px;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgb(255 255 255 / 0.1);
         border-radius: 9999px;
     }
 
@@ -107,7 +107,7 @@ const { side, texts } = Astro.props;
         bottom: 0;
         right: 0.75rem;
         width: 8px;
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: rgb(255 255 255 / 0.05);
         border-radius: 9999px;
     }
 
@@ -117,7 +117,7 @@ const { side, texts } = Astro.props;
         left: 0;
         right: 0;
         height: 70%;
-        background-color: rgba(59, 130, 246, 0.2);
+        background-color: rgb(59 130 246 / 0.2);
     }
 
     .lb-page-water-wave-1,
@@ -126,7 +126,7 @@ const { side, texts } = Astro.props;
         top: -1.5rem;
         width: 200%;
         height: 3rem;
-        background-color: rgba(59, 130, 246, 0.2);
+        background-color: rgb(59 130 246 / 0.2);
         border-radius: 40%;
     }
 
@@ -137,7 +137,7 @@ const { side, texts } = Astro.props;
 
     .lb-page-water-wave-2 {
         left: -30%;
-        background-color: rgba(59, 130, 246, 0.15);
+        background-color: rgb(59 130 246 / 0.15);
         border-radius: 35%;
         animation: lb-wave-2 10s linear infinite;
     }
@@ -149,7 +149,7 @@ const { side, texts } = Astro.props;
 
     .lb-page-water-bubble {
         position: absolute;
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: rgb(255 255 255 / 0.3);
         border-radius: 9999px;
         bottom: -10px;
     }
@@ -160,6 +160,7 @@ const { side, texts } = Astro.props;
         left: 20%;
         animation: lb-bubble 4s infinite;
     }
+
     .lb-page-water-bubble.bubble-2 {
         width: 10px;
         height: 10px;
@@ -167,6 +168,7 @@ const { side, texts } = Astro.props;
         animation: lb-bubble 6s infinite;
         animation-delay: 1s;
     }
+
     .lb-page-water-bubble.bubble-3 {
         width: 4px;
         height: 4px;
@@ -174,6 +176,7 @@ const { side, texts } = Astro.props;
         animation: lb-bubble 5s infinite;
         animation-delay: 0.5s;
     }
+
     .lb-page-water-bubble.bubble-4 {
         width: 8px;
         height: 8px;
@@ -181,6 +184,7 @@ const { side, texts } = Astro.props;
         animation: lb-bubble 7s infinite;
         animation-delay: 2s;
     }
+
     .lb-page-water-bubble.bubble-5 {
         width: 5px;
         height: 5px;
@@ -193,8 +197,8 @@ const { side, texts } = Astro.props;
         position: absolute;
         width: 2.5rem;
         height: 2.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgb(255 255 255 / 0.1);
+        background-color: rgb(255 255 255 / 0.05);
         border-radius: 0.25rem;
         backdrop-filter: blur(2px);
     }
@@ -214,55 +218,66 @@ const { side, texts } = Astro.props;
     }
 
     .lb-page-water-highlight {
-        color: #60a5fa;
+        color: var(--library-blue);
     }
 
     @keyframes lb-wave-1 {
         0% {
             transform: rotate(0deg);
         }
+
         100% {
             transform: rotate(360deg);
         }
     }
+
     @keyframes lb-wave-2 {
         0% {
             transform: rotate(0deg);
         }
+
         100% {
             transform: rotate(-360deg);
         }
     }
+
     @keyframes lb-bubble {
         0% {
             transform: translateY(0);
             opacity: 0;
         }
+
         10% {
             opacity: 1;
         }
+
         90% {
             opacity: 1;
         }
+
         100% {
             transform: translateY(-120px);
             opacity: 0;
         }
     }
+
     @keyframes lb-float-ice-1 {
         0%,
         100% {
             transform: rotate(15deg) translateY(0);
         }
+
         50% {
             transform: rotate(20deg) translateY(-8px);
         }
     }
+
     @keyframes lb-float-ice-2 {
         0%,
         100% {
             transform: rotate(-30deg) translateY(0);
         }
+
         50% {
             transform: rotate(-25deg) translateY(-6px);
         }
@@ -270,22 +285,5 @@ const { side, texts } = Astro.props;
 </style>
 
 <script>
-    import { calculateWaterStats } from "../../../utils/libraryLogic";
-
-    const countEl = document.getElementById("water-count");
-    const bottlesEl = document.getElementById("water-bottles");
-
-    document.addEventListener("update-life-stats", (e: any) => {
-        const { stats } = e.detail;
-        if (!countEl || !stats) return;
-
-        const { litersDrunk } = calculateWaterStats(stats.daysAlive);
-        const bottles = litersDrunk / 0.5;
-
-        countEl.innerText = litersDrunk.toLocaleString();
-        if (bottlesEl) {
-            const label = bottlesEl.innerText.split(" ").slice(1).join(" ");
-            bottlesEl.innerText = `${Math.floor(bottles).toLocaleString()} ${label || "BOTELLAS"}`;
-        }
-    });
+    import "../../../scripts/libraryPages/water";
 </script>

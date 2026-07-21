@@ -1,12 +1,7 @@
 ---
-interface Props {
-    side: "left" | "right";
-    texts: {
-        title: string;
-        sublabel: string;
-        quote: string;
-    };
-}
+import LibraryStatText from "./LibraryStatText.astro";
+import MindGlowFilter from "./MindGlowFilter.astro";
+import type { LibraryPageProps as Props } from "./libraryPageTypes";
 const { side, texts } = Astro.props;
 ---
 
@@ -20,15 +15,7 @@ const { side, texts } = Astro.props;
                     <div class="lb-page-mind-ping" />
 
                     <svg class="lb-page-mind-svg">
-                        <defs>
-                            <filter id="glow-purple">
-                                <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-                                <feMerge>
-                                    <feMergeNode in="coloredBlur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
-                        </defs>
+                        <MindGlowFilter />
 
                         <path
                             d="M144,144 Q100,100 80,140 T40,180"
@@ -98,18 +85,7 @@ const { side, texts } = Astro.props;
             </div>
         </div>
     ) : (
-        <div class="lb-page-text-container">
-            <h3 class="lb-page-title-colored lb-page-title-purple">{texts.title}</h3>
-
-            <div>
-                <div class="lb-page-counter-small" id="mind-count">
-                    0
-                </div>
-                <div class="lb-page-counter-label">{texts.sublabel}</div>
-            </div>
-
-            <p class="lb-page-quote">{texts.quote}</p>
-        </div>
+        <LibraryStatText counterId="mind-count" titleClass="lb-page-title-purple" {texts} />
     )
 }
 
@@ -127,7 +103,7 @@ const { side, texts } = Astro.props;
         position: absolute;
         width: 16rem;
         height: 14rem;
-        background-color: rgba(120, 53, 89, 0.1);
+        background-color: rgb(120 53 89 / 0.1);
         border-radius: 50%;
         filter: blur(64px);
         animation: lb-pulse-slow 6s ease-in-out infinite;
@@ -147,7 +123,7 @@ const { side, texts } = Astro.props;
         left: 50%;
         width: 4px;
         height: 4px;
-        background-color: #c084fc;
+        background-color: var(--library-purple);
         border-radius: 9999px;
         box-shadow: 0 0 10px #a855f7;
         animation: lb-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
@@ -164,7 +140,7 @@ const { side, texts } = Astro.props;
 
     .lb-page-mind-idea {
         position: absolute;
-        background-color: #e9d5ff;
+        background-color: var(--library-purple-pale);
         border-radius: 9999px;
         animation: lb-float-idea 5s ease-in-out infinite;
     }
@@ -174,6 +150,7 @@ const { side, texts } = Astro.props;
         left: 5rem;
         width: 4px;
         height: 4px;
+
         --tx: 20px;
         --ty: -30px;
     }
@@ -184,7 +161,8 @@ const { side, texts } = Astro.props;
         width: 6px;
         height: 6px;
         animation-delay: 2s;
-        background-color: #d8b4fe;
+        background-color: var(--library-purple-light);
+
         --tx: -15px;
         --ty: -40px;
     }
@@ -195,7 +173,8 @@ const { side, texts } = Astro.props;
         width: 4px;
         height: 4px;
         animation-delay: 4s;
-        background-color: #ffffff;
+        background-color: var(--library-white);
+
         --tx: 10px;
         --ty: -20px;
     }
@@ -225,11 +204,13 @@ const { side, texts } = Astro.props;
             stroke-dashoffset: 0;
             opacity: 0.2;
         }
+
         50% {
             stroke-dasharray: 100, 1000;
             stroke-dashoffset: -50;
             opacity: 1;
         }
+
         100% {
             stroke-dasharray: 0, 1000;
             stroke-dashoffset: -200;
@@ -243,10 +224,12 @@ const { side, texts } = Astro.props;
             opacity: 0;
             transform: scale(1);
         }
+
         5% {
             opacity: 1;
             transform: scale(1.5);
         }
+
         10% {
             opacity: 0;
             transform: scale(1);
@@ -258,10 +241,12 @@ const { side, texts } = Astro.props;
             transform: translate(0, 0) scale(1);
             opacity: 0;
         }
+
         20%,
         80% {
             opacity: 0.8;
         }
+
         100% {
             transform: translate(var(--tx, 20px), var(--ty, -30px)) scale(0);
             opacity: 0;
@@ -274,6 +259,7 @@ const { side, texts } = Astro.props;
             opacity: 0.3;
             transform: scale(1);
         }
+
         50% {
             opacity: 0.5;
             transform: scale(1.1);
@@ -290,15 +276,5 @@ const { side, texts } = Astro.props;
 </style>
 
 <script>
-    import { calculateMindStats } from "../../../utils/libraryLogic";
-
-    const countEl = document.getElementById("mind-count");
-
-    document.addEventListener("update-life-stats", (e: any) => {
-        const { stats } = e.detail;
-        if (!countEl || !stats) return;
-
-        const { thoughts } = calculateMindStats(stats.daysAlive);
-        countEl.innerText = Math.floor(thoughts).toLocaleString();
-    });
+    import "../../../scripts/libraryPages/mind";
 </script>

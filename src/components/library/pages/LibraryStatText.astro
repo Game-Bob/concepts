@@ -1,0 +1,14 @@
+---
+import type { LibraryStatTextProps as Props } from "./libraryPageTypes";
+
+const { counterId, texts, titleClass } = Astro.props;
+---
+
+<div class="lb-page-text-container">
+    <h3 class:list={["lb-page-title-colored", titleClass]}>{texts.title}</h3>
+    <div>
+        <div class="lb-page-counter-small" id={counterId}>0</div>
+        <div class="lb-page-counter-label">{texts.sublabel}</div>
+    </div>
+    <p class="lb-page-quote">{texts.quote}</p>
+</div>

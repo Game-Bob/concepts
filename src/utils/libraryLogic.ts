@@ -13,6 +13,20 @@ const differenceInMinutes = (d1: Date, d2: Date) => {
     return Math.floor(diff / (1000 * 60));
 };
 
+export interface LifeStats {
+    daysAlive: number;
+    hoursAlive: number;
+    minutesAlive: number;
+}
+
+export interface LifeStatsUpdateDetail {
+    birthdate: Date;
+    stats: LifeStats | null;
+}
+
+export const getLifeStatsUpdate = (event: Event): LifeStatsUpdateDetail =>
+    (event as CustomEvent<LifeStatsUpdateDetail>).detail;
+
 export const calculateLifeStats = (birthdate: Date) => {
     const now = new Date();
     if (birthdate > now) {

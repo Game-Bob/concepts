@@ -1,0 +1,29 @@
+---
+import { Icon } from "astro-icon/components";
+import type { NuanceLocaleData } from "../../concepts/nuance/types";
+import "../../styles/cards/nuance-card.css";
+
+interface Props {
+    href: string;
+    locale: NuanceLocaleData;
+    number: string;
+}
+
+const { href, locale, number } = Astro.props;
+---
+
+<a class="nuance-card" href={href} data-concept-number={number}>
+    <div class="nuance-card__glow"></div>
+    <div class="nuance-card__content">
+        <div class="nuance-card__icon">
+            <Icon name="mdi:contrast-circle" />
+        </div>
+        <div class="nuance-card__text">
+            <h2>{locale.cardTitle}</h2>
+            <p class="nuance-card__subtitle">{locale.cardSubtitle}</p>
+            <div class="nuance-card__line"></div>
+            <p class="nuance-card__description">"{locale.cardDescription}"</p>
+        </div>
+    </div>
+    <div class="nuance-card__border"></div>
+</a>

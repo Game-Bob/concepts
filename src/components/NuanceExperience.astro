@@ -1,0 +1,30 @@
+---
+import type { NuanceLocaleData } from "../concepts/nuance/types";
+import NuanceConceptSlide from "./nuance/NuanceConceptSlide.astro";
+import NuanceController from "./nuance/NuanceController.astro";
+import NuanceIntroSlide from "./nuance/NuanceIntroSlide.astro";
+import NuanceOutroSlide from "./nuance/NuanceOutroSlide.astro";
+import "../styles/nuance-experience.css";
+
+interface Props {
+    locale: NuanceLocaleData;
+    indexUrl: string;
+}
+
+const { locale, indexUrl } = Astro.props;
+---
+
+<main class="nuance-experience">
+    <NuanceController texts={locale.texts}>
+        <NuanceIntroSlide intro={locale.texts.intro} />
+        {locale.texts.slides.map((slide) => <NuanceConceptSlide {...slide} />)}
+        <NuanceOutroSlide outro={locale.texts.outro} {indexUrl} />
+    </NuanceController>
+</main>
+
+<script>
+    import { initializeNuanceExperience } from "../concepts/nuance/runtime";
+
+    const cleanup = initializeNuanceExperience();
+    document.addEventListener("astro:before-swap", cleanup, { once: true });
+</script>

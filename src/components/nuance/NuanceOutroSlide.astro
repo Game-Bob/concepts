@@ -1,0 +1,22 @@
+---
+import type { NuanceTexts } from "../../concepts/nuance/types";
+import NuanceSlide from "./NuanceSlide.astro";
+
+interface Props {
+    outro: NuanceTexts["outro"];
+    indexUrl: string;
+}
+
+const { outro, indexUrl } = Astro.props;
+---
+
+<NuanceSlide id="fin" labelLeft="" labelRight="">
+    <div slot="center">
+        <p class="nslide-outro-text">
+            {outro.firstLine}<br />{outro.secondLine}
+        </p>
+        <a href={indexUrl} class="nslide-outro-btn">{outro.exit}</a>
+    </div>
+    <div slot="left" class="nslide-left-desc">{outro.left}</div>
+    <div slot="right" class="nslide-right-desc">{outro.right}</div>
+</NuanceSlide>

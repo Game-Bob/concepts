@@ -87,14 +87,13 @@ const { side, texts } = Astro.props;
         inset: 0;
         opacity: 0.15;
         filter: blur(1px);
-        font-family: serif;
     }
 
     .lb-page-words-item {
         position: absolute;
         font-size: 1.25rem;
         font-weight: bold;
-        color: #e7e5e4;
+        color: var(--library-foreground);
     }
 
     .lb-page-words-item.item-1 {
@@ -102,31 +101,37 @@ const { side, texts } = Astro.props;
         left: 10%;
         transform: rotate(-15deg);
     }
+
     .lb-page-words-item.item-2 {
         top: 20%;
         right: 15%;
         transform: rotate(10deg);
     }
+
     .lb-page-words-item.item-3 {
         bottom: 20%;
         left: 15%;
         transform: rotate(5deg);
     }
+
     .lb-page-words-item.item-4 {
         bottom: 15%;
         right: 10%;
         transform: rotate(-20deg);
     }
+
     .lb-page-words-item.item-5 {
         top: 45%;
         left: 8%;
         transform: rotate(30deg);
     }
+
     .lb-page-words-item.item-6 {
         top: 50%;
         right: 8%;
         transform: rotate(-10deg);
     }
+
     .lb-page-words-item.item-7 {
         bottom: 45%;
         left: 45%;
@@ -144,38 +149,43 @@ const { side, texts } = Astro.props;
 
     .lb-page-words-float {
         position: absolute;
-        font-family: serif;
         font-weight: bold;
-        color: #f59e0b;
-        text-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+        color: var(--library-gold-warm);
+        text-shadow: 0 0 10px rgb(245 158 11 / 0.2);
     }
 
     .lb-page-words-float.float-1 {
         font-size: 1.5rem;
         animation: lb-pop-1 4s ease-in-out infinite;
     }
+
     .lb-page-words-float.float-2 {
         font-size: 1.75rem;
         animation: lb-pop-2 5s ease-in-out infinite;
     }
+
     .lb-page-words-float.float-3 {
         font-size: 1.25rem;
         animation: lb-pop-3 6s ease-in-out infinite;
     }
+
     .lb-page-words-float.float-4 {
         font-size: 1.125rem;
         animation: lb-pop-4 4.5s ease-in-out infinite;
     }
+
     .lb-page-words-float.float-5 {
         font-size: 1.35rem;
         animation: lb-pop-5 5.5s ease-in-out infinite;
     }
+
     .lb-page-words-float.float-6 {
         font-size: 1.25rem;
         top: 15%;
         left: 20%;
         animation: lb-pop-3 5.2s ease-in-out infinite;
     }
+
     .lb-page-words-float.float-7 {
         font-size: 1.4rem;
         bottom: 15%;
@@ -194,12 +204,12 @@ const { side, texts } = Astro.props;
     .lb-page-words-icon {
         width: 4rem;
         height: 4rem;
-        color: rgba(245, 158, 11, 0.15);
-        filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.05));
+        color: rgb(245 158 11 / 0.15);
+        filter: drop-shadow(0 0 15px rgb(245 158 11 / 0.05));
     }
 
     .lb-page-words-highlight {
-        color: #fbbf24;
+        color: var(--library-gold-bright);
     }
 
     @keyframes lb-pop-1 {
@@ -208,50 +218,59 @@ const { side, texts } = Astro.props;
             transform: scale(1) translate(0, 0);
             opacity: 0.4;
         }
+
         50% {
             transform: scale(1.15) translate(5px, -5px);
             opacity: 0.8;
         }
     }
+
     @keyframes lb-pop-2 {
         0%,
         100% {
             transform: scale(1) translate(0, 0);
             opacity: 0.3;
         }
+
         50% {
             transform: scale(1.1) translate(-5px, 5px);
             opacity: 0.7;
         }
     }
+
     @keyframes lb-pop-3 {
         0%,
         100% {
             transform: scale(1) rotate(0deg);
             opacity: 0.5;
         }
+
         50% {
             transform: scale(1.2) rotate(15deg);
             opacity: 0.9;
         }
     }
+
     @keyframes lb-pop-4 {
         0%,
         100% {
             transform: scale(1) rotate(0deg);
             opacity: 0.4;
         }
+
         50% {
             transform: scale(1.15) rotate(-10deg);
             opacity: 0.8;
         }
     }
+
     @keyframes lb-pop-5 {
         0%,
         100% {
             transform: scale(1) rotate(-3deg);
             opacity: 0.3;
         }
+
         50% {
             transform: scale(1.1) rotate(-6deg);
             opacity: 0.6;
@@ -260,20 +279,5 @@ const { side, texts } = Astro.props;
 </style>
 
 <script>
-    import { calculateWordsStats } from "../../../utils/libraryLogic";
-
-    const countEl = document.getElementById("words-count");
-    const countTextEl = document.getElementById("words-count-text");
-
-    document.addEventListener("update-life-stats", (e: any) => {
-        const { stats } = e.detail;
-        if (!countEl || !stats) return;
-
-        const { wordsSpoken } = calculateWordsStats(stats.minutesAlive);
-        countEl.innerText = Math.floor(wordsSpoken).toLocaleString();
-        if (countTextEl) {
-            const label = countTextEl.innerText.split(" ").slice(1).join(" ");
-            countTextEl.innerText = `${Math.floor(wordsSpoken).toLocaleString()} ${label}`;
-        }
-    });
+    import "../../../scripts/libraryPages/words";
 </script>

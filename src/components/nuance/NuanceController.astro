@@ -1,0 +1,27 @@
+---
+import type { NuanceTexts } from "../../concepts/nuance/types";
+import NuanceHUD from "./NuanceHUD.astro";
+
+interface Props {
+    texts: NuanceTexts;
+}
+
+const { texts } = Astro.props;
+---
+
+<div class="nctrl-wrapper" data-theme="center" data-nuance-controller>
+    <div class="nctrl-bg-center" data-nuance-bg-center>
+        <div class="nctrl-bg-gradient"></div>
+        <div class="nctrl-bg-radial"></div>
+        <div class="nctrl-bg-overlay"></div>
+    </div>
+
+    <div class="nctrl-bg-left" data-nuance-bg-left></div>
+    <div class="nctrl-bg-right" data-nuance-bg-right></div>
+
+    <div class="nctrl-scroll">
+        <slot />
+    </div>
+
+    <NuanceHUD hud={texts.hud} />
+</div>

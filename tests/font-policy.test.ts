@@ -10,16 +10,22 @@ describe("font policy", () => {
         [".sample { font: 1rem serif; }", "property-disallowed-list"],
         ["@font-face { font-family: sample; src: url(sample.woff2); }", "at-rule-disallowed-list"],
         ["@import url(font.css);", "at-rule-disallowed-list"],
-    ])("rejects non-global font ownership", async (code, expectedRule) => {
-        const result = await stylelint.lint({
-            code,
-            codeFilename: path.resolve("src/components/invalid-font.css"),
-            configFile: path.resolve(".stylelintrc.json"),
-        });
-        const rules = result.results.flatMap(({ warnings }) => warnings.map(({ rule }) => rule));
+    ])(
+        "rejects non-global font ownership",
+        async (code, expectedRule) => {
+            const result = await stylelint.lint({
+                code,
+                codeFilename: path.resolve("src/components/invalid-font.css"),
+                configFile: path.resolve(".stylelintrc.json"),
+            });
+            const rules = result.results.flatMap(({ warnings }) =>
+                warnings.map(({ rule }) => rule)
+            );
 
-        expect(rules).toContain(expectedRule);
-    }, 15000);
+            expect(rules).toContain(expectedRule);
+        },
+        15000
+    );
 
     it("defines font-family exactly once in the global typography boundary", async () => {
         const globalStyles = await readFile(path.resolve("src/styles/global.css"), "utf8");

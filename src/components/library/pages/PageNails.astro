@@ -76,7 +76,7 @@ const { side, texts } = Astro.props;
         width: 100%;
         height: 100%;
         opacity: 0.3;
-        color: #e7e5e4;
+        color: var(--library-foreground);
     }
 
     .animate-scratch {
@@ -89,6 +89,7 @@ const { side, texts } = Astro.props;
             stroke-dashoffset: 200;
             opacity: 0;
         }
+
         20%,
         100% {
             stroke-dasharray: 200;
@@ -99,12 +100,12 @@ const { side, texts } = Astro.props;
 </style>
 
 <script>
-    import { calculateGrowthStats } from "../../../utils/libraryLogic";
+    import { calculateGrowthStats, getLifeStatsUpdate } from "../../../utils/libraryLogic";
 
     const countEl = document.getElementById("nails-count");
 
-    document.addEventListener("update-life-stats", (e: any) => {
-        const { stats } = e.detail;
+    document.addEventListener("update-life-stats", (event) => {
+        const { stats } = getLifeStatsUpdate(event);
         if (!countEl || !stats) return;
 
         const { nailsMeters } = calculateGrowthStats(stats.daysAlive);

@@ -60,7 +60,7 @@ const { side, texts } = Astro.props;
         background-image: linear-gradient(
             to bottom,
             transparent,
-            rgba(30, 58, 138, 0.05),
+            rgb(30 58 138 / 0.05),
             transparent
         );
         filter: blur(20px);
@@ -82,8 +82,8 @@ const { side, texts } = Astro.props;
     .lb-page-breath-c4 {
         position: absolute;
         border-radius: 9999px;
-        border: 1px solid rgba(59, 130, 246, 0.15);
-        background-color: rgba(59, 130, 246, 0.02);
+        border: 1px solid rgb(59 130 246 / 0.15);
+        background-color: rgb(59 130 246 / 0.02);
     }
 
     .lb-page-breath-c1 {
@@ -111,15 +111,15 @@ const { side, texts } = Astro.props;
         height: 25%;
         animation: lb-breath-pulse 4s ease-in-out infinite;
         animation-delay: 1.5s;
-        background-color: rgba(59, 130, 246, 0.05);
-        border: 1px solid rgba(59, 130, 246, 0.3);
+        background-color: rgb(59 130 246 / 0.05);
+        border: 1px solid rgb(59 130 246 / 0.3);
     }
 
     .lb-page-breath-orbit {
         position: absolute;
         width: 110%;
         height: 110%;
-        border: 1px dashed rgba(59, 130, 246, 0.08);
+        border: 1px dashed rgb(59 130 246 / 0.08);
         border-radius: 9999px;
         animation: lb-spin 20s linear infinite;
     }
@@ -128,7 +128,7 @@ const { side, texts } = Astro.props;
         position: absolute;
         width: 6px;
         height: 6px;
-        background-color: rgba(96, 165, 250, 0.4);
+        background-color: rgb(96 165 250 / 0.4);
         border-radius: 9999px;
     }
 
@@ -154,12 +154,13 @@ const { side, texts } = Astro.props;
             transform: scale(0.9);
             opacity: 0.3;
         }
+
         50% {
             transform: scale(1.1);
             opacity: 0.8;
-            border-color: rgba(59, 130, 246, 0.3);
-            background-color: rgba(59, 130, 246, 0.04);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+            border-color: rgb(59 130 246 / 0.3);
+            background-color: rgb(59 130 246 / 0.04);
+            box-shadow: 0 0 20px rgb(59 130 246 / 0.1);
         }
     }
 
@@ -167,6 +168,7 @@ const { side, texts } = Astro.props;
         from {
             transform: rotate(0deg);
         }
+
         to {
             transform: rotate(360deg);
         }
@@ -174,11 +176,13 @@ const { side, texts } = Astro.props;
 </style>
 
 <script>
+    import { getLifeStatsUpdate } from "../../../utils/libraryLogic";
+
     const counter = document.getElementById("breath-counter");
     let animationFrame: number;
 
-    document.addEventListener("update-life-stats", (e: any) => {
-        const { birthdate } = e.detail;
+    document.addEventListener("update-life-stats", (event) => {
+        const { birthdate } = getLifeStatsUpdate(event);
         if (!counter) return;
 
         const start = () => {

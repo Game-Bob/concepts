@@ -3,8 +3,10 @@ import { MEASUREMENT_CONCEPT } from "./measurement/locales";
 import { WAITING_CONCEPT } from "./waiting/locales";
 import { BOREDOM_CONCEPT } from "./boredom/locales";
 import { LIBRARY_CONCEPT } from "./library/locales";
+import { NUANCE_CONCEPT } from "./nuance/locales";
 
 const CONCEPT_MODULES = [
+    NUANCE_CONCEPT,
     WAITING_CONCEPT,
     MEASUREMENT_CONCEPT,
     BOREDOM_CONCEPT,

@@ -1,0 +1,39 @@
+---
+import type { NuanceTexts } from "../../concepts/nuance/types";
+
+interface Props {
+    hud: NuanceTexts["hud"];
+}
+
+const { hud } = Astro.props;
+---
+
+<div class="nhud-wrapper">
+    <div class="nhud-labels">
+        <span class="nhud-label-text" data-nuance-label-left>{hud.defaultLeft}</span>
+        <span class="nhud-label-text" data-nuance-label-right>{hud.defaultRight}</span>
+    </div>
+
+    <div
+        class="nhud-track-container"
+        data-nuance-track
+        role="slider"
+        tabindex="0"
+        aria-label={hud.sliderLabel}
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="50"
+    >
+        <div class="nhud-track" data-nuance-visual-track>
+            <div class="nhud-track-left-gradient"></div>
+            <div class="nhud-track-right-gradient"></div>
+            <div class="nhud-track-center-line"></div>
+        </div>
+
+        <div class="nhud-handle" data-nuance-handle>
+            <div class="nhud-handle-line"></div>
+        </div>
+    </div>
+
+    <div class="nhud-hint">{hud.hint}</div>
+</div>

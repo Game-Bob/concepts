@@ -71,13 +71,18 @@ describe("concept registry", () => {
             path.resolve("src/components/ConceptsIndex.astro"),
             "utf8"
         );
+        const cardSource = fs.readFileSync(
+            path.resolve("src/components/ConceptCard.astro"),
+            "utf8"
+        );
         const detailSource = fs.readFileSync(
             path.resolve("src/components/ConceptDetail.astro"),
             "utf8"
         );
 
+        expect(indexSource).toContain("<ConceptCard");
         for (const concept of CONCEPTS) {
-            expect(indexSource).toContain(`concept.id === "${concept.id}"`);
+            expect(cardSource).toContain(`conceptId === "${concept.id}"`);
             expect(detailSource).toContain(`conceptId === "${concept.id}"`);
         }
     });

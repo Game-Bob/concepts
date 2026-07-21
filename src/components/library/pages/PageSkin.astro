@@ -45,7 +45,7 @@ const { side, texts } = Astro.props;
     .lb-page-skin-cylinder {
         width: 12rem;
         height: 16rem;
-        border: 2px solid rgba(231, 229, 228, 0.2);
+        border: 2px solid rgb(231 229 228 / 0.2);
         border-radius: 50% 50% 0 0;
         position: relative;
         opacity: 0.5;
@@ -57,13 +57,14 @@ const { side, texts } = Astro.props;
     .lb-page-skin-cylinder-grad {
         position: absolute;
         inset: 0;
-        background-image: linear-gradient(to top, transparent, rgba(231, 229, 228, 0.1));
+        background-image: linear-gradient(to top, transparent, rgb(231 229 228 / 0.1));
     }
 
     @keyframes lb-drift {
         0% {
             background-position: 0 0;
         }
+
         100% {
             background-position: 100px 100px;
         }
@@ -71,12 +72,12 @@ const { side, texts } = Astro.props;
 </style>
 
 <script>
-    import { calculateSkinStats } from "../../../utils/libraryLogic";
+    import { calculateSkinStats, getLifeStatsUpdate } from "../../../utils/libraryLogic";
 
     const countEl = document.getElementById("skin-count");
 
-    document.addEventListener("update-life-stats", (e: any) => {
-        const { stats } = e.detail;
+    document.addEventListener("update-life-stats", (event) => {
+        const { stats } = getLifeStatsUpdate(event);
         if (!countEl || !stats) return;
 
         const { skinShedKg } = calculateSkinStats(stats.daysAlive);

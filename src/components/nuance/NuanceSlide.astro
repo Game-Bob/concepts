@@ -1,0 +1,29 @@
+---
+interface Props {
+    id: string;
+    labelLeft: string;
+    labelRight: string;
+}
+
+const { id, labelLeft, labelRight } = Astro.props;
+---
+
+<section
+    class="nuance-slide"
+    data-nuance-slide
+    data-id={id}
+    data-label-left={labelLeft}
+    data-label-right={labelRight}
+>
+    <div class="nuance-state-left">
+        <slot name="left" />
+    </div>
+
+    <div class="nuance-state-right">
+        <slot name="right" />
+    </div>
+
+    <div class="nuance-state-center">
+        <slot name="center" />
+    </div>
+</section>

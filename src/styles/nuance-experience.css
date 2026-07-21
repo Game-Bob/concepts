@@ -1,0 +1,434 @@
+.nuance-experience {
+    min-height: 100dvh;
+}
+
+.nctrl-wrapper {
+    --nuance-neutral-background: #171717;
+    --nuance-neutral-text: #e5e5e5;
+    --nuance-white: #fff;
+    --nuance-black: #000;
+    --nuance-current: currentcolor;
+
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: var(--nuance-neutral-background);
+    color: var(--nuance-neutral-text);
+    user-select: none;
+}
+
+.nctrl-bg-center {
+    position: absolute;
+    inset: 0;
+    background-color: var(--nuance-neutral-background);
+    opacity: 1;
+    transition: opacity 0.7s ease;
+}
+
+.nctrl-bg-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom right, #312e81, #581c87, #881337);
+    opacity: 0.5;
+}
+
+.nctrl-bg-radial {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgb(255 100 100 / 0.2), transparent 70%);
+}
+
+.nctrl-bg-overlay {
+    position: absolute;
+    inset: 0;
+    opacity: 0.1;
+    mix-blend-mode: overlay;
+}
+
+.nctrl-bg-left {
+    position: absolute;
+    inset: 0;
+    background-color: var(--nuance-white);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease;
+}
+
+.nctrl-bg-right {
+    position: absolute;
+    inset: 0;
+    background-color: var(--nuance-black);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease;
+}
+
+.nctrl-scroll {
+    position: absolute;
+    z-index: 10;
+    inset: 0;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    padding-top: 2.5rem;
+    padding-bottom: 10rem;
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+}
+
+.nuance-slide {
+    position: relative;
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 2rem;
+    scroll-snap-align: center;
+}
+
+.nuance-state-left,
+.nuance-state-right {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 2rem;
+    opacity: 0;
+    pointer-events: none;
+    text-align: center;
+    transition: opacity 0.3s ease;
+}
+
+.nuance-state-center {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    max-width: 56rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 2rem;
+    opacity: 1;
+    text-align: center;
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+.nslide-center {
+    display: flex;
+    max-width: 48rem;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.nslide-badge {
+    display: inline-block;
+    align-self: center;
+    padding: 0.25rem 1rem;
+    border: 1px solid rgb(255 255 255 / 0.2);
+    border-radius: 9999px;
+    background-color: rgb(255 255 255 / 0.05);
+    backdrop-filter: blur(8px);
+    color: rgb(255 255 255 / 0.7);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.nslide-main-title {
+    margin-bottom: 2rem;
+    color: var(--nuance-white);
+    filter: drop-shadow(0 4px 10px rgb(0 0 0 / 0.5));
+    font-size: clamp(2.25rem, 12vw, 9rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    text-transform: uppercase;
+}
+
+.nslide-main-desc {
+    max-width: 52rem;
+    margin: 0 auto;
+    color: rgb(255 255 255 / 0.9);
+    filter: drop-shadow(0 2px 4px rgb(0 0 0 / 0.3));
+    font-size: clamp(1.1rem, 2vw, 2rem);
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+.nslide-title {
+    margin: 0;
+    color: var(--nuance-white);
+    filter: drop-shadow(0 4px 8px rgb(0 0 0 / 0.4));
+    font-size: clamp(2rem, 10vw, 7rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+    text-transform: uppercase;
+}
+
+.nslide-desc {
+    max-width: 48rem;
+    margin: 0 auto;
+    color: rgb(255 255 255 / 0.9);
+    font-size: clamp(1.1rem, 1.8vw, 1.75rem);
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+.nslide-left-title,
+.nslide-right-title {
+    margin: 0;
+    font-size: clamp(2.2rem, 12vw, 10rem);
+    font-weight: 950;
+    letter-spacing: -0.06em;
+    line-height: 0.85;
+    text-transform: uppercase;
+}
+
+.nslide-left-title {
+    color: var(--nuance-black);
+}
+
+.nslide-right-title {
+    color: var(--nuance-white);
+}
+
+.nslide-left-desc,
+.nslide-right-desc {
+    margin-top: 1.5rem;
+    font-size: clamp(1rem, 1.8vw, 1.75rem);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.nslide-left-desc {
+    color: var(--nuance-black);
+}
+
+.nslide-right-desc {
+    color: var(--nuance-white);
+}
+
+.nslide-outro-text {
+    margin-bottom: 2rem;
+    font-size: clamp(1.25rem, 2.5vw, 2.25rem);
+    font-weight: 300;
+    line-height: 1.4;
+    opacity: 0.8;
+}
+
+.nslide-outro-btn {
+    display: inline-block;
+    padding: 1rem 3rem;
+    border-radius: 9999px;
+    background-color: var(--nuance-white);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+    color: var(--nuance-black);
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+.nslide-outro-btn:hover {
+    background-color: var(--nuance-neutral-text);
+}
+
+.nhud-wrapper {
+    position: fixed;
+    z-index: 50;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 1rem;
+    pointer-events: none;
+}
+
+.nhud-labels {
+    display: flex;
+    width: 100%;
+    max-width: 36rem;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    pointer-events: auto;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.nhud-label-text {
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.nhud-track-container {
+    position: relative;
+    z-index: 50;
+    display: flex;
+    width: 100%;
+    max-width: 36rem;
+    height: 6rem;
+    align-items: center;
+    justify-content: center;
+    cursor: ew-resize;
+    pointer-events: auto;
+    touch-action: none;
+}
+
+.nhud-track {
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 3.5rem;
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 0.2);
+    border-radius: 9999px;
+    background-color: rgb(0 0 0 / 0.2);
+    backdrop-filter: blur(24px);
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    pointer-events: none;
+    transition:
+        background-color 0.5s ease,
+        border-color 0.5s ease;
+}
+
+.nhud-track-left-gradient {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    background: linear-gradient(to right, rgb(255 255 255 / 0.1), transparent);
+}
+
+.nhud-track-right-gradient {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    background: linear-gradient(to left, rgb(0 0 0 / 0.1), transparent);
+}
+
+.nhud-track-center-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background-color: var(--nuance-current);
+    opacity: 0.2;
+    transform: translateX(-50%);
+}
+
+.nhud-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    width: 3rem;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(0 0 0 / 0.1);
+    border-radius: 9999px;
+    background-color: var(--nuance-white);
+    box-shadow: 0 0 15px rgb(0 0 0 / 0.2);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: transform 0.075s ease;
+}
+
+.nhud-handle:active {
+    transform: translate(-50%, -50%) scale(0.95);
+}
+
+.nhud-handle-line {
+    width: 2px;
+    height: 1.25rem;
+    border-radius: 9999px;
+    background-color: rgb(0 0 0 / 0.2);
+}
+
+.nhud-hint {
+    margin-top: 1rem;
+    animation: nhud-pulse-anim 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    opacity: 0.5;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+@keyframes nhud-pulse-anim {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@media (width >= 768px) {
+    .nhud-wrapper {
+        padding: 2rem;
+    }
+
+    .nhud-labels {
+        font-size: 0.75rem;
+    }
+
+    .nhud-track-container {
+        height: 5rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nctrl-bg-center,
+    .nctrl-bg-left,
+    .nctrl-bg-right,
+    .nuance-state-left,
+    .nuance-state-right,
+    .nuance-state-center,
+    .nhud-label-text,
+    .nhud-track,
+    .nhud-handle,
+    .nslide-outro-btn {
+        transition: none;
+    }
+
+    .nctrl-scroll {
+        scroll-behavior: auto;
+    }
+
+    .nhud-hint {
+        animation: none;
+    }
+}

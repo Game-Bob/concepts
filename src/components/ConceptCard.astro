@@ -1,0 +1,45 @@
+---
+import type { ConceptId } from "../concepts/registry";
+import { getConceptLocale } from "../concepts/registry";
+import type { Language } from "../i18n/languages";
+import BoredomCard from "./cards/BoredomCard.astro";
+import LibraryCard from "./cards/LibraryCard.astro";
+import MeasurementCard from "./cards/MeasurementCard.astro";
+import NuanceCard from "./cards/NuanceCard.astro";
+import WaitingCard from "./cards/WaitingCard.astro";
+
+interface Props {
+    conceptId: ConceptId;
+    href: string;
+    language: Language;
+    number: string;
+}
+
+const { conceptId, href, language, number } = Astro.props;
+---
+
+{
+    conceptId === "nuance" && (
+        <NuanceCard {href} locale={getConceptLocale("nuance", language)} {number} />
+    )
+}
+{
+    conceptId === "waiting" && (
+        <WaitingCard {href} locale={getConceptLocale("waiting", language)} {number} />
+    )
+}
+{
+    conceptId === "measurement" && (
+        <MeasurementCard {href} locale={getConceptLocale("measurement", language)} {number} />
+    )
+}
+{
+    conceptId === "boredom" && (
+        <BoredomCard {href} locale={getConceptLocale("boredom", language)} {number} />
+    )
+}
+{
+    conceptId === "library" && (
+        <LibraryCard {href} locale={getConceptLocale("library", language)} {number} />
+    )
+}

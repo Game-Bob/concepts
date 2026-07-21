@@ -100,7 +100,7 @@ const { side, texts } = Astro.props;
         position: absolute;
         width: 2rem;
         height: 3rem;
-        color: #e7e5e4;
+        color: var(--library-foreground);
         opacity: 0;
     }
 
@@ -133,7 +133,7 @@ const { side, texts } = Astro.props;
     }
 
     .lb-page-steps-highlight {
-        color: #fb923c;
+        color: var(--library-orange-soft);
     }
 
     @keyframes lb-step-appear {
@@ -141,11 +141,13 @@ const { side, texts } = Astro.props;
             opacity: 0;
             transform: scale(0.9);
         }
+
         20%,
         80% {
             opacity: 0.6;
             transform: scale(1);
         }
+
         100% {
             opacity: 0;
             transform: scale(0.95);
@@ -154,13 +156,13 @@ const { side, texts } = Astro.props;
 </style>
 
 <script>
-    import { calculateStepsStats } from "../../../utils/libraryLogic";
+    import { calculateStepsStats, getLifeStatsUpdate } from "../../../utils/libraryLogic";
 
     const countEl = document.getElementById("steps-count");
     const kmEl = document.getElementById("steps-km");
 
-    document.addEventListener("update-life-stats", (e: any) => {
-        const { stats } = e.detail;
+    document.addEventListener("update-life-stats", (event) => {
+        const { stats } = getLifeStatsUpdate(event);
         if (!countEl || !stats) return;
 
         const { stepsTaken } = calculateStepsStats(stats.daysAlive);

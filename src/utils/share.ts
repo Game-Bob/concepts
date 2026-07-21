@@ -5,8 +5,49 @@ export interface ShareImageOptions {
     url?: string;
     fileName?: string;
     onSuccess?: () => void;
-    onError?: (error: any) => void;
+    onError?: (error: Error) => void;
 }
+
+interface ToastGlobal {
+    show: (message: string, type: string) => void;
+}
+
+interface ElementStyles {
+    background: string;
+    opacity: string;
+    transform: string;
+    transition: string;
+}
+
+const COLOR_PROPERTIES = [
+    "color",
+    "background-color",
+    "border-color",
+    "box-shadow",
+    "background",
+    "background-image",
+    "border-top-color",
+    "border-right-color",
+    "border-bottom-color",
+    "border-left-color",
+    "outline-color",
+    "text-decoration-color",
+    "fill",
+    "stroke",
+] as const;
+
+const toError = (value: unknown): Error =>
+    value instanceof Error ? value : new Error(String(value));
+
+const isAbortError = (value: unknown): boolean =>
+    value instanceof DOMException
+        ? value.name === "AbortError"
+        : toError(value).name === "AbortError";
+
+const getToast = (): ToastGlobal | null => {
+    const globalWindow = window as unknown as { toast?: ToastGlobal };
+    return globalWindow.toast ?? null;
+};
 
 const downloadBlob = (blob: Blob, filename: string) => {
     const url = URL.createObjectURL(blob);
@@ -15,345 +56,190 @@ const downloadBlob = (blob: Blob, filename: string) => {
     link.href = url;
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
 
-export const shareElementAsImage = async ({
-    element,
-    title,
-    text,
-    url = window.location.href,
-    fileName = "share-image.webp",
-    onSuccess,
-    onError,
-}: ShareImageOptions) => {
-    const fullShareText = `${title}\n\n${text}\n\n${url}`;
-
-    const shareTextOnly = async () => {
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: title,
-                    text: fullShareText,
-                });
-                onSuccess?.();
-            } catch (err) {
-                copyToClipboard();
-            }
-        } else {
-            copyToClipboard();
-        }
-    };
-
-    const copyToClipboard = async () => {
-        try {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                await navigator.clipboard.writeText(fullShareText);
-            } else {
-                const textArea = document.createElement("textarea");
-                textArea.value = fullShareText;
-                textArea.style.position = "fixed";
-                textArea.style.left = "-9999px";
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-
-                document.execCommand("copy");
-                document.body.removeChild(textArea);
-            }
-            onSuccess?.();
-        } catch (err) {
-            onError?.(err);
-        }
-    };
+const copyText = async (text: string): Promise<boolean> => {
+    if (!navigator.clipboard?.writeText) return false;
 
     try {
-        const originalTransform = element.style.transform;
-        const originalTransition = element.style.transition;
-        const originalOpacity = element.style.opacity;
-        const originalBackground = element.style.background;
-
-        element.style.transform = "none";
-        element.style.transition = "none";
-        element.style.opacity = "1";
-
-        element.style.background = "radial-gradient(circle at center, #292524 0%, #0c0a09 100%)";
-
-        const html2canvas = (await import("html2canvas")).default;
-        const canvas = await html2canvas(element, {
-            backgroundColor: null,
-            scale: 2,
-            logging: false,
-            useCORS: true,
-            allowTaint: true,
-            ignoreElements: (element) => {
-                return element.classList.contains("ignore-capture");
-            },
-            onclone: (clonedDoc) => {
-                try {
-                    let replacements = 0;
-
-                    const styleTags = clonedDoc.querySelectorAll("style");
-                    styleTags.forEach((styleTag) => {
-                        if (
-                            styleTag.innerHTML.includes("oklab") ||
-                            styleTag.innerHTML.includes("oklch")
-                        ) {
-                            const newCss = styleTag.innerHTML.replace(
-                                /(oklab|oklch)\([^)]+\)/g,
-                                "#000000"
-                            );
-                            styleTag.innerHTML = newCss;
-                            replacements++;
-                        }
-                    });
-
-                    const allElements = clonedDoc.querySelectorAll("*");
-                    allElements.forEach((el) => {
-                        const element = el as HTMLElement;
-
-                        const props = [
-                            "color",
-                            "backgroundColor",
-                            "borderColor",
-                            "boxShadow",
-                            "background",
-                            "backgroundImage",
-                            "borderTopColor",
-                            "borderRightColor",
-                            "borderBottomColor",
-                            "borderLeftColor",
-                            "outlineColor",
-                            "textDecorationColor",
-                            "fill",
-                            "stroke",
-                        ];
-
-                        const style = window.getComputedStyle(element);
-
-                        props.forEach((prop) => {
-                            const val = style[prop as any];
-                            if (val && (val.includes("oklab") || val.includes("oklch"))) {
-                                let safeVal = "#000000";
-                                if (prop === "color") safeVal = "#ffffff";
-                                if (prop.includes("background")) safeVal = "rgba(0,0,0,0)";
-
-                                if (prop === "color") {
-                                    element.style.color = "#e7e5e4";
-                                } else if (prop === "backgroundColor") {
-                                    element.style.backgroundColor = "#0c0a09";
-                                } else {
-                                    (element.style as any)[prop] = safeVal;
-                                }
-                                replacements++;
-                            }
-                        });
-
-                        if (element instanceof SVGElement) {
-                            const svgAttrs = ["fill", "stroke"];
-                            svgAttrs.forEach((attr) => {
-                                const val = element.getAttribute(attr);
-                                if (val && (val.includes("oklab") || val.includes("oklch"))) {
-                                    element.setAttribute(attr, "#3f1d1d");
-                                    replacements++;
-                                }
-                            });
-                        }
-                    });
-                } catch (e) {}
-            },
-        });
-
-        element.style.transform = originalTransform;
-        element.style.transition = originalTransition;
-        element.style.opacity = originalOpacity;
-        element.style.background = originalBackground;
-
-        const blob = await new Promise<Blob | null>((resolve) => {
-            canvas.toBlob((b) => resolve(b), "image/jpeg", 0.9);
-        });
-
-        if (blob) {
-            const file = new File([blob], fileName.replace(/\.webp$/i, ".jpg"), {
-                type: "image/jpeg",
-            });
-
-            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                try {
-                    await copyToClipboard();
-
-                    if ((window as any).toast) {
-                        (window as any).toast.show(
-                            "Texto copiado. Pégalo al compartir.",
-                            "success"
-                        );
-                    }
-
-                    const isIOS =
-                        /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
-
-                    const shareData: any = {
-                        files: [file],
-                    };
-
-                    if (!isIOS) {
-                        shareData.text = fullShareText;
-                        shareData.title = title;
-                    }
-
-                    await navigator.share(shareData);
-                    onSuccess?.();
-                } catch (err: any) {
-                    if (err.name === "AbortError") {
-                        return;
-                    }
-                    downloadBlob(blob, fileName);
-                }
-            } else {
-                let textShared = false;
-                if (navigator.share) {
-                    try {
-                        await navigator.share({
-                            title: title,
-                            text: fullShareText,
-                        });
-                        textShared = true;
-                    } catch (err) {}
-                }
-
-                if (!textShared) {
-                    copyToClipboard();
-                }
-
-                downloadBlob(blob, fileName);
-            }
-        } else {
-            await shareTextOnly();
-        }
-    } catch (error: any) {
-        await shareTextOnly();
+        await navigator.clipboard.writeText(text);
+        return true;
+    } catch {
+        return false;
     }
 };
 
-export async function handleGlobalShare(e: MouseEvent) {
-    const target = e.target as HTMLElement;
-    const btn = target.closest("[data-share-btn]");
-
-    if (!btn) return;
-
-    const element = btn as HTMLElement;
-    const shareText = element.dataset.shareText;
-    const targetId = element.dataset.shareTargetId;
-    const fileName = element.dataset.shareFilename || "share.webp";
-    const shareTitle = element.dataset.shareTitle || "Compartir";
-
-    if (targetId) {
-        const targetEl = document.getElementById(targetId);
-        if (targetEl) {
-            await shareElementAsImage({
-                element: targetEl,
-                title: shareTitle,
-                text: shareText || "",
-                fileName: fileName,
-            });
-            return;
+const shareText = async (title: string, text: string): Promise<boolean> => {
+    if (navigator.share) {
+        try {
+            await navigator.share({ title, text });
+            return true;
+        } catch (error) {
+            if (isAbortError(error)) return true;
         }
     }
 
-    if (!shareText) return;
+    return copyText(text);
+};
 
-    const fullText = `${shareText}\n\n${window.location.href}`;
+const containsUnsupportedColor = (value: string): boolean =>
+    value.includes("oklab") || value.includes("oklch");
 
-    const tryShare = async () => {
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: shareTitle,
-                    text: fullText,
-                });
-                return true;
-            } catch (err) {
-                if ((err as Error).name === "AbortError") return true;
-            }
+const getSafeColor = (property: string): string => {
+    if (property === "color") return "#e7e5e4";
+    if (property.includes("background")) return "rgba(0, 0, 0, 0)";
+    return "#000000";
+};
+
+const sanitizeStyleTags = (clonedDocument: Document) => {
+    clonedDocument.querySelectorAll("style").forEach((styleTag) => {
+        if (!containsUnsupportedColor(styleTag.innerHTML)) return;
+        styleTag.innerHTML = styleTag.innerHTML.replace(/(oklab|oklch)\([^)]+\)/g, "#000000");
+    });
+};
+
+const sanitizeSvgColors = (element: SVGElement) => {
+    for (const attribute of ["fill", "stroke"]) {
+        const value = element.getAttribute(attribute);
+        if (value && containsUnsupportedColor(value)) {
+            element.setAttribute(attribute, "#3f1d1d");
         }
-        return await copyToClipboard();
-    };
+    }
+};
 
-    const copyToClipboard = async () => {
-        try {
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            const isSecure = window.isSecureContext;
+const sanitizeElementColors = (element: Element) => {
+    if (!(element instanceof HTMLElement || element instanceof SVGElement)) return;
+    const view = element.ownerDocument.defaultView;
+    if (!view) return;
 
-            if (isMobile && !isSecure) {
-                if ((window as any).toast) {
-                    (window as any).toast.show(
-                        "Compartir requiere HTTPS. Copiado al portapapeles.",
-                        "warning"
-                    );
-                }
-            }
-
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                await navigator.clipboard.writeText(fullText);
-            } else {
-                throw new Error("Clipboard API unavailable");
-            }
-
-            showCopiedFeedback();
-            return true;
-        } catch (err) {
-            return fallbackCopyTextToClipboard(fullText);
+    const computedStyle = view.getComputedStyle(element);
+    for (const property of COLOR_PROPERTIES) {
+        const value = computedStyle.getPropertyValue(property);
+        if (containsUnsupportedColor(value)) {
+            element.style.setProperty(property, getSafeColor(property));
         }
-    };
+    }
 
-    const fallbackCopyTextToClipboard = (text: string) => {
-        try {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
+    if (element instanceof SVGElement) sanitizeSvgColors(element);
+};
 
-            textArea.style.top = "0";
-            textArea.style.left = "0";
-            textArea.style.position = "fixed";
-            textArea.style.opacity = "0";
+const sanitizeClone = (clonedDocument: Document) => {
+    sanitizeStyleTags(clonedDocument);
+    clonedDocument.querySelectorAll("*").forEach(sanitizeElementColors);
+};
 
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
+const readElementStyles = (element: HTMLElement): ElementStyles => ({
+    background: element.style.background,
+    opacity: element.style.opacity,
+    transform: element.style.transform,
+    transition: element.style.transition,
+});
 
-            const successful = document.execCommand("copy");
-            document.body.removeChild(textArea);
+const applyCaptureStyles = (element: HTMLElement) => {
+    element.style.background = "radial-gradient(circle at center, #292524 0%, #0c0a09 100%)";
+    element.style.opacity = "1";
+    element.style.transform = "none";
+    element.style.transition = "none";
+};
 
-            if (successful) {
-                showCopiedFeedback();
-                return true;
-            } else {
-                return false;
-            }
-        } catch (err) {
-            return false;
-        }
-    };
+const restoreElementStyles = (element: HTMLElement, styles: ElementStyles) => {
+    element.style.background = styles.background;
+    element.style.opacity = styles.opacity;
+    element.style.transform = styles.transform;
+    element.style.transition = styles.transition;
+};
 
-    const showCopiedFeedback = () => {
-        const originalContent = element.innerHTML;
+const captureElement = async (element: HTMLElement): Promise<Blob | null> => {
+    const originalStyles = readElementStyles(element);
+    applyCaptureStyles(element);
 
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        const isSecure = window.isSecureContext;
+    try {
+        const html2canvas = (await import("html2canvas")).default;
+        const canvas = await html2canvas(element, {
+            allowTaint: true,
+            backgroundColor: null,
+            ignoreElements: (candidate) => candidate.classList.contains("ignore-capture"),
+            logging: false,
+            onclone: sanitizeClone,
+            scale: 2,
+            useCORS: true,
+        });
+        return await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.9));
+    } finally {
+        restoreElementStyles(element, originalStyles);
+    }
+};
 
-        if (!isMobile || isSecure) {
-            element.innerHTML =
-                '<span style="font-size: 0.75em; font-weight: bold; color: #10b981;">¡Copiado!</span>';
+const isIos = (): boolean => /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-            setTimeout(() => {
-                element.innerHTML = originalContent;
-            }, 2000);
-        }
-    };
+const shareFile = async (file: File, title: string, text: string): Promise<boolean> => {
+    const files = [file];
+    if (!navigator.share || !navigator.canShare?.({ files })) return false;
 
-    await tryShare();
-}
+    await copyText(text);
+    getToast()?.show("Texto copiado. Pégalo al compartir.", "success");
+    const shareData: ShareData = { files };
+    if (!isIos()) {
+        shareData.text = text;
+        shareData.title = title;
+    }
 
-if (typeof window !== "undefined") {
-    document.addEventListener("click", handleGlobalShare);
-}
+    try {
+        await navigator.share(shareData);
+        return true;
+    } catch (error) {
+        return isAbortError(error);
+    }
+};
+
+const shareImageBlob = async (
+    blob: Blob,
+    fileName: string,
+    title: string,
+    text: string
+): Promise<boolean> => {
+    const jpegName = fileName.replace(/\.webp$/i, ".jpg");
+    const file = new File([blob], jpegName, { type: "image/jpeg" });
+    if (await shareFile(file, title, text)) return true;
+
+    await shareText(title, text);
+    downloadBlob(blob, jpegName);
+    return true;
+};
+
+const completeImageShare = async (
+    blob: Blob | null,
+    fileName: string,
+    title: string,
+    text: string
+): Promise<boolean> => {
+    if (!blob) return shareText(title, text);
+    return shareImageBlob(blob, fileName, title, text);
+};
+
+const resolveImageOptions = (options: ShareImageOptions) => ({
+    fileName: options.fileName ?? "share-image.webp",
+    url: options.url ?? window.location.href,
+});
+
+const notifySuccess = (callback: (() => void) | undefined) => callback?.();
+
+const notifyError = (callback: ((error: Error) => void) | undefined, error: unknown) =>
+    callback?.(toError(error));
+
+export const shareElementAsImage = async (options: ShareImageOptions) => {
+    const { element, title, text, onSuccess, onError } = options;
+    const { fileName, url } = resolveImageOptions(options);
+    const fullText = `${title}\n\n${text}\n\n${url}`;
+
+    try {
+        const blob = await captureElement(element);
+        const completed = await completeImageShare(blob, fileName, title, fullText);
+        if (completed) notifySuccess(onSuccess);
+    } catch (error) {
+        notifyError(onError, error);
+        if (await shareText(title, fullText)) notifySuccess(onSuccess);
+    }
+};

@@ -31,7 +31,7 @@ const { side, texts } = Astro.props;
                 <div class="lb-page-sublabel">{texts.sublabel}</div>
             </div>
 
-            <p class="lb-page-quote" set:html={texts.quote}></p>
+            <p class="lb-page-quote" set:html={texts.quote} />
         </div>
     )
 }
@@ -49,7 +49,7 @@ const { side, texts } = Astro.props;
     .lb-page-cats-glow {
         position: absolute;
         inset: 0;
-        background-color: rgba(234, 179, 8, 0.1);
+        background-color: rgb(234 179 8 / 0.1);
         filter: blur(64px);
         border-radius: 9999px;
         animation: lb-pulse 2s infinite;
@@ -70,6 +70,7 @@ const { side, texts } = Astro.props;
         100% {
             opacity: 1;
         }
+
         50% {
             opacity: 0.5;
         }

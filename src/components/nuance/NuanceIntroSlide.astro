@@ -1,0 +1,23 @@
+---
+import type { NuanceTexts } from "../../concepts/nuance/types";
+import NuanceSlide from "./NuanceSlide.astro";
+
+interface Props {
+    intro: NuanceTexts["intro"];
+}
+
+const { intro } = Astro.props;
+---
+
+<NuanceSlide id="intro" labelLeft={intro.labelLeft} labelRight={intro.labelRight}>
+    <h1 slot="center" class="nslide-main-title nslide-title--intro">{intro.title}</h1>
+    <p slot="center" class="nslide-main-desc">
+        {intro.descriptionFirst}<br />{intro.descriptionSecond}
+    </p>
+
+    <h1 slot="left" class="nslide-left-title">{intro.leftTitle}</h1>
+    <p slot="left" class="nslide-left-desc">{intro.leftDescription}</p>
+
+    <h1 slot="right" class="nslide-right-title">{intro.rightTitle}</h1>
+    <p slot="right" class="nslide-right-desc">{intro.rightDescription}</p>
+</NuanceSlide>

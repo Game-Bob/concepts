@@ -13,9 +13,11 @@ interface Props {
     description: string;
     canonical: string;
     alternates: readonly AlternateLink[];
+    image?: string;
 }
 
-const { language, brand, title, description, canonical, alternates } = Astro.props;
+const { language, brand, title, description, canonical, alternates, image } = Astro.props;
+const socialImage = image ? new URL(image, canonical).href : undefined;
 ---
 
 <!doctype html>
@@ -26,6 +28,8 @@ const { language, brand, title, description, canonical, alternates } = Astro.pro
         <ThemeBoot />
         <title>{title}</title>
         <meta name="description" content={description} />
+        {socialImage && <meta property="og:image" content={socialImage} />}
+        {socialImage && <meta name="twitter:image" content={socialImage} />}
         <link rel="canonical" href={canonical} />
         {
             alternates.map(({ language: alternateLanguage, url }) => (

@@ -1,0 +1,125 @@
+.nuance-card {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 24rem;
+    min-height: 25rem;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    text-decoration: none;
+    transition:
+        background-color 0.5s ease,
+        border-color 0.5s ease;
+}
+
+.nuance-card:hover {
+    border-color: var(--color-accent);
+    background-color: var(--color-page);
+}
+
+.nuance-card__glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgb(100 100 100), transparent 70%);
+    opacity: 0.1;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.nuance-card:hover .nuance-card__glow {
+    opacity: 0.2;
+}
+
+.nuance-card__content {
+    position: relative;
+    display: flex;
+    min-height: 25rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+.nuance-card__icon {
+    margin-bottom: 2rem;
+    color: var(--color-text);
+    opacity: 0.8;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nuance-card:hover .nuance-card__icon {
+    transform: scale(1.1);
+}
+
+.nuance-card__icon svg {
+    width: 4rem;
+    height: 4rem;
+}
+
+.nuance-card__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nuance-card h2 {
+    margin: 0 0 0.75rem;
+    color: var(--color-text);
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.nuance-card__subtitle {
+    margin: 0 0 1.5rem;
+    color: var(--color-muted);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    opacity: 0.6;
+    text-transform: uppercase;
+}
+
+.nuance-card__line {
+    width: 3rem;
+    height: 1px;
+    margin-bottom: 1.5rem;
+    background-color: var(--color-border);
+}
+
+.nuance-card__description {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 1.125rem;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.nuance-card__border {
+    position: absolute;
+    inset: 1rem;
+    border: 1px solid var(--color-border);
+    opacity: 0.3;
+    pointer-events: none;
+    transition:
+        border-color 0.5s ease,
+        opacity 0.5s ease;
+}
+
+.nuance-card:hover .nuance-card__border {
+    border-color: var(--color-accent);
+    opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nuance-card,
+    .nuance-card__glow,
+    .nuance-card__icon,
+    .nuance-card__border {
+        transition: none;
+    }
+}
