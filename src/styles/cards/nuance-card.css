@@ -1,4 +1,9 @@
 .nuance-card {
+    --nuance-card-black: #000;
+    --nuance-card-white: #fff;
+    --nuance-card-background: var(--nuance-card-black);
+    --nuance-card-foreground: var(--nuance-card-white);
+
     position: relative;
     display: block;
     width: 100%;
@@ -6,35 +11,88 @@
     min-height: 25rem;
     margin: 0 auto;
     overflow: hidden;
-    border: 1px solid var(--color-border);
-    background-color: var(--color-surface);
-    color: var(--color-text);
+    border: 0.0625rem solid var(--nuance-card-foreground);
+    background: var(--nuance-card-background);
+    color: var(--nuance-card-foreground);
     text-decoration: none;
-    transition:
-        background-color 0.5s ease,
-        border-color 0.5s ease;
 }
 
-.nuance-card:hover {
-    border-color: var(--color-accent);
-    background-color: var(--color-page);
+.nuance-card[data-nuance-pole="white"] {
+    --nuance-card-background: var(--nuance-card-white);
+    --nuance-card-foreground: var(--nuance-card-black);
+}
+
+.nuance-card::before,
+.nuance-card::after {
+    position: absolute;
+    z-index: 4;
+    display: none;
+    pointer-events: none;
+    content: "";
+}
+
+.nuance-card::before {
+    inset: 0;
+    background: var(--nuance-card-foreground);
+    mix-blend-mode: difference;
+}
+
+.nuance-card::after {
+    inset: -10% 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0 0.45rem,
+        var(--nuance-card-foreground) 0.45rem 0.55rem,
+        transparent 0.55rem 1.15rem
+    );
+    mix-blend-mode: difference;
+}
+
+.nuance-card--glitch-a::before,
+.nuance-card--glitch-a::after,
+.nuance-card--glitch-b::before,
+.nuance-card--glitch-b::after {
+    display: block;
+}
+
+.nuance-card--glitch-a::before {
+    animation: nuance-card-fracture-a 180ms steps(2, jump-none) both;
+}
+
+.nuance-card--glitch-a::after {
+    animation: nuance-card-scan-a 180ms steps(3, jump-none) both;
+}
+
+.nuance-card--glitch-b::before {
+    animation: nuance-card-fracture-b 210ms steps(2, jump-none) both;
+}
+
+.nuance-card--glitch-b::after {
+    animation: nuance-card-scan-b 210ms steps(3, jump-none) both;
 }
 
 .nuance-card__glow {
     position: absolute;
+    z-index: 0;
     inset: 0;
-    background: radial-gradient(circle at center, rgb(100 100 100), transparent 70%);
-    opacity: 0.1;
+    background: linear-gradient(
+        90deg,
+        transparent 0 48%,
+        var(--nuance-card-foreground) 48% 52%,
+        transparent 52% 100%
+    );
+    opacity: 0;
     pointer-events: none;
-    transition: opacity 0.5s ease;
 }
 
-.nuance-card:hover .nuance-card__glow {
-    opacity: 0.2;
+.nuance-card--glitch-a .nuance-card__glow,
+.nuance-card--glitch-b .nuance-card__glow {
+    opacity: 1;
 }
 
 .nuance-card__content {
     position: relative;
+    z-index: 1;
     display: flex;
     min-height: 25rem;
     flex-direction: column;
@@ -44,15 +102,17 @@
     text-align: center;
 }
 
-.nuance-card__icon {
-    margin-bottom: 2rem;
-    color: var(--color-text);
-    opacity: 0.8;
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+.nuance-card--glitch-a .nuance-card__content {
+    animation: nuance-card-content-a 180ms steps(2, jump-none) both;
 }
 
-.nuance-card:hover .nuance-card__icon {
-    transform: scale(1.1);
+.nuance-card--glitch-b .nuance-card__content {
+    animation: nuance-card-content-b 210ms steps(2, jump-none) both;
+}
+
+.nuance-card__icon {
+    margin-bottom: 2rem;
+    color: var(--nuance-card-foreground);
 }
 
 .nuance-card__icon svg {
@@ -68,7 +128,7 @@
 
 .nuance-card h2 {
     margin: 0 0 0.75rem;
-    color: var(--color-text);
+    color: var(--nuance-card-foreground);
     font-size: 1.5rem;
     font-weight: 300;
     letter-spacing: 0.1em;
@@ -77,23 +137,23 @@
 
 .nuance-card__subtitle {
     margin: 0 0 1.5rem;
-    color: var(--color-muted);
-    font-size: 10px;
+    color: var(--nuance-card-foreground);
+    font-size: 0.625rem;
+    font-weight: 700;
     letter-spacing: 0.3em;
-    opacity: 0.6;
     text-transform: uppercase;
 }
 
 .nuance-card__line {
     width: 3rem;
-    height: 1px;
+    height: 0.0625rem;
     margin-bottom: 1.5rem;
-    background-color: var(--color-border);
+    background: var(--nuance-card-foreground);
 }
 
 .nuance-card__description {
     margin: 0;
-    color: var(--color-muted);
+    color: var(--nuance-card-foreground);
     font-size: 1.125rem;
     font-style: italic;
     line-height: 1.6;
@@ -101,25 +161,132 @@
 
 .nuance-card__border {
     position: absolute;
+    z-index: 2;
     inset: 1rem;
-    border: 1px solid var(--color-border);
-    opacity: 0.3;
+    border: 0.0625rem solid var(--nuance-card-foreground);
     pointer-events: none;
-    transition:
-        border-color 0.5s ease,
-        opacity 0.5s ease;
 }
 
 .nuance-card:hover .nuance-card__border {
-    border-color: var(--color-accent);
-    opacity: 0.5;
+    inset: 0.75rem;
+}
+
+.nuance-card:focus-visible {
+    outline: 0.25rem solid var(--nuance-card-foreground);
+    outline-offset: 0.25rem;
+}
+
+@keyframes nuance-card-fracture-a {
+    0% {
+        clip-path: inset(8% 0 72%);
+        transform: translateX(-7%);
+    }
+
+    35% {
+        clip-path: inset(42% 0 38%);
+        transform: translateX(9%);
+    }
+
+    70% {
+        clip-path: inset(74% 0 9%);
+        transform: translateX(-4%);
+    }
+
+    100% {
+        clip-path: inset(0);
+        transform: translateX(0);
+    }
+}
+
+@keyframes nuance-card-fracture-b {
+    0% {
+        clip-path: inset(68% 0 12%);
+        transform: translateX(8%);
+    }
+
+    40% {
+        clip-path: inset(18% 0 64%);
+        transform: translateX(-10%);
+    }
+
+    75% {
+        clip-path: inset(48% 0 32%);
+        transform: translateX(5%);
+    }
+
+    100% {
+        clip-path: inset(0);
+        transform: translateX(0);
+    }
+}
+
+@keyframes nuance-card-scan-a {
+    0% {
+        transform: translateY(-6%) skewY(1deg);
+    }
+
+    50% {
+        transform: translateY(9%) skewY(-2deg);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes nuance-card-scan-b {
+    0% {
+        transform: translateY(8%) skewY(-1deg);
+    }
+
+    45% {
+        transform: translateY(-10%) skewY(2deg);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes nuance-card-content-a {
+    0%,
+    100% {
+        transform: translate(0);
+    }
+
+    33% {
+        transform: translate(-0.35rem, 0.15rem);
+    }
+
+    66% {
+        transform: translate(0.3rem, -0.1rem);
+    }
+}
+
+@keyframes nuance-card-content-b {
+    0%,
+    100% {
+        transform: translate(0);
+    }
+
+    30% {
+        transform: translate(0.4rem, -0.15rem);
+    }
+
+    70% {
+        transform: translate(-0.25rem, 0.1rem);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .nuance-card,
-    .nuance-card__glow,
-    .nuance-card__icon,
-    .nuance-card__border {
-        transition: none;
+    .nuance-card::before,
+    .nuance-card::after,
+    .nuance-card__glow {
+        display: none;
+        animation: none;
+    }
+
+    .nuance-card__content {
+        animation: none;
     }
 }

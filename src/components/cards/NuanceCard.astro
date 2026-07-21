@@ -12,8 +12,14 @@ interface Props {
 const { href, locale, number } = Astro.props;
 ---
 
-<a class="nuance-card" href={href} data-concept-number={number}>
-    <div class="nuance-card__glow"></div>
+<a
+    class="nuance-card"
+    href={href}
+    data-concept-number={number}
+    data-nuance-card
+    data-nuance-pole="black"
+>
+    <div class="nuance-card__glow" aria-hidden="true"></div>
     <div class="nuance-card__content">
         <div class="nuance-card__icon">
             <Icon name="mdi:contrast-circle" />
@@ -25,5 +31,12 @@ const { href, locale, number } = Astro.props;
             <p class="nuance-card__description">"{locale.cardDescription}"</p>
         </div>
     </div>
-    <div class="nuance-card__border"></div>
+    <div class="nuance-card__border" aria-hidden="true"></div>
 </a>
+
+<script>
+    import { initializeNuanceCards } from "../../concepts/nuance/cardRuntime";
+
+    const cleanup = initializeNuanceCards();
+    document.addEventListener("astro:before-swap", cleanup, { once: true });
+</script>
