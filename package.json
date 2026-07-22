@@ -1,6 +1,6 @@
 {
     "name": "@jjlmoya/concepts",
-    "version": "0.0.0",
+    "version": "0.1.2",
     "private": true,
     "type": "module",
     "engines": {
@@ -23,6 +23,7 @@
         "cf:deploy": "npm run build && wrangler deploy",
         "cf:deployments": "wrangler deployments list",
         "cf:rollback": "wrangler rollback",
+        "minor": "node scripts/release.mjs minor",
         "prepare": "husky"
     },
     "dependencies": {
