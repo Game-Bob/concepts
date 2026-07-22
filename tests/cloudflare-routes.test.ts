@@ -34,10 +34,20 @@ describe("Cloudflare deployment", () => {
         expect(config.routes).toEqual([
             ...conceptRoutes,
             { pattern: "www.gamebob.dev/_studio/*", zone_name: "gamebob.dev" },
+            {
+                pattern: "www.gamebob.dev/images/death-reading.webp",
+                zone_name: "gamebob.dev",
+            },
+            { pattern: "www.gamebob.dev/images/wheat/*", zone_name: "gamebob.dev" },
             { pattern: "www.jjlmoya.es/conceptos", zone_name: "jjlmoya.es" },
             { pattern: "www.jjlmoya.es/conceptos/*", zone_name: "jjlmoya.es" },
             { pattern: "www.jjlmoya.es/conceptos/sitemap.xml", zone_name: "jjlmoya.es" },
             { pattern: "www.jjlmoya.es/_studio/*", zone_name: "jjlmoya.es" },
+            {
+                pattern: "www.jjlmoya.es/images/death-reading.webp",
+                zone_name: "jjlmoya.es",
+            },
+            { pattern: "www.jjlmoya.es/images/wheat/*", zone_name: "jjlmoya.es" },
         ]);
     });
 
