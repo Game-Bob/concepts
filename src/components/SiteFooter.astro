@@ -9,11 +9,7 @@ interface Props {
 }
 
 const { language } = Astro.props;
+const version = (import.meta.env.PUBLIC_APP_VERSION || packageJson.version).replace(/^v/, "");
 ---
 
-<Footer
-    class="concepts-site-footer"
-    identity={getBrand(language)}
-    {language}
-    version={packageJson.version}
-/>
+<Footer class="concepts-site-footer" identity={getBrand(language)} {language} {version} />
