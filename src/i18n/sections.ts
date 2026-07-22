@@ -12,8 +12,8 @@ export const CONCEPTS_SECTION_SLUGS = {
     pl: "koncepcje",
     id: "konsep",
     tr: "kavramlar",
-    ru: "концепции",
-    ja: "コンセプト",
-    ko: "콘셉트",
-    zh: "概念",
+    ru: "kontseptsii",
+    ja: "concepts",
+    ko: "concepts",
+    zh: "concepts",
 } as const satisfies Record<Language, string>;

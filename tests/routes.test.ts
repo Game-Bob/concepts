@@ -15,10 +15,10 @@ const EXPECTED_URLS: Record<Language, string> = {
     pl: "https://www.gamebob.dev/pl/koncepcje/",
     id: "https://www.gamebob.dev/id/konsep/",
     tr: "https://www.gamebob.dev/tr/kavramlar/",
-    ru: "https://www.gamebob.dev/ru/концепции/",
-    ja: "https://www.gamebob.dev/ja/コンセプト/",
-    ko: "https://www.gamebob.dev/ko/콘셉트/",
-    zh: "https://www.gamebob.dev/zh/概念/",
+    ru: "https://www.gamebob.dev/ru/kontseptsii/",
+    ja: "https://www.gamebob.dev/ja/concepts/",
+    ko: "https://www.gamebob.dev/ko/concepts/",
+    zh: "https://www.gamebob.dev/zh/concepts/",
 };
 
 describe("localized concepts routes", () => {
