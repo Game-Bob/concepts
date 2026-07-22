@@ -220,7 +220,7 @@ if (confirmTearBtn) {
         ) as HTMLElement | null;
         if (!activeSpread) return;
 
-        const shareTitle = shareBtn.getAttribute("title") || document.title;
+        const shareTitle = shareBtn?.getAttribute("title") || document.title;
         const shareText = getTornMessage(currentPage);
         void performTearShare(activeSpread, shareTitle, shareText);
     });
