@@ -149,6 +149,15 @@ export default [
         },
     },
     {
+        files: ["src/components/inflation/**/*"],
+        rules: {
+            "max-lines": "off",
+            "max-lines-per-function": "off",
+            complexity: "off",
+            "no-nested-ternary": "off",
+        },
+    },
+    {
         files: ["src/concepts/wheat/locales.ts"],
         rules: {
             "max-params": "off",

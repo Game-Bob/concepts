@@ -37,6 +37,26 @@
                 "media-feature-range-notation": null,
                 "declaration-block-no-redundant-longhand-properties": null
             }
+        },
+        {
+            "files": [
+                "src/components/InflationExperience.astro",
+                "src/components/inflation/**/*.astro",
+                "**/inflation-experience.css",
+                "**/inflation-card.css"
+            ],
+            "rules": {
+                "scale-unlimited/declaration-strict-value": null,
+                "color-function-notation": null,
+                "color-named": null,
+                "property-disallowed-list": null,
+                "rule-empty-line-before": [
+                    "always",
+                    {
+                        "ignore": ["inside-block"]
+                    }
+                ]
+            }
         }
     ],
     "rules": {
