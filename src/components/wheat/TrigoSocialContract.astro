@@ -1,0 +1,185 @@
+---
+import ShareableQuote from "./WheatShareableQuote.astro";
+
+import type { WheatTexts } from "../../concepts/wheat/types";
+
+interface Props {
+    texts: WheatTexts["socialContract"];
+    common: WheatTexts["common"];
+}
+
+const { texts, common } = Astro.props;
+---
+
+<section
+    id="contrato-social"
+    class="wheat-relative wheat-font-serif wheat-min-h-screen wheat-flex wheat-items-center wheat-justify-center wheat-py-12 wheat-py-24@md wheat-social-contract"
+>
+    <div
+        class="wheat-container wheat-container--wide wheat-grid wheat-grid--cols-2 wheat-items-center wheat-gap-12"
+    >
+        <div class="wheat-space-y-6 wheat-space-y-8@md">
+            <span
+                class="trigo-chapter wheat-contract-chapter wheat-text-xs wheat-text-sm@md wheat-tracking-widest wheat-uppercase"
+            >
+                {texts.chapter}
+            </span>
+            <h2 class="wheat-text-3xl wheat-text-4xl@md wheat-font-bold wheat-contract-title">
+                {texts.title}
+            </h2>
+            <p class="wheat-text-base wheat-text-lg@md wheat-leading-relaxed wheat-contract-desc">
+                {texts.firstParagraph}
+            </p>
+            <p class="wheat-text-base wheat-text-lg@md wheat-leading-relaxed wheat-contract-desc">
+                {texts.secondParagraph}
+                <ShareableQuote quote={texts.quote} shareLabel={common.shareIdea} />
+            </p>
+            <div class="wheat-contract-quote-box wheat-p-6">
+                <p class="wheat-italic wheat-contract-quote-text">
+                    {texts.lawQuote}
+                </p>
+                <p
+                    class="wheat-text-xs wheat-contract-quote-author wheat-mt-2 wheat-uppercase wheat-tracking-widest"
+                >
+                    {texts.lawAttribution}
+                </p>
+            </div>
+        </div>
+
+        <div
+            class="wheat-relative wheat-contract-visual-container wheat-p-8 wheat-flex wheat-flex-col wheat-items-center wheat-justify-center wheat-rounded wheat-border"
+        >
+            <div
+                class="wheat-contract-tablet wheat-rounded wheat-flex wheat-flex-col wheat-gap-1 wheat-p-4 wheat-overflow-hidden wheat-relative"
+            >
+                <div class="wheat-absolute wheat-inset-0 wheat-contract-tablet-overlay"></div>
+
+                <div class="wheat-contract-tablet-line wheat-contract-tablet-line--full"></div>
+                <div class="wheat-contract-tablet-line wheat-contract-tablet-line--2-3"></div>
+                <div class="wheat-contract-tablet-line wheat-contract-tablet-line--full wheat-mt-2">
+                </div>
+                <div class="wheat-contract-tablet-line wheat-contract-tablet-line--3-4"></div>
+                <div class="wheat-contract-tablet-line wheat-contract-tablet-line--full wheat-mt-2">
+                </div>
+                <div class="wheat-contract-tablet-line wheat-contract-tablet-line--1-2"></div>
+                <div class="wheat-contract-tablet-line wheat-contract-tablet-line--full wheat-mt-2">
+                </div>
+                <div class="wheat-contract-tablet-line wheat-contract-tablet-line--full"></div>
+                <div class="wheat-contract-tablet-line wheat-contract-tablet-line--4-5 wheat-mt-2">
+                </div>
+
+                <div
+                    class="wheat-absolute wheat-contract-tablet-seal wheat-rounded-full wheat-flex wheat-items-center wheat-justify-center"
+                >
+                    <div class="wheat-contract-tablet-seal-inner wheat-rounded-full"></div>
+                </div>
+            </div>
+            <p
+                class="wheat-mt-6 wheat-text-xs wheat-contract-tablet-caption wheat-font-mono wheat-text-center"
+            >
+                {texts.tabletTitle}<br />{texts.tabletPlace}
+            </p>
+        </div>
+    </div>
+</section>
+
+<style>
+    .wheat-social-contract {
+        color: var(--wheat-stone-200);
+        border-top: 1px solid rgb(120 53 4 / 0.1);
+    }
+
+    .wheat-contract-chapter {
+        color: var(--wheat-stone-400);
+    }
+
+    .wheat-contract-title {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-contract-desc {
+        color: var(--wheat-stone-300);
+    }
+
+    .wheat-contract-quote-box {
+        background-color: var(--wheat-stone-950);
+        border-left: 2px solid var(--wheat-amber-700);
+    }
+
+    .wheat-contract-quote-text {
+        color: var(--wheat-stone-400);
+    }
+
+    .wheat-contract-quote-author {
+        color: var(--wheat-amber-600);
+    }
+
+    .wheat-contract-visual-container {
+        height: 24rem;
+        background-color: var(--wheat-stone-800);
+        border-color: var(--wheat-stone-800);
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    }
+
+    .wheat-contract-tablet {
+        width: 12rem;
+        height: 16rem;
+        background-color: var(--wheat-stone-700);
+        box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.06);
+    }
+
+    .wheat-contract-tablet-overlay {
+        opacity: 0.5;
+        mix-blend-mode: multiply;
+    }
+
+    .wheat-contract-tablet-line {
+        height: 4px;
+        background-color: rgb(var(--wheat-stone-600-rgb) / 0.5);
+        border-radius: 0.25rem;
+    }
+
+    .wheat-contract-tablet-line--full {
+        width: 100%;
+    }
+
+    .wheat-contract-tablet-line--2-3 {
+        width: 66.6667%;
+    }
+
+    .wheat-contract-tablet-line--3-4 {
+        width: 75%;
+    }
+
+    .wheat-contract-tablet-line--1-2 {
+        width: 50%;
+    }
+
+    .wheat-contract-tablet-line--4-5 {
+        width: 80%;
+    }
+
+    .wheat-contract-tablet-seal {
+        bottom: 1rem;
+        right: 1rem;
+        width: 2rem;
+        height: 2rem;
+        border: 2px solid rgb(120 53 4 / 0.3);
+    }
+
+    .wheat-contract-tablet-seal-inner {
+        width: 1rem;
+        height: 1rem;
+        background-color: rgb(120 53 4 / 0.5);
+    }
+
+    .wheat-contract-tablet-caption {
+        color: var(--wheat-stone-500);
+    }
+
+    @media (width >= 768px) {
+        .wheat-space-y-8\@md > * + * {
+            margin-top: 2rem;
+        }
+    }
+</style>

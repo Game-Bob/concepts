@@ -1,0 +1,146 @@
+---
+import ShareableQuote from "./WheatShareableQuote.astro";
+
+import type { WheatTexts } from "../../concepts/wheat/types";
+
+interface Props {
+    texts: WheatTexts["deepTime"];
+    common: WheatTexts["common"];
+}
+
+const { texts, common } = Astro.props;
+---
+
+<section
+    id="tiempo-profundo"
+    class="wheat-relative wheat-font-serif wheat-min-h-screen wheat-flex wheat-items-center wheat-justify-center wheat-py-12 wheat-py-24@md wheat-overflow-hidden wheat-deeptime"
+>
+    <div
+        class="wheat-absolute wheat-inset-0 wheat-flex wheat-items-center wheat-deeptime-landscape"
+        id="landscape-mover"
+    >
+        <div class="wheat-deeptime-track wheat-flex wheat-items-center">
+            <div class="wheat-deeptime-circle wheat-deeptime-circle--1"></div>
+            <div class="wheat-deeptime-circle wheat-deeptime-circle--2"></div>
+            <div class="wheat-deeptime-circle wheat-deeptime-circle--3"></div>
+        </div>
+    </div>
+
+    <div class="wheat-w-full wheat-relative" id="section1-container">
+        <div class="wheat-w-full wheat-flex wheat-flex-col wheat-justify-center">
+            <div
+                class="wheat-relative wheat-deeptime-content wheat-max-w-4xl wheat-mx-auto wheat-px-6 wheat-text-center"
+            >
+                <span
+                    class="trigo-chapter wheat-deeptime-chapter wheat-text-xs wheat-text-sm@md wheat-tracking-widest wheat-uppercase wheat-block wheat-mb-4"
+                >
+                    {texts.chapter}
+                </span>
+                <h2
+                    class="wheat-text-4xl wheat-text-6xl@md wheat-font-bold wheat-mb-8 wheat-deeptime-title"
+                >
+                    {texts.title}
+                </h2>
+
+                <div
+                    class="wheat-space-y-6 wheat-space-y-8@md wheat-deeptime-card wheat-p-6 wheat-p-8@md wheat-rounded-lg wheat-mx-auto"
+                >
+                    <p
+                        class="wheat-text-xl wheat-text-2xl@md wheat-leading-relaxed wheat-deeptime-text-primary"
+                    >
+                        {texts.firstParagraph}
+                    </p>
+                    <p class="wheat-text-base wheat-text-lg@md wheat-deeptime-text-secondary">
+                        {texts.secondParagraph}
+                        <ShareableQuote quote={texts.quote} shareLabel={common.shareIdea} />
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .wheat-deeptime {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-deeptime-landscape {
+        transition: transform 100ms linear;
+    }
+
+    .wheat-deeptime-track {
+        width: 300vw;
+        height: 100%;
+        background: linear-gradient(
+            to right,
+            var(--wheat-stone-900),
+            var(--wheat-stone-800),
+            var(--wheat-stone-950)
+        );
+        justify-content: space-around;
+        opacity: 0.5;
+    }
+
+    .wheat-deeptime-circle {
+        border-radius: 50%;
+        filter: blur(64px);
+        opacity: 0.3;
+        width: 16rem;
+        height: 16rem;
+    }
+
+    @media (width >= 768px) {
+        .wheat-deeptime-circle {
+            width: 24rem;
+            height: 24rem;
+        }
+
+        .wheat-space-y-8\@md > * + * {
+            margin-top: 2rem;
+        }
+
+        .wheat-p-8\@md {
+            padding: 2rem;
+        }
+    }
+
+    .wheat-deeptime-circle--1 {
+        background-color: var(--wheat-stone-700);
+    }
+
+    .wheat-deeptime-circle--2 {
+        background-color: var(--wheat-stone-600);
+    }
+
+    .wheat-deeptime-circle--3 {
+        background-color: var(--wheat-stone-800);
+    }
+
+    .wheat-deeptime-content {
+        z-index: 10;
+    }
+
+    .wheat-deeptime-chapter {
+        color: rgb(217 119 6 / 0.6);
+    }
+
+    .wheat-deeptime-title {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-deeptime-card {
+        backdrop-filter: blur(4px);
+        background-color: rgb(0 0 0 / 0.3);
+        border: 1px solid rgb(var(--wheat-stone-500-rgb) / 0.5);
+        max-width: 42rem;
+    }
+
+    .wheat-deeptime-text-primary {
+        color: var(--wheat-stone-300);
+    }
+
+    .wheat-deeptime-text-secondary {
+        color: var(--wheat-stone-400);
+    }
+</style>

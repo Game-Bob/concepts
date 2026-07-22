@@ -1,0 +1,295 @@
+---
+import type { WheatTexts } from "../../concepts/wheat/types";
+
+interface Props {
+    texts: WheatTexts["tableOfContents"];
+}
+
+const { texts } = Astro.props;
+const sections = texts.sections;
+---
+
+<nav
+    class="wheat-fixed wheat-toc wheat-flex wheat-flex-col wheat-gap-4"
+    aria-label={texts.navigationLabel}
+>
+    {
+        sections.map((section) => (
+            <a
+                href={`#${section.id}`}
+                class="group wheat-flex wheat-items-center wheat-justify-end wheat-gap-3 wheat-toc-link"
+                aria-label={section.label}
+                data-theme={section.theme}
+            >
+                <span
+                    class:list={[
+                        "wheat-text-xs wheat-uppercase wheat-tracking-widest wheat-toc-label",
+                        section.theme === "emerald"
+                            ? "wheat-toc-label--emerald"
+                            : section.theme === "amber"
+                              ? "wheat-toc-label--amber"
+                              : "wheat-toc-label--neutral",
+                    ]}
+                >
+                    {section.label}
+                </span>
+                <div class:list={["wheat-toc-dot", section.theme]} />
+            </a>
+        ))
+    }
+</nav>
+
+<button
+    id="toc-mobile-toggle"
+    class="wheat-fixed wheat-toc-mobile-btn wheat-rounded-full wheat-flex wheat-items-center wheat-justify-center"
+    aria-label={texts.openLabel}
+>
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="wheat-toc-mobile-icon"
+    >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+    </svg>
+</button>
+
+<div
+    id="toc-mobile-menu"
+    class="wheat-fixed wheat-toc-mobile-menu wheat-flex wheat-flex-col translate-y-full"
+>
+    <div class="wheat-flex wheat-justify-end wheat-p-6">
+        <button
+            id="toc-mobile-close"
+            class="wheat-toc-mobile-close wheat-p-2"
+            aria-label={texts.closeLabel}
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="wheat-toc-mobile-close-icon"
+            >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"
+                ></path>
+            </svg>
+        </button>
+    </div>
+    <div class="wheat-flex-1 wheat-overflow-y-auto wheat-px-6 wheat-pb-12">
+        <h3
+            class="wheat-toc-mobile-title wheat-text-xs wheat-uppercase wheat-tracking-widest wheat-mb-8 wheat-pb-4"
+        >
+            {texts.title}
+        </h3>
+        <nav class="wheat-flex wheat-flex-col wheat-gap-6">
+            {
+                sections.map((section) => (
+                    <a
+                        href={`#${section.id}`}
+                        class="toc-mobile-link wheat-text-lg wheat-font-serif wheat-flex wheat-items-center wheat-gap-4 wheat-toc-mobile-link"
+                        data-target={section.id}
+                    >
+                        <span
+                            class:list={[
+                                "wheat-toc-mobile-dot wheat-rounded-full",
+                                section.theme === "emerald"
+                                    ? "wheat-toc-mobile-dot--emerald"
+                                    : section.theme === "amber"
+                                      ? "wheat-toc-mobile-dot--amber"
+                                      : "wheat-toc-mobile-dot--neutral",
+                            ]}
+                        />
+                        {section.label}
+                    </a>
+                ))
+            }
+        </nav>
+    </div>
+</div>
+
+<style>
+    .wheat-toc {
+        position: fixed;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 50;
+        display: none;
+    }
+
+    @media (width >= 1024px) {
+        .wheat-toc {
+            display: flex;
+        }
+    }
+
+    .wheat-toc-link {
+        text-decoration: none;
+    }
+
+    .wheat-toc-label {
+        font-size: 10px;
+        opacity: 0;
+        transform: translateX(-0.5rem);
+        transition: all 0.3s;
+        background-color: rgb(0 0 0 / 0.5);
+        backdrop-filter: blur(4px);
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+    }
+
+    .group:hover .wheat-toc-label {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .wheat-toc-label--emerald {
+        color: var(--wheat-emerald-400);
+    }
+
+    .wheat-toc-label--amber {
+        color: var(--wheat-amber-500);
+    }
+
+    .wheat-toc-label--neutral {
+        color: var(--wheat-stone-400);
+    }
+
+    .wheat-toc-dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        border: 1px solid var(--wheat-stone-700);
+        background-color: var(--wheat-stone-800);
+        transition: all 0.3s;
+    }
+
+    .group:hover .wheat-toc-dot {
+        transform: scale(1.25);
+    }
+
+    .group:hover .wheat-toc-dot.emerald,
+    .wheat-toc-dot.emerald.active {
+        background-color: var(--wheat-emerald-500);
+        border-color: var(--wheat-emerald-500);
+        transform: scale(1.25);
+    }
+
+    .group:hover .wheat-toc-dot.amber,
+    .wheat-toc-dot.amber.active {
+        background-color: var(--wheat-amber-500);
+        border-color: var(--wheat-amber-500);
+        transform: scale(1.25);
+    }
+
+    .group:hover .wheat-toc-dot.neutral,
+    .wheat-toc-dot.neutral.active {
+        background-color: var(--wheat-stone-500);
+        border-color: var(--wheat-stone-500);
+        transform: scale(1.25);
+    }
+
+    .wheat-toc-mobile-btn {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 50;
+        width: 3rem;
+        height: 3rem;
+        background-color: rgb(var(--wheat-stone-900-rgb) / 0.8);
+        backdrop-filter: blur(4px);
+        border: 1px solid var(--wheat-stone-700);
+        color: var(--wheat-amber-500);
+        box-shadow:
+            0 10px 15px -3px rgb(0 0 0 / 0.1),
+            0 4px 6px -2px rgb(0 0 0 / 0.05);
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    @media (width >= 1024px) {
+        .wheat-toc-mobile-btn {
+            display: none;
+        }
+    }
+
+    .wheat-toc-mobile-btn:hover {
+        transform: scale(1.05);
+    }
+
+    .wheat-toc-mobile-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .wheat-toc-mobile-menu {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        background-color: rgb(var(--wheat-stone-950-rgb) / 0.95);
+        backdrop-filter: blur(4px);
+        transition: transform 0.3s;
+    }
+
+    @media (width >= 1024px) {
+        .wheat-toc-mobile-menu {
+            display: none;
+        }
+    }
+
+    .wheat-toc-mobile-close {
+        background: none;
+        border: none;
+        color: var(--wheat-stone-400);
+        cursor: pointer;
+    }
+
+    .wheat-toc-mobile-close:hover {
+        color: var(--wheat-white);
+    }
+
+    .wheat-toc-mobile-close-icon {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .wheat-toc-mobile-title {
+        color: var(--wheat-amber-500);
+        font-weight: bold;
+        border-bottom: 1px solid var(--wheat-stone-800);
+    }
+
+    .wheat-toc-mobile-link {
+        text-decoration: none;
+        color: var(--wheat-stone-300);
+        transition: color 0.2s;
+    }
+
+    .wheat-toc-mobile-link:hover {
+        color: var(--wheat-amber-500);
+    }
+
+    .wheat-toc-mobile-dot {
+        width: 0.375rem;
+        height: 0.375rem;
+    }
+
+    .wheat-toc-mobile-dot--emerald {
+        background-color: var(--wheat-emerald-500);
+    }
+
+    .wheat-toc-mobile-dot--amber {
+        background-color: var(--wheat-amber-500);
+    }
+
+    .wheat-toc-mobile-dot--neutral {
+        background-color: var(--wheat-stone-500);
+    }
+</style>

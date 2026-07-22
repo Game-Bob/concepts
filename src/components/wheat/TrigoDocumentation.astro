@@ -1,0 +1,104 @@
+---
+import type { WheatTexts } from "../../concepts/wheat/types";
+interface Props {
+    texts: WheatTexts["documentation"];
+}
+const { texts } = Astro.props;
+---
+
+<section
+    id="documentacion"
+    class="wheat-relative wheat-font-mono wheat-py-12 wheat-py-24@md wheat-doc-section"
+>
+    <div class="wheat-container wheat-container--narrow">
+        <h3
+            class="trigo-chapter wheat-doc-chapter wheat-text-xs wheat-uppercase wheat-tracking-widest wheat-mb-12 wheat-pb-4"
+        >
+            {texts.title}
+        </h3><div
+            class="wheat-space-y-8 wheat-text-xs wheat-text-sm@md wheat-leading-relaxed wheat-doc-list"
+        >
+            {
+                texts.references.map((reference, index) => (
+                    <>
+                        <div class="wheat-doc-row">
+                            <>
+                                <div class="wheat-doc-row-title">{reference.category}</div>
+                                <div class="wheat-doc-row-content">
+                                    <>
+                                        <p class:list={[!false && "wheat-mb-2"]}>
+                                            <strong class:list={[!false && "wheat-doc-author"]}>
+                                                {reference.authors}
+                                            </strong>{" "}
+                                            {reference.year} <em>{reference.title}</em>{" "}
+                                            {reference.publisher}
+                                        </p>
+                                        <p class:list={[!false && "wheat-opacity-60"]}>
+                                            {reference.description}
+                                        </p>
+                                    </>
+                                </div>
+                            </>
+                        </div>
+                        {index < texts.references.length - 1 && <div class="wheat-doc-divider" />}
+                    </>
+                ))
+            }
+        </div><div
+            class="wheat-doc-footer wheat-mt-12 wheat-pt-12 wheat-flex wheat-justify-between wheat-items-end wheat-font-sans"
+        >
+            <div class="wheat-doc-footer-left">
+                <p>{texts.projectLabel}</p><p>{texts.updatedAt}</p>
+            </div><div class="wheat-doc-footer-right wheat-text-right">
+                <p>{texts.status}</p><p>{texts.identifier}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .wheat-doc-section {
+        color: var(--wheat-stone-600);
+        border-top: 1px solid var(--wheat-stone-900);
+    }
+
+    .wheat-doc-chapter {
+        color: var(--wheat-stone-700);
+        border-bottom: 1px solid var(--wheat-stone-900);
+    }
+
+    .wheat-doc-row {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1rem;
+    }
+
+    @media (width >= 768px) {
+        .wheat-doc-row {
+            grid-template-columns: 200px 1fr;
+            gap: 2rem;
+        }
+    }
+
+    .wheat-doc-row-title {
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        color: var(--wheat-stone-800);
+    }
+
+    .wheat-doc-author {
+        color: var(--wheat-stone-500);
+    }
+
+    .wheat-doc-divider {
+        width: 100%;
+        height: 1px;
+        background-color: var(--wheat-stone-900);
+    }
+
+    .wheat-doc-footer {
+        border-top: 1px solid var(--wheat-stone-900);
+        font-size: 10px;
+        color: var(--wheat-stone-800);
+    }
+</style>

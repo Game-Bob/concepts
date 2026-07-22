@@ -1,0 +1,28 @@
+---
+import type { WheatLocaleData } from "../../concepts/wheat/types";
+import WheatDualityGraphic from "./WheatDualityGraphic.astro";
+import "../../styles/cards/wheat-card.css";
+
+interface Props {
+    href: string;
+    locale: WheatLocaleData;
+    number: string;
+}
+
+const { href, locale, number } = Astro.props;
+---
+
+<a href={href} class="wheat-card">
+    <div class="wheat-card__glow-backdrop"></div>
+    <header class="wheat-card__header">
+        <span class="wheat-card__number">{number}</span>
+        <div class="wheat-card__title-group">
+            <h2>{locale.cardTitle}</h2>
+            <p>{locale.cardSubtitle}</p>
+        </div>
+    </header>
+
+    <WheatDualityGraphic leftLabel={locale.cardLeftLabel} rightLabel={locale.cardRightLabel} />
+
+    <blockquote class="wheat-card__statement">“{locale.cardDescription}”</blockquote>
+</a>

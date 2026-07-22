@@ -64,7 +64,14 @@ const sourceTextPlugin = {
 
 export default [
     {
-        ignores: ["dist/**", "node_modules/**", ".astro/**", ".wrangler/**", "coverage/**"],
+        ignores: [
+            "dist/**",
+            "node_modules/**",
+            ".astro/**",
+            ".wrangler/**",
+            "coverage/**",
+            "scratch/**",
+        ],
     },
     ...tseslint.configs.recommended,
     ...eslintPluginAstro.configs["flat/recommended"],
@@ -114,6 +121,7 @@ export default [
             "src/i18n/**/*.ts",
             "src/sections/**/locales.ts",
             "src/concepts/**/locales.ts",
+            "src/concepts/**/types.ts",
             "src/concepts/**/texts/**/*.ts",
         ],
         rules: {
@@ -129,6 +137,21 @@ export default [
             complexity: "off",
             "@typescript-eslint/no-unused-vars": "off",
             "source/no-emojis": "off",
+        },
+    },
+    {
+        files: ["src/components/wheat/**/*"],
+        rules: {
+            "max-lines": "off",
+            "max-lines-per-function": "off",
+            complexity: "off",
+            "no-nested-ternary": "off",
+        },
+    },
+    {
+        files: ["src/concepts/wheat/locales.ts"],
+        rules: {
+            "max-params": "off",
         },
     },
     {

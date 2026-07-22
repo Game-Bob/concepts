@@ -1,0 +1,79 @@
+---
+import type { WheatTexts } from "../../concepts/wheat/types";
+
+interface Props {
+    texts: WheatTexts["modernMap"];
+}
+
+const { texts } = Astro.props;
+---
+
+<section
+    id="mapa-moderno"
+    class="wheat-relative wheat-font-serif wheat-min-h-screen wheat-flex wheat-flex-col wheat-items-center wheat-justify-center wheat-py-12 wheat-py-24@md wheat-modernmap"
+>
+    <div
+        class="wheat-container wheat-container--narrow wheat-text-center wheat-mb-12 wheat-mb-16@md"
+    >
+        <span
+            class="trigo-chapter wheat-modernmap-chapter wheat-text-xs wheat-text-sm@md wheat-tracking-widest wheat-uppercase"
+        >
+            {texts.chapter}
+        </span>
+        <h2
+            class="wheat-text-3xl wheat-text-5xl@md wheat-font-bold wheat-mt-4 wheat-mb-6 wheat-mb-8@md wheat-modernmap-title"
+        >
+            {texts.title}
+        </h2>
+
+        <div
+            class="wheat-text-left wheat-space-y-4 wheat-space-y-6@md wheat-text-base wheat-text-lg@md wheat-leading-relaxed wheat-modernmap-desc wheat-max-w-2xl wheat-mx-auto"
+        >
+            <p>
+                {texts.firstParagraph}
+            </p>
+            <p>
+                {texts.secondParagraph}
+            </p>
+            <p class="wheat-font-bold wheat-modernmap-accent">
+                {texts.conclusion}
+            </p>
+        </div>
+    </div>
+</section>
+
+<style>
+    .wheat-modernmap {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-modernmap-chapter {
+        color: rgb(217 119 6 / 0.6);
+    }
+
+    .wheat-modernmap-title {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-modernmap-desc {
+        color: var(--wheat-stone-400);
+    }
+
+    .wheat-modernmap-accent {
+        color: rgb(var(--wheat-amber-500-rgb) / 0.8);
+    }
+
+    @media (width >= 768px) {
+        .wheat-mb-16\@md {
+            margin-bottom: 4rem;
+        }
+
+        .wheat-mb-8\@md {
+            margin-bottom: 2rem;
+        }
+
+        .wheat-space-y-6\@md > * + * {
+            margin-top: 1.5rem;
+        }
+    }
+</style>

@@ -1,0 +1,130 @@
+---
+import type { WheatTexts } from "../../concepts/wheat/types";
+
+interface Props {
+    texts: WheatTexts["positiveKnowledge"];
+}
+
+const { texts } = Astro.props;
+---
+
+<section
+    id="positive-knowledge"
+    class="wheat-relative wheat-font-serif wheat-min-h-screen wheat-flex wheat-items-center wheat-justify-center wheat-py-12 wheat-py-24@md wheat-pos-knowledge"
+>
+    <div
+        class="wheat-container wheat-container--narrow wheat-px-6 wheat-grid wheat-grid--cols-2 wheat-items-center wheat-gap-12"
+    >
+        <div class="wheat-pos-knowledge-content wheat-space-y-6">
+            <span
+                class="wheat-text-xs wheat-text-sm@md wheat-tracking-widest wheat-uppercase wheat-block trigo-positive-chapter"
+            >
+                {texts.chapter}
+            </span>
+            <h2 class="wheat-text-3xl wheat-text-5xl@md wheat-font-bold wheat-pos-knowledge-title">
+                {texts.title}
+            </h2>
+            <p class="wheat-text-lg wheat-pos-knowledge-desc-primary wheat-leading-relaxed">
+                {texts.firstParagraph}
+            </p>
+            <p class="wheat-text-base wheat-pos-knowledge-desc-secondary wheat-leading-relaxed">
+                {texts.secondParagraph}
+            </p>
+        </div>
+
+        <div
+            class="wheat-relative wheat-pos-knowledge-visual wheat-rounded-lg wheat-border wheat-flex wheat-items-center wheat-justify-center"
+        >
+            <div class="wheat-pos-knowledge-circle">
+                <div class="wheat-pos-knowledge-marker wheat-absolute"></div>
+                <div class="wheat-pos-knowledge-circle-inner-1 wheat-absolute"></div>
+                <div class="wheat-pos-knowledge-circle-inner-2 wheat-absolute"></div>
+                <div
+                    class="wheat-absolute wheat-inset-0 wheat-flex wheat-items-center wheat-justify-center"
+                >
+                    <div class="wheat-pos-knowledge-core-dot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .wheat-pos-knowledge {
+        color: var(--wheat-stone-200);
+        border-bottom: 1px solid rgb(var(--wheat-emerald-500-rgb) / 0.1);
+    }
+
+    .wheat-pos-knowledge-title {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-pos-knowledge-desc-primary {
+        color: var(--wheat-stone-300);
+    }
+
+    .wheat-pos-knowledge-desc-secondary {
+        color: var(--wheat-stone-400);
+    }
+
+    .wheat-pos-knowledge-visual {
+        height: 400px;
+        background-color: var(--wheat-stone-950);
+        border-color: rgb(var(--wheat-emerald-500-rgb) / 0.2);
+    }
+
+    .wheat-pos-knowledge-circle {
+        width: 16rem;
+        height: 16rem;
+        border-radius: 50%;
+        border: 1px solid rgb(var(--wheat-emerald-500-rgb) / 0.2);
+        position: relative;
+        animation: spin 20s linear infinite;
+    }
+
+    .wheat-pos-knowledge-marker {
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 1rem;
+        height: 1rem;
+        background-color: var(--wheat-emerald-500);
+        border-radius: 50%;
+        box-shadow: 0 0 15px rgb(var(--wheat-emerald-500-rgb) / 0.5);
+    }
+
+    .wheat-pos-knowledge-circle-inner-1 {
+        inset: 1rem;
+        border-radius: 50%;
+        border: 1px solid rgb(var(--wheat-emerald-500-rgb) / 0.1);
+    }
+
+    .wheat-pos-knowledge-circle-inner-2 {
+        inset: 3rem;
+        border-radius: 50%;
+        border: 1px solid rgb(var(--wheat-emerald-500-rgb) / 0.1);
+    }
+
+    .wheat-pos-knowledge-core-dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: var(--wheat-emerald-900);
+        border-radius: 50%;
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @media (width >= 768px) {
+        .wheat-space-y-6 > * + * {
+            margin-top: 1.5rem;
+        }
+    }
+</style>

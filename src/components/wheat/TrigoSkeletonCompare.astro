@@ -1,0 +1,109 @@
+---
+import ShareableQuote from "./WheatShareableQuote.astro";
+
+import type { WheatTexts } from "../../concepts/wheat/types";
+
+interface Props {
+    texts: WheatTexts["skeleton"];
+    common: WheatTexts["common"];
+}
+
+const { texts, common } = Astro.props;
+---
+
+<section
+    id="cuerpos-rotos"
+    class="wheat-relative wheat-font-serif wheat-min-h-screen wheat-flex wheat-items-center wheat-justify-center wheat-py-12 wheat-py-24@md wheat-skeleton-section"
+>
+    <div class="wheat-container wheat-container--wide wheat-px-6">
+        <div class="wheat-text-center wheat-mb-12 wheat-mb-16@md">
+            <span
+                class="trigo-chapter wheat-skeleton-chapter wheat-text-xs wheat-text-sm@md wheat-tracking-widest wheat-uppercase"
+            >
+                {texts.chapter}
+            </span>
+            <h2
+                class="wheat-text-3xl wheat-text-4xl@md wheat-font-bold wheat-mt-4 wheat-skeleton-title"
+            >
+                {texts.title}
+            </h2>
+        </div>
+
+        <div class="wheat-grid wheat-grid--cols-2 wheat-items-center wheat-gap-12">
+            <div class="wheat-space-y-6 wheat-space-y-8@md">
+                <p
+                    class="wheat-text-base wheat-text-lg@md wheat-leading-relaxed wheat-skeleton-text"
+                >
+                    <ShareableQuote quote={texts.quote} shareLabel={common.shareIdea} />
+                </p>
+                <p
+                    class="wheat-text-base wheat-text-lg@md wheat-leading-relaxed wheat-skeleton-text"
+                >
+                    {texts.description}
+                </p>
+            </div>
+
+            <div
+                class="wheat-relative wheat-skeleton-card wheat-p-4 wheat-rounded-lg wheat-flex wheat-flex-col wheat-items-center wheat-justify-center wheat-overflow-hidden"
+            >
+                <img
+                    src="/images/wheat/skeleton-compare.webp"
+                    alt={texts.imageAlt}
+                    class="wheat-w-full wheat-h-auto wheat-rounded wheat-skeleton-img"
+                />
+                <div class="wheat-mt-4 wheat-text-center wheat-font-mono wheat-skeleton-caption">
+                    {texts.figureCaption}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .wheat-skeleton-section {
+        color: var(--wheat-stone-200);
+        border-top: 1px solid rgb(120 53 4 / 0.1);
+    }
+
+    .wheat-skeleton-chapter {
+        color: var(--wheat-stone-400);
+    }
+
+    .wheat-skeleton-title {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-skeleton-text {
+        color: var(--wheat-stone-300);
+    }
+
+    .wheat-skeleton-card {
+        background-color: var(--wheat-stone-900);
+        border: 1px solid var(--wheat-stone-800);
+    }
+
+    .wheat-skeleton-img {
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+        opacity: 0.9;
+        transition: opacity 0.5s;
+    }
+
+    .wheat-skeleton-img:hover {
+        opacity: 1;
+    }
+
+    .wheat-skeleton-caption {
+        font-size: 10px;
+        color: var(--wheat-stone-600);
+    }
+
+    @media (width >= 768px) {
+        .wheat-mb-16\@md {
+            margin-bottom: 4rem;
+        }
+
+        .wheat-space-y-8\@md > * + * {
+            margin-top: 2rem;
+        }
+    }
+</style>

@@ -1,0 +1,98 @@
+---
+import ShareableQuote from "./WheatShareableQuote.astro";
+
+import type { WheatTexts } from "../../concepts/wheat/types";
+
+interface Props {
+    texts: WheatTexts["trap"];
+    common: WheatTexts["common"];
+}
+
+const { texts, common } = Astro.props;
+---
+
+<section
+    id="trampa"
+    class="wheat-relative wheat-font-serif wheat-min-h-screen wheat-flex wheat-items-center wheat-justify-center wheat-py-12 wheat-py-24@md wheat-trap"
+>
+    <div class="wheat-container wheat-container--narrow wheat-text-center">
+        <div class="wheat-space-y-12">
+            <div>
+                <span
+                    class="trigo-chapter wheat-trap-chapter wheat-text-xs wheat-text-sm@md wheat-tracking-widest wheat-uppercase"
+                >
+                    {texts.chapter}
+                </span>
+                <h2
+                    class="wheat-text-3xl wheat-text-5xl@md wheat-font-bold wheat-trap-title wheat-mt-4 wheat-mb-8"
+                >
+                    {texts.title}
+                </h2>
+            </div>
+
+            <div
+                class="wheat-space-y-8 wheat-text-lg wheat-text-xl@md wheat-leading-relaxed wheat-trap-desc wheat-max-w-2xl wheat-mx-auto"
+            >
+                <p>
+                    {texts.description}
+                </p>
+                <p class="wheat-font-bold wheat-trap-quote wheat-text-2xl wheat-text-3xl@md">
+                    <ShareableQuote quote={texts.quote} shareLabel={common.shareIdea} />
+                </p>
+            </div>
+
+            <div class="wheat-pt-12">
+                <div
+                    class="wheat-trap-card wheat-p-6 wheat-p-8@md wheat-rounded wheat-border wheat-inline-block"
+                >
+                    <p
+                        class="wheat-font-mono wheat-text-sm wheat-text-base@md wheat-trap-card-text wheat-italic"
+                    >
+                        {texts.figureCaption}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .wheat-trap {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-trap-chapter {
+        color: var(--wheat-stone-400);
+    }
+
+    .wheat-trap-title {
+        color: var(--wheat-stone-200);
+    }
+
+    .wheat-trap-desc {
+        color: var(--wheat-stone-300);
+    }
+
+    .wheat-trap-quote {
+        color: rgb(var(--wheat-amber-500-rgb) / 0.9);
+    }
+
+    .wheat-trap-card {
+        background-color: var(--wheat-stone-800);
+        border-color: rgb(146 64 14 / 0.1);
+    }
+
+    .wheat-trap-card-text {
+        color: var(--wheat-stone-400);
+    }
+
+    @media (width >= 768px) {
+        .wheat-p-8\@md {
+            padding: 2rem;
+        }
+
+        .wheat-text-base\@md {
+            font-size: 1rem;
+        }
+    }
+</style>

@@ -4,6 +4,7 @@ import { WAITING_CONCEPT } from "./waiting/locales";
 import { BOREDOM_CONCEPT } from "./boredom/locales";
 import { LIBRARY_CONCEPT } from "./library/locales";
 import { NUANCE_CONCEPT } from "./nuance/locales";
+import { WHEAT_CONCEPT } from "./wheat/locales";
 
 const CONCEPT_MODULES = [
     NUANCE_CONCEPT,
@@ -11,6 +12,7 @@ const CONCEPT_MODULES = [
     MEASUREMENT_CONCEPT,
     BOREDOM_CONCEPT,
     LIBRARY_CONCEPT,
+    WHEAT_CONCEPT,
 ] as const;
 
 type RegisteredConcept = (typeof CONCEPT_MODULES)[number];
