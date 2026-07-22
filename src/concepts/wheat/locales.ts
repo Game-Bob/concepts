@@ -35,21 +35,21 @@ export const WHEAT_SLUGS = {
 } as const satisfies Record<Language, string>;
 
 const WHEAT_CARD_LABELS = {
-    es: { cardLeftLabel: "Libertad", cardRightLabel: "Seguridad" },
-    en: { cardLeftLabel: "Freedom", cardRightLabel: "Security" },
-    fr: { cardLeftLabel: "Liberté", cardRightLabel: "Sécurité" },
-    de: { cardLeftLabel: "Freiheit", cardRightLabel: "Sicherheit" },
-    it: { cardLeftLabel: "Libertà", cardRightLabel: "Sicurezza" },
-    pt: { cardLeftLabel: "Liberdade", cardRightLabel: "Segurança" },
-    nl: { cardLeftLabel: "Vrijheid", cardRightLabel: "Veiligheid" },
-    sv: { cardLeftLabel: "Frihet", cardRightLabel: "Trygghet" },
-    pl: { cardLeftLabel: "Wolność", cardRightLabel: "Bezpieczeństwo" },
-    id: { cardLeftLabel: "Kebebasan", cardRightLabel: "Keamanan" },
-    tr: { cardLeftLabel: "Özgürlük", cardRightLabel: "Güvenlik" },
-    ru: { cardLeftLabel: "Свобода", cardRightLabel: "Безопасность" },
-    ja: { cardLeftLabel: "自由", cardRightLabel: "安全" },
-    ko: { cardLeftLabel: "자유", cardRightLabel: "안전" },
-    zh: { cardLeftLabel: "自由", cardRightLabel: "安全" },
+    es: { cardLeftLabel: "Salvador", cardRightLabel: "Esclavizador" },
+    en: { cardLeftLabel: "Saviour", cardRightLabel: "Enslaver" },
+    fr: { cardLeftLabel: "Sauveur", cardRightLabel: "Asservisseur" },
+    de: { cardLeftLabel: "Retter", cardRightLabel: "Versklaver" },
+    it: { cardLeftLabel: "Salvatore", cardRightLabel: "Schiavizzatore" },
+    pt: { cardLeftLabel: "Salvador", cardRightLabel: "Escravizador" },
+    nl: { cardLeftLabel: "Redder", cardRightLabel: "Onderwerper" },
+    sv: { cardLeftLabel: "Räddare", cardRightLabel: "Förslavare" },
+    pl: { cardLeftLabel: "Zbawca", cardRightLabel: "Zniewalający" },
+    id: { cardLeftLabel: "Penyelamat", cardRightLabel: "Memperbudak" },
+    tr: { cardLeftLabel: "Kurtarıcı", cardRightLabel: "Köleleştiren" },
+    ru: { cardLeftLabel: "Спаситель", cardRightLabel: "Поработитель" },
+    ja: { cardLeftLabel: "救済者", cardRightLabel: "支配者" },
+    ko: { cardLeftLabel: "구원자", cardRightLabel: "지배자" },
+    zh: { cardLeftLabel: "拯救者", cardRightLabel: "奴役者" },
 } as const satisfies Record<Language, Pick<WheatLocaleData, "cardLeftLabel" | "cardRightLabel">>;
 
 const localized = (

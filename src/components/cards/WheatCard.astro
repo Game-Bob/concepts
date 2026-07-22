@@ -10,13 +10,21 @@ interface Props {
 }
 
 const { href, locale, number } = Astro.props;
+const titleLength = [...locale.cardTitle].length;
+let titleSize = "short";
+
+if (titleLength > 16) {
+    titleSize = "long";
+} else if (titleLength > 9) {
+    titleSize = "medium";
+}
 ---
 
 <a href={href} class="wheat-card">
     <div class="wheat-card__glow-backdrop"></div>
     <header class="wheat-card__header">
         <span class="wheat-card__number">{number}</span>
-        <div class="wheat-card__title-group">
+        <div class:list={["wheat-card__title-group", `wheat-card__title-group--${titleSize}`]}>
             <h2>{locale.cardTitle}</h2>
             <p>{locale.cardSubtitle}</p>
         </div>
