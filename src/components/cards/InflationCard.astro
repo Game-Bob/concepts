@@ -1,0 +1,60 @@
+---
+import type { InflationLocaleData } from "../../concepts/inflation/types";
+import "../../styles/cards/inflation-card.css";
+
+interface Props {
+    href: string;
+    locale: InflationLocaleData;
+    number: string;
+}
+
+const { href, locale, number } = Astro.props;
+---
+
+<a href={href} class="inflation-card">
+    <div class="inflation-card__pressure" aria-hidden="true"></div>
+    <header class="inflation-card__header">
+        <span class="inflation-card__number">{number}</span>
+        <div class="inflation-card__title-group">
+            <p>{locale.cardSubtitle}</p>
+            <h2>{locale.cardTitle}</h2>
+        </div>
+    </header>
+
+    <div class="inflation-card__stage" aria-hidden="true">
+        <div class="inflation-card__banknote">
+            <span class="inflation-card__serial">MCMXC · 000001</span>
+            <span class="inflation-card__watermark">€</span>
+            <div class="inflation-card__denomination">
+                <strong>100</strong>
+                <span>€</span>
+            </div>
+            <span class="inflation-card__banknote-year">1980</span>
+            <span class="inflation-card__security-line"></span>
+        </div>
+
+        <div class="inflation-card__erosion-zone">
+            <div class="inflation-card__fire-sparks">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="inflation-card__remnant">
+            <span class="inflation-card__remnant-value">25<sup>€</sup></span>
+            <span class="inflation-card__remnant-year">2025</span>
+        </div>
+    </div>
+
+    <div class="inflation-card__timeline" aria-hidden="true">
+        <span>1980</span>
+        <i></i>
+        <span class="inflation-card__timeline-loss">−75%</span>
+        <i></i>
+        <span>2025</span>
+    </div>
+
+    <blockquote class="inflation-card__statement">“{locale.cardDescription}”</blockquote>
+</a>

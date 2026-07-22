@@ -1,0 +1,1037 @@
+.inflation-card {
+    --inflation-ink: #183d36;
+    --inflation-paper: #e9e1c7;
+    --inflation-heat: #e23d28;
+    --inflation-gold: #d5a62e;
+
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    min-height: 27rem;
+    flex-direction: column;
+    padding: 1.5rem;
+    overflow: hidden;
+    border: 0.0625rem solid rgb(24 61 54 / 0.35);
+    border-radius: 0.35rem;
+    background:
+        linear-gradient(90deg, transparent 49.7%, rgb(24 61 54 / 0.08) 50%, transparent 50.3%),
+        repeating-linear-gradient(
+            0deg,
+            rgb(24 61 54 / 0.035) 0 0.0625rem,
+            transparent 0.0625rem 0.3rem
+        ),
+        var(--inflation-paper);
+    color: var(--inflation-ink);
+    box-shadow:
+        0 1.5rem 4rem rgb(66 45 16 / 0.12),
+        inset 0 0 0 0.35rem rgb(255 255 255 / 0.28);
+    text-decoration: none;
+    transform: translateZ(0);
+    transition:
+        transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 500ms ease;
+}
+
+.inflation-card::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0.7rem;
+    border: 0.0625rem solid rgb(24 61 54 / 0.22);
+    content: "";
+    pointer-events: none;
+}
+
+.inflation-card::after {
+    position: absolute;
+    z-index: -2;
+    top: -45%;
+    right: -42%;
+    width: 85%;
+    aspect-ratio: 1;
+    border: 2.5rem solid rgb(226 61 40 / 0.1);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 1.35rem rgb(226 61 40 / 0.08),
+        0 0 0 3.2rem rgb(226 61 40 / 0.045);
+    animation: inflation-rings 14400s linear infinite alternate;
+    content: "";
+}
+
+.theme-dark .inflation-card {
+    --inflation-ink: #d9f5df;
+    --inflation-paper: #111a18;
+    --inflation-heat: #ff5a3d;
+    --inflation-gold: #f0bd3f;
+
+    border-color: rgb(185 229 193 / 0.24);
+    background:
+        linear-gradient(90deg, transparent 49.7%, rgb(185 229 193 / 0.08) 50%, transparent 50.3%),
+        repeating-linear-gradient(
+            0deg,
+            rgb(185 229 193 / 0.035) 0 0.0625rem,
+            transparent 0.0625rem 0.3rem
+        ),
+        var(--inflation-paper);
+    box-shadow:
+        0 1.5rem 4rem rgb(0 0 0 / 0.36),
+        inset 0 0 0 0.35rem rgb(255 255 255 / 0.025);
+}
+
+.theme-dark .inflation-card::before {
+    border-color: rgb(185 229 193 / 0.16);
+}
+
+.inflation-card:hover {
+    box-shadow:
+        0 2rem 4rem rgb(66 45 16 / 0.2),
+        inset 0 0 0 0.35rem rgb(255 255 255 / 0.32);
+    transform: translateY(-0.45rem) rotate(-0.35deg);
+}
+
+.theme-dark .inflation-card:hover {
+    box-shadow:
+        0 2rem 4.5rem rgb(0 0 0 / 0.55),
+        0 0 3rem rgb(226 61 40 / 0.08),
+        inset 0 0 0 0.35rem rgb(255 255 255 / 0.035);
+}
+
+.inflation-card__pressure {
+    position: absolute;
+    z-index: -1;
+    top: 4.75rem;
+    right: -3.5rem;
+    width: 9rem;
+    height: 13rem;
+    background: radial-gradient(ellipse, rgb(226 61 40 / 0.24), transparent 68%);
+    filter: blur(0.25rem);
+    animation: inflation-pressure 21600s linear forwards;
+    transform: rotate(-8deg);
+}
+
+.inflation-card__header {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.inflation-card__number {
+    display: grid;
+    width: 2.2rem;
+    aspect-ratio: 1;
+    border: 0.0625rem solid currentcolor;
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    opacity: 0.7;
+    place-items: center;
+}
+
+.inflation-card__title-group {
+    text-align: right;
+}
+
+.inflation-card__title-group p {
+    margin: 0 0 0.2rem;
+    color: var(--inflation-heat);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.inflation-card__title-group h2 {
+    margin: 0;
+    font-size: clamp(1.55rem, 5vw, 2.2rem);
+    font-weight: 950;
+    letter-spacing: -0.065em;
+    line-height: 0.85;
+}
+
+.inflation-card__stage {
+    position: relative;
+    height: 12.5rem;
+    margin: 1rem -1.5rem 0.35rem;
+}
+
+.inflation-card__banknote {
+    position: absolute;
+    top: 2.1rem;
+    left: 1.15rem;
+    width: 67%;
+    height: 7.2rem;
+    overflow: hidden;
+    border: 0.12rem solid var(--inflation-ink);
+    background:
+        radial-gradient(
+            circle at 72% 48%,
+            transparent 0 1.35rem,
+            rgb(24 61 54 / 0.23) 1.4rem 1.48rem,
+            transparent 1.53rem
+        ),
+        repeating-radial-gradient(
+            circle at 72% 48%,
+            transparent 0 0.28rem,
+            rgb(24 61 54 / 0.11) 0.3rem 0.34rem
+        ),
+        linear-gradient(135deg, #d9d4ad, #f5edcf 55%, #d3c897);
+    box-shadow:
+        0.55rem 0.65rem 0 rgb(24 61 54 / 0.17),
+        0 1rem 2rem rgb(66 45 16 / 0.16);
+    animation: inflation-banknote-burn 21600s linear forwards;
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        97% 12%,
+        100% 23%,
+        96% 35%,
+        99% 49%,
+        95% 62%,
+        98% 76%,
+        94% 88%,
+        96% 100%,
+        0 100%
+    );
+    transform: rotate(-4deg);
+}
+
+.theme-dark .inflation-card__banknote {
+    background:
+        radial-gradient(
+            circle at 72% 48%,
+            transparent 0 1.35rem,
+            rgb(217 245 223 / 0.2) 1.4rem 1.48rem,
+            transparent 1.53rem
+        ),
+        repeating-radial-gradient(
+            circle at 72% 48%,
+            transparent 0 0.28rem,
+            rgb(217 245 223 / 0.09) 0.3rem 0.34rem
+        ),
+        linear-gradient(135deg, #173e35, #245e4f 55%, #122f29);
+    box-shadow:
+        0.55rem 0.65rem 0 rgb(217 245 223 / 0.11),
+        0 1rem 2rem rgb(0 0 0 / 0.35);
+}
+
+.inflation-card__banknote::before,
+.inflation-card__banknote::after {
+    position: absolute;
+    border: 0.0625rem solid currentcolor;
+    border-radius: 50%;
+    content: "";
+    opacity: 0.3;
+}
+
+.inflation-card__banknote::before {
+    top: -3.3rem;
+    left: -2.5rem;
+    width: 8rem;
+    aspect-ratio: 1;
+    box-shadow:
+        0 0 0 0.25rem transparent,
+        0 0 0 0.32rem currentcolor;
+}
+
+.inflation-card__banknote::after {
+    right: -1.8rem;
+    bottom: -2.8rem;
+    width: 6.5rem;
+    aspect-ratio: 1;
+}
+
+.inflation-card__serial {
+    position: absolute;
+    top: 0.55rem;
+    left: 0.7rem;
+    font-size: 0.42rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    opacity: 0.66;
+}
+
+.inflation-card__watermark {
+    position: absolute;
+    top: 50%;
+    left: 58%;
+    font-size: 5rem;
+    font-weight: 300;
+    line-height: 1;
+    opacity: 0.08;
+    transform: translate(-50%, -50%);
+}
+
+.inflation-card__denomination {
+    position: absolute;
+    bottom: 0.8rem;
+    left: 0.75rem;
+    display: flex;
+    align-items: flex-start;
+    line-height: 0.75;
+}
+
+.inflation-card__denomination strong {
+    font-size: clamp(2.5rem, 11vw, 4rem);
+    font-weight: 950;
+    letter-spacing: -0.09em;
+}
+
+.inflation-card__denomination span {
+    margin: -0.15rem 0 0 0.2rem;
+    font-size: 1rem;
+    font-weight: 900;
+}
+
+.inflation-card__banknote-year {
+    position: absolute;
+    right: 0.55rem;
+    bottom: 0.45rem;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    transform: rotate(-90deg) translateX(100%);
+    transform-origin: right bottom;
+}
+
+.inflation-card__security-line {
+    position: absolute;
+    top: -15%;
+    left: 44%;
+    width: 0.18rem;
+    height: 130%;
+    background: repeating-linear-gradient(
+        to bottom,
+        var(--inflation-gold) 0 0.25rem,
+        transparent 0.25rem 0.42rem
+    );
+    opacity: 0.75;
+    transform: rotate(8deg);
+}
+
+.inflation-card__erosion-zone {
+    position: absolute;
+    z-index: 3;
+    top: 2.1rem;
+    left: 1.15rem;
+    width: 67%;
+    height: 7.2rem;
+    animation: inflation-burn-front 21600s linear forwards;
+    pointer-events: none;
+}
+
+.inflation-card__erosion-zone::before {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, #ff5a3d, #fff3b0 48%, #ff8a24);
+    clip-path: polygon(
+        98.5% 0,
+        100% 0,
+        97% 12%,
+        100% 23%,
+        96% 35%,
+        99% 49%,
+        95% 62%,
+        98% 76%,
+        94% 88%,
+        96% 100%,
+        94.5% 100%,
+        92.5% 88%,
+        96.5% 76%,
+        93.5% 62%,
+        97.5% 49%,
+        94.5% 35%,
+        98.5% 23%,
+        95.5% 12%
+    );
+    animation:
+        inflation-burn-edge-shape 21600s linear forwards,
+        inflation-ember 1.8s steps(4, end) infinite alternate;
+    content: "";
+}
+
+.inflation-card__fire-sparks {
+    position: absolute;
+    inset: 0;
+}
+
+.inflation-card__fire-sparks i {
+    --spark-start-x: 99%;
+    --spark-end-x: 56%;
+    --spark-y: 50%;
+    --spark-size: 0.1rem;
+    --spark-duration: 2s;
+    --spark-delay: -0.4s;
+    --spark-flight-x: 1.5rem;
+    --spark-flight-y: -2rem;
+
+    position: absolute;
+    top: var(--spark-y);
+    left: var(--spark-start-x);
+    width: var(--spark-size);
+    aspect-ratio: 1;
+    border-radius: 55% 15% 55% 45%;
+    background-color: #fff3b0;
+    box-shadow: 0 0 0.2rem #ff5a3d;
+    animation:
+        inflation-spark-anchor 21600s linear forwards,
+        inflation-spark-flight-a var(--spark-duration) cubic-bezier(0.18, 0.72, 0.31, 1)
+            var(--spark-delay) infinite;
+}
+
+.inflation-card__fire-sparks i:nth-child(1) {
+    --spark-y: 4%;
+    --spark-start-x: 99%;
+    --spark-end-x: 57%;
+    --spark-size: 0.13rem;
+    --spark-duration: 1.35s;
+    --spark-delay: -0.2s;
+    --spark-flight-x: 1.3rem;
+    --spark-flight-y: -2.5rem;
+}
+
+.inflation-card__fire-sparks i:nth-child(2) {
+    --spark-y: 12%;
+    --spark-start-x: 97%;
+    --spark-end-x: 54%;
+    --spark-size: 0.07rem;
+    --spark-duration: 2.65s;
+    --spark-delay: -1.1s;
+    --spark-flight-x: 2.1rem;
+    --spark-flight-y: -1.4rem;
+}
+
+.inflation-card__fire-sparks i:nth-child(3) {
+    --spark-y: 23%;
+    --spark-start-x: 100%;
+    --spark-end-x: 60%;
+    --spark-size: 0.16rem;
+    --spark-duration: 1.8s;
+    --spark-delay: -0.7s;
+    --spark-flight-x: 0.9rem;
+    --spark-flight-y: -3rem;
+}
+
+.inflation-card__fire-sparks i:nth-child(4) {
+    --spark-y: 35%;
+    --spark-start-x: 96%;
+    --spark-end-x: 51%;
+    --spark-size: 0.06rem;
+    --spark-duration: 3.2s;
+    --spark-delay: -2.5s;
+    --spark-flight-x: 2.8rem;
+    --spark-flight-y: -0.8rem;
+}
+
+.inflation-card__fire-sparks i:nth-child(5) {
+    --spark-y: 49%;
+    --spark-start-x: 99%;
+    --spark-end-x: 57%;
+    --spark-size: 0.11rem;
+    --spark-duration: 2.1s;
+    --spark-delay: -1.8s;
+    --spark-flight-x: 1.7rem;
+    --spark-flight-y: -2rem;
+}
+
+.inflation-card__fire-sparks i:nth-child(6) {
+    --spark-y: 62%;
+    --spark-start-x: 95%;
+    --spark-end-x: 48%;
+    --spark-size: 0.09rem;
+    --spark-duration: 1.2s;
+    --spark-delay: -0.5s;
+    --spark-flight-x: 2.2rem;
+    --spark-flight-y: 1.4rem;
+}
+
+.inflation-card__fire-sparks i:nth-child(7) {
+    --spark-y: 76%;
+    --spark-start-x: 98%;
+    --spark-end-x: 54%;
+    --spark-size: 0.14rem;
+    --spark-duration: 2.9s;
+    --spark-delay: -2.2s;
+    --spark-flight-x: 1.1rem;
+    --spark-flight-y: -1.8rem;
+}
+
+.inflation-card__fire-sparks i:nth-child(8) {
+    --spark-y: 88%;
+    --spark-start-x: 94%;
+    --spark-end-x: 46%;
+    --spark-size: 0.055rem;
+    --spark-duration: 1.55s;
+    --spark-delay: -0.9s;
+    --spark-flight-x: 2.5rem;
+    --spark-flight-y: -0.5rem;
+}
+
+.inflation-card__fire-sparks i:nth-child(9) {
+    --spark-y: 97%;
+    --spark-start-x: 96%;
+    --spark-end-x: 50%;
+    --spark-size: 0.1rem;
+    --spark-duration: 2.4s;
+    --spark-delay: -1.7s;
+    --spark-flight-x: 1.6rem;
+    --spark-flight-y: 1.2rem;
+}
+
+.inflation-card__fire-sparks i:nth-child(10) {
+    --spark-y: 18%;
+    --spark-start-x: 98%;
+    --spark-end-x: 57%;
+    --spark-size: 0.045rem;
+    --spark-duration: 3.7s;
+    --spark-delay: -3.1s;
+    --spark-flight-x: 3rem;
+    --spark-flight-y: -2.2rem;
+}
+
+.inflation-card__fire-sparks i:nth-child(11) {
+    --spark-y: 42%;
+    --spark-start-x: 97%;
+    --spark-end-x: 54%;
+    --spark-size: 0.08rem;
+    --spark-duration: 1.7s;
+    --spark-delay: -1.35s;
+    --spark-flight-x: 1.2rem;
+    --spark-flight-y: -2.8rem;
+}
+
+.inflation-card__fire-sparks i:nth-child(12) {
+    --spark-y: 69%;
+    --spark-start-x: 96%;
+    --spark-end-x: 51%;
+    --spark-size: 0.12rem;
+    --spark-duration: 2.25s;
+    --spark-delay: -0.15s;
+    --spark-flight-x: 2.4rem;
+    --spark-flight-y: -1.1rem;
+}
+
+.inflation-card__fire-sparks i:nth-child(13) {
+    --spark-y: 31%;
+    --spark-start-x: 98%;
+    --spark-end-x: 55%;
+    --spark-size: 0.065rem;
+    --spark-duration: 1.05s;
+    --spark-delay: -0.8s;
+    --spark-flight-x: 0.7rem;
+    --spark-flight-y: -1.7rem;
+}
+
+.inflation-card__fire-sparks i:nth-child(14) {
+    --spark-y: 84%;
+    --spark-start-x: 95%;
+    --spark-end-x: 48%;
+    --spark-size: 0.09rem;
+    --spark-duration: 3.05s;
+    --spark-delay: -2.7s;
+    --spark-flight-x: 2.9rem;
+    --spark-flight-y: 0.6rem;
+}
+
+.inflation-card__fire-sparks i:nth-child(3n + 2) {
+    background-color: #ff8a24;
+    animation-name: inflation-spark-anchor, inflation-spark-flight-b;
+}
+
+.inflation-card__fire-sparks i:nth-child(4n) {
+    border-radius: 50%;
+    background-color: #ffbf47;
+    animation-name: inflation-spark-anchor, inflation-spark-flight-c;
+}
+
+.inflation-card__erosion-zone span {
+    position: absolute;
+    width: 0.42rem;
+    aspect-ratio: 1;
+    border: 0.0625rem solid var(--inflation-ink);
+    background-color: var(--inflation-paper);
+    opacity: 0.76;
+    animation:
+        inflation-fragment-front 21600s linear forwards,
+        inflation-ash-drift 5400s ease-in-out infinite alternate;
+    rotate: 18deg;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(1) {
+    top: 8%;
+    left: 96%;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(2) {
+    top: 23%;
+    left: 102%;
+    width: 0.65rem;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(3) {
+    top: 4%;
+    left: 108%;
+    width: 0.3rem;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(3n) {
+    animation-duration: 21600s, 6900s;
+    animation-direction: normal, alternate-reverse;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(4n) {
+    animation-duration: 21600s, 8100s;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(5n) {
+    animation-duration: 21600s, 4200s;
+    animation-direction: normal, alternate-reverse;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(4) {
+    top: 42%;
+    left: 94%;
+    width: 0.55rem;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(5) {
+    top: 54%;
+    left: 103%;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(6) {
+    top: 32%;
+    left: 112%;
+    width: 0.25rem;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(7) {
+    top: 74%;
+    left: 95%;
+    width: 0.3rem;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(8) {
+    top: 82%;
+    left: 101%;
+    width: 0.6rem;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(9) {
+    top: 68%;
+    left: 109%;
+    width: 0.34rem;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(10) {
+    top: 18%;
+    left: 116%;
+    width: 0.48rem;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(11) {
+    top: 91%;
+    left: 113%;
+    width: 0.22rem;
+}
+
+.inflation-card__erosion-zone span:nth-of-type(12) {
+    top: 48%;
+    left: 119%;
+    width: 0.28rem;
+}
+
+.inflation-card__remnant {
+    position: absolute;
+    z-index: 2;
+    top: 4.25rem;
+    right: 1.15rem;
+    display: grid;
+    width: 4.5rem;
+    aspect-ratio: 1;
+    border: 0.12rem solid var(--inflation-heat);
+    border-radius: 50%;
+    background-color: var(--inflation-paper);
+    color: var(--inflation-heat);
+    box-shadow:
+        0 0 0 0.18rem var(--inflation-paper),
+        0 0 0 0.24rem var(--inflation-heat),
+        0.35rem 0.45rem 0 rgb(226 61 40 / 0.15);
+    animation: inflation-remnant 21600s linear forwards;
+    place-content: center;
+    text-align: center;
+    transform: rotate(7deg) scale(0.86);
+}
+
+.inflation-card__remnant-value {
+    display: block;
+    font-size: 1.55rem;
+    font-weight: 950;
+    letter-spacing: -0.08em;
+    line-height: 0.8;
+}
+
+.inflation-card__remnant-value sup {
+    margin-left: 0.08rem;
+    font-size: 0.55rem;
+    letter-spacing: 0;
+}
+
+.inflation-card__remnant-year {
+    display: block;
+    margin-top: 0.28rem;
+    font-size: 0.46rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+}
+
+.inflation-card__timeline {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 0.25rem 1rem;
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+.inflation-card__timeline i {
+    height: 0.0625rem;
+    background: repeating-linear-gradient(
+        to right,
+        currentcolor 0 0.2rem,
+        transparent 0.2rem 0.4rem
+    );
+    opacity: 0.45;
+}
+
+.inflation-card__timeline-loss {
+    color: var(--inflation-heat);
+    font-size: 0.68rem;
+    font-weight: 950;
+}
+
+.inflation-card__statement {
+    position: relative;
+    margin: auto 0 0;
+    padding: 0.85rem 0.9rem 0 2.7rem;
+    border-top: 0.0625rem solid rgb(24 61 54 / 0.24);
+    font-size: 0.78rem;
+    font-style: italic;
+    line-height: 1.45;
+}
+
+.inflation-card__statement::before {
+    position: absolute;
+    top: 0.7rem;
+    left: 0.2rem;
+    color: var(--inflation-heat);
+    content: "↘";
+    font-size: 1.65rem;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 1;
+    animation: inflation-arrow-fall 240s ease-in-out infinite alternate;
+    transform: rotate(-8deg);
+}
+
+.theme-dark .inflation-card__statement {
+    border-top-color: rgb(217 245 223 / 0.18);
+}
+
+@keyframes inflation-banknote-burn {
+    0% {
+        clip-path: polygon(
+            0 0,
+            100% 0,
+            97% 12%,
+            100% 23%,
+            96% 35%,
+            99% 49%,
+            95% 62%,
+            98% 76%,
+            94% 88%,
+            96% 100%,
+            0 100%
+        );
+        filter: saturate(1);
+        transform: rotate(-4deg);
+    }
+
+    100% {
+        clip-path: polygon(
+            0 0,
+            58% 0,
+            54% 10%,
+            60% 22%,
+            51% 34%,
+            57% 47%,
+            48% 61%,
+            54% 74%,
+            46% 87%,
+            50% 100%,
+            0 100%
+        );
+        filter: saturate(0.65) sepia(0.28);
+        transform: translateX(-0.55rem) rotate(-7deg);
+    }
+}
+
+@keyframes inflation-ash-drift {
+    0% {
+        opacity: 0.76;
+        rotate: 18deg;
+        translate: 0 0;
+    }
+
+    100% {
+        opacity: 0.1;
+        rotate: 170deg;
+        translate: 2rem 1.5rem;
+    }
+}
+
+@keyframes inflation-ember {
+    0% {
+        filter: brightness(0.9) drop-shadow(0 0 0.18rem #ff5a3d) drop-shadow(0 0 0.45rem #ff8a24);
+        opacity: 0.72;
+    }
+
+    100% {
+        filter: brightness(1.65) drop-shadow(0 0 0.32rem #ff5a3d) drop-shadow(0 0 0.75rem #ff8a24);
+        opacity: 1;
+    }
+}
+
+@keyframes inflation-burn-front {
+    0% {
+        transform: rotate(-4deg);
+    }
+
+    100% {
+        transform: translateX(-0.55rem) rotate(-7deg);
+    }
+}
+
+@keyframes inflation-burn-edge-shape {
+    0% {
+        clip-path: polygon(
+            98.5% 0,
+            100% 0,
+            97% 12%,
+            100% 23%,
+            96% 35%,
+            99% 49%,
+            95% 62%,
+            98% 76%,
+            94% 88%,
+            96% 100%,
+            94.5% 100%,
+            92.5% 88%,
+            96.5% 76%,
+            93.5% 62%,
+            97.5% 49%,
+            94.5% 35%,
+            98.5% 23%,
+            95.5% 12%
+        );
+    }
+
+    100% {
+        clip-path: polygon(
+            56.5% 0,
+            58% 0,
+            54% 10%,
+            60% 22%,
+            51% 34%,
+            57% 47%,
+            48% 61%,
+            54% 74%,
+            46% 87%,
+            50% 100%,
+            48.5% 100%,
+            44.5% 87%,
+            52.5% 74%,
+            46.5% 61%,
+            55.5% 47%,
+            49.5% 34%,
+            58.5% 22%,
+            52.5% 10%
+        );
+    }
+}
+
+@keyframes inflation-spark-anchor {
+    0% {
+        left: var(--spark-start-x);
+    }
+
+    100% {
+        left: var(--spark-end-x);
+    }
+}
+
+@keyframes inflation-fragment-front {
+    0% {
+        margin-left: 0;
+    }
+
+    100% {
+        margin-left: -45%;
+    }
+}
+
+@keyframes inflation-spark-flight-a {
+    0% {
+        opacity: 0;
+        rotate: 0deg;
+        scale: 0.2;
+        translate: 0 0;
+    }
+
+    12% {
+        opacity: 1;
+    }
+
+    54% {
+        opacity: 0.82;
+        rotate: 67deg;
+        scale: 1;
+    }
+
+    100% {
+        opacity: 0;
+        rotate: 183deg;
+        scale: 0;
+        translate: var(--spark-flight-x) var(--spark-flight-y);
+    }
+}
+
+@keyframes inflation-spark-flight-b {
+    0% {
+        opacity: 0;
+        rotate: 18deg;
+        scale: 0.1;
+        translate: 0 0;
+    }
+    8% {
+        opacity: 0.9;
+    }
+    38% {
+        opacity: 1;
+        rotate: -54deg;
+        translate: -0.25rem -0.45rem;
+    }
+    100% {
+        opacity: 0;
+        rotate: -210deg;
+        scale: 0.05;
+        translate: var(--spark-flight-x) var(--spark-flight-y);
+    }
+}
+
+@keyframes inflation-spark-flight-c {
+    0% {
+        opacity: 0;
+        rotate: 0deg;
+        scale: 0.35;
+        translate: 0 0;
+    }
+    18% {
+        opacity: 1;
+    }
+    62% {
+        opacity: 0.7;
+        rotate: 115deg;
+        translate: 0.4rem 0.25rem;
+    }
+    100% {
+        opacity: 0;
+        rotate: 290deg;
+        scale: 0;
+        translate: var(--spark-flight-x) var(--spark-flight-y);
+    }
+}
+
+@keyframes inflation-pressure {
+    0% {
+        opacity: 0.65;
+        transform: rotate(-8deg) scale(1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: rotate(4deg) scale(1.85);
+    }
+}
+
+@keyframes inflation-remnant {
+    0% {
+        opacity: 0.68;
+        transform: rotate(7deg) scale(0.82);
+    }
+
+    100% {
+        opacity: 1;
+        transform: rotate(-5deg) scale(1.08);
+    }
+}
+
+@keyframes inflation-rings {
+    0% {
+        transform: rotate(0) scale(1);
+    }
+
+    100% {
+        transform: rotate(18deg) scale(1.16);
+    }
+}
+
+@keyframes inflation-arrow-fall {
+    0% {
+        transform: translateY(0) rotate(-8deg);
+    }
+
+    100% {
+        transform: translateY(0.28rem) rotate(2deg);
+    }
+}
+
+@media (width <= 24rem) {
+    .inflation-card {
+        min-height: 25rem;
+        padding: 1.25rem;
+    }
+
+    .inflation-card__stage {
+        margin-inline: -1.25rem;
+    }
+
+    .inflation-card__banknote {
+        width: 65%;
+    }
+
+    .inflation-card__remnant {
+        right: 0.85rem;
+        width: 4rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .inflation-card,
+    .inflation-card::after,
+    .inflation-card__pressure,
+    .inflation-card__banknote,
+    .inflation-card__erosion-zone,
+    .inflation-card__erosion-zone::before,
+    .inflation-card__fire-sparks i,
+    .inflation-card__erosion-zone span,
+    .inflation-card__remnant,
+    .inflation-card__statement::before {
+        animation: none;
+        transition: none;
+    }
+}
