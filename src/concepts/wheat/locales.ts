@@ -211,7 +211,6 @@ export const WHEAT_LOCALES = {
 export const WHEAT_CONCEPT = {
     id: "wheat",
     useDetailedDescription: true,
-    socialImage: "/images/wheat/header.webp",
     slugs: WHEAT_SLUGS,
     locales: WHEAT_LOCALES,
 } as const;

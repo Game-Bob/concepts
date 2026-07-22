@@ -4,6 +4,8 @@ import "@jjlmoya/identity/styles.css";
 import type { Language } from "../i18n/languages";
 import type { AlternateLink } from "../routing/routes";
 import type { Brand } from "../identity/brands";
+import { LANGUAGES } from "../i18n/languages";
+import { BRAND_ICONS } from "../seo/assets";
 import "../styles/global.css";
 
 interface Props {
@@ -14,28 +16,109 @@ interface Props {
     canonical: string;
     alternates: readonly AlternateLink[];
     image?: string;
+    pageType?: "website" | "article";
 }
 
-const { language, brand, title, description, canonical, alternates, image } = Astro.props;
+const {
+    language,
+    brand,
+    title,
+    description,
+    canonical,
+    alternates,
+    image,
+    pageType = "website",
+} = Astro.props;
 const socialImage = image ? new URL(image, canonical).href : undefined;
+const favicon = BRAND_ICONS[brand].favicon;
+const appleTouchIcon = BRAND_ICONS[brand].appleTouchIcon;
+const manifest = new URL("/manifest.json", canonical).href;
+const locale = LANGUAGES.find(({ code }) => code === language)?.locale ?? language;
+const openGraphLocale = locale.replace("-", "_");
+const siteName = brand === "jjlmoya" ? "jjlmoya" : "GameBob Studio";
+const xDefaultUrl = alternates.find(({ language }) => language === "en")?.url ?? canonical;
+const structuredData = {
+    "@context": "https://schema.org",
+    "@type": pageType === "article" ? "Article" : "CollectionPage",
+    url: canonical,
+    name: title,
+    headline: title,
+    description,
+    inLanguage: locale,
+    ...(socialImage ? { image: socialImage } : {}),
+    author: {
+        "@type": "Person",
+        name: "jjlmoya",
+        url: "https://www.jjlmoya.es/",
+    },
+    publisher: {
+        "@type": "Organization",
+        name: "GameBob Studio",
+        url: "https://www.gamebob.dev/",
+    },
+};
 ---
 
 <!doctype html>
 <html lang={language} data-brand={brand} data-identity={brand}>
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <ThemeBoot />
         <title>{title}</title>
+        <meta name="title" content={title} />
         <meta name="description" content={description} />
+        <meta name="author" content="jjlmoya" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
+        <meta name="generator" content={Astro.generator} />
+        <meta name="theme-color" content="#0f172a" />
+        <link rel="icon" type="image/webp" sizes="48x48" href={favicon} />
+        <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
+        <link rel="manifest" href={manifest} />
+        <meta property="og:type" content={pageType} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:site_name" content={siteName} />
+        <meta property="og:locale" content={openGraphLocale} />
+        {
+            alternates
+                .filter(({ language: alternateLanguage }) => alternateLanguage !== language)
+                .map(({ language: alternateLanguage }) => {
+                    const alternateLocale = LANGUAGES.find(
+                        ({ code }) => code === alternateLanguage
+                    )?.locale;
+                    return alternateLocale ? (
+                        <meta
+                            property="og:locale:alternate"
+                            content={alternateLocale.replace("-", "_")}
+                        />
+                    ) : null;
+                })
+        }
         {socialImage && <meta property="og:image" content={socialImage} />}
+        {socialImage && <meta property="og:image:secure_url" content={socialImage} />}
+        {socialImage && <meta property="og:image:type" content="image/png" />}
+        {socialImage && <meta property="og:image:width" content="1200" />}
+        {socialImage && <meta property="og:image:height" content="630" />}
+        {socialImage && <meta property="og:image:alt" content={description} />}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={canonical} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:site" content="@jjlmoya" />
+        <meta name="twitter:creator" content="@jjlmoya" />
         {socialImage && <meta name="twitter:image" content={socialImage} />}
+        {socialImage && <meta name="twitter:image:alt" content={description} />}
         <link rel="canonical" href={canonical} />
         {
             alternates.map(({ language: alternateLanguage, url }) => (
                 <link rel="alternate" hreflang={alternateLanguage} href={url} />
             ))
         }
+        <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     </head>
     <body>
         <slot />

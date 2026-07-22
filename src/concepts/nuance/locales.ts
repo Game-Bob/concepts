@@ -174,7 +174,6 @@ export const NUANCE_LOCALES = {
 export const NUANCE_CONCEPT = {
     id: "nuance",
     useDetailedDescription: true,
-    socialImage: "/images/nuance-og.webp",
     slugs: NUANCE_SLUGS,
     locales: NUANCE_LOCALES,
 } as const;

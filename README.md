@@ -8,7 +8,18 @@ Aplicación multilingüe para las obras de Conceptos de GameBob.
 - Los otros catorce idiomas se publican en `https://www.gamebob.dev/{idioma}/{sección}/`.
 - Las rutas de sección se traducen.
 - Cada página declara canonical y quince `hreflang` recíprocos.
+- Cada página publica metadatos Open Graph/Twitter, datos estructurados y un asset social propio.
+- Cada sección publica `sitemap.xml`; el índice internacional está en `/en/concepts/sitemap-index.xml`.
 - Los assets compilados viven bajo `/_studio/`.
+
+Los `robots.txt` de los sitios padre deben enlazar estos dos puntos de entrada:
+
+```text
+Sitemap: https://www.jjlmoya.es/conceptos/sitemap.xml
+Sitemap: https://www.gamebob.dev/en/concepts/sitemap-index.xml
+```
+
+Los placeholders editables de favicon y Open Graph viven en `src/assets/seo/`; su README documenta nombres y dimensiones finales.
 
 ## Desarrollo
 

@@ -12,6 +12,7 @@ import type { Language } from "../i18n/languages";
 import { LANGUAGES } from "../i18n/languages";
 import { LANGUAGE_UI } from "../i18n/language-ui";
 import { HEADER_UI } from "../i18n/header-ui";
+import { OPEN_GRAPH_IMAGES } from "../seo/assets";
 import ConceptCard from "./ConceptCard.astro";
 import SiteFooter from "./SiteFooter.astro";
 import "../styles/concepts-index.css";
@@ -46,6 +47,7 @@ const concepts = CONCEPTS.map((concept) => ({
     description={locale.description}
     canonical={getConceptsIndexUrl(language)}
     alternates={getConceptsAlternateLinks()}
+    image={OPEN_GRAPH_IMAGES.concepts}
 >
     <Header
         class="concepts-site-header"

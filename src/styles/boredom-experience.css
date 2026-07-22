@@ -11,12 +11,6 @@
     --bore-staple-dark: #b0b0b0;
     --bore-staple-border: #999;
     --bore-stain: rgb(139 90 43 / 0.06);
-    --bore-postit-y: #ff0;
-    --bore-postit-p: #ff69b4;
-    --bore-postit-b: #33b5e5;
-    --bore-postit-g: #00e676;
-    --bore-postit-o: #ff9100;
-    --bore-postit-v: #ba68c8;
 
     background-color: var(--bore-bg);
     color: var(--bore-fg);
@@ -38,35 +32,6 @@
     box-shadow:
         0 4px 20px rgb(0 0 0 / 0.08),
         0 1px 5px rgb(0 0 0 / 0.06);
-}
-
-.boredom-experience__page {
-    position: absolute;
-    inset: 0;
-    background-color: var(--bore-paper);
-    border: 1px solid #ccc;
-    box-shadow: 0 1px 3px rgb(0 0 0 / 0.05);
-    pointer-events: none;
-}
-
-.boredom-experience__page--1 {
-    transform: translate(-5px, 4px) rotate(-1.2deg);
-    z-index: -4;
-}
-
-.boredom-experience__page--2 {
-    transform: translate(4px, 5px) rotate(0.8deg);
-    z-index: -3;
-}
-
-.boredom-experience__page--3 {
-    transform: translate(-3px, -4px) rotate(0.4deg);
-    z-index: -2;
-}
-
-.boredom-experience__page--4 {
-    transform: translate(5px, -3px) rotate(-0.6deg);
-    z-index: -1;
 }
 
 .boredom-experience__staple {
@@ -241,106 +206,6 @@
 
 .boredom-experience__back:hover {
     text-decoration: none;
-}
-
-.boredom-experience__postit {
-    position: absolute;
-    box-shadow: 1px 1px 3px rgb(0 0 0 / 0.15);
-    border-left: 1px solid rgb(0 0 0 / 0.05);
-    pointer-events: none;
-}
-
-.boredom-experience__postit--1 {
-    right: -15px;
-    top: 220px;
-    width: 36px;
-    height: 25px;
-    background-color: var(--bore-postit-y);
-    transform: rotate(4deg);
-    z-index: -3;
-}
-
-.boredom-experience__postit--2 {
-    right: -12px;
-    top: 130px;
-    width: 34px;
-    height: 28px;
-    background-color: var(--bore-postit-p);
-    transform: rotate(-3deg);
-    z-index: -4;
-}
-
-.boredom-experience__postit--3 {
-    left: -15px;
-    top: 310px;
-    width: 36px;
-    height: 24px;
-    background-color: var(--bore-postit-b);
-    transform: rotate(-6deg);
-    box-shadow: -1px 1px 3px rgb(0 0 0 / 0.15);
-    border-right: 1px solid rgb(0 0 0 / 0.05);
-    border-left: none;
-    z-index: -3;
-}
-
-.boredom-experience__postit--4 {
-    left: -12px;
-    top: 150px;
-    width: 32px;
-    height: 26px;
-    background-color: var(--bore-postit-g);
-    transform: rotate(5deg);
-    box-shadow: -1px 1px 3px rgb(0 0 0 / 0.15);
-    border-right: 1px solid rgb(0 0 0 / 0.05);
-    border-left: none;
-    z-index: -3;
-}
-
-.boredom-experience__postit--5 {
-    bottom: -15px;
-    left: 120px;
-    width: 25px;
-    height: 36px;
-    background-color: var(--bore-postit-o);
-    transform: rotate(-2deg);
-    border-top: 1px solid rgb(0 0 0 / 0.05);
-    border-left: none;
-    z-index: -4;
-}
-
-.boredom-experience__postit--6 {
-    right: -14px;
-    top: 420px;
-    width: 34px;
-    height: 26px;
-    background-color: var(--bore-postit-v);
-    transform: rotate(7deg);
-    z-index: -3;
-}
-
-.boredom-experience__postit--7 {
-    bottom: -12px;
-    left: 280px;
-    width: 28px;
-    height: 32px;
-    background-color: var(--bore-postit-y);
-    transform: rotate(3deg);
-    border-top: 1px solid rgb(0 0 0 / 0.05);
-    border-left: none;
-    z-index: -4;
-}
-
-.boredom-experience__postit--8 {
-    left: -15px;
-    top: 480px;
-    width: 36px;
-    height: 30px;
-    background-color: var(--bore-postit-p);
-    transform: rotate(-4deg);
-    box-shadow: -1px 1px 3px rgb(0 0 0 / 0.15);
-    border-right: 1px solid rgb(0 0 0 / 0.05);
-    border-left: none;
-    z-index: -4;
 }
 
 .boredom-experience :target {

@@ -76,7 +76,6 @@ export const INFLATION_LOCALES = {
 export const INFLATION_CONCEPT = {
     id: "inflation",
     useDetailedDescription: true,
-    socialImage: "/images/concepts/inflacion_concept.webp",
     slugs: INFLATION_SLUGS,
     locales: INFLATION_LOCALES,
 } as const;
