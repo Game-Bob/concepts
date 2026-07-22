@@ -1,0 +1,298 @@
+---
+import type { InflationLocaleData } from "../../concepts/inflation/types";
+
+interface Props {
+    locale: InflationLocaleData;
+    twitter?: string;
+}
+
+const { locale, twitter = "jjlmoya" } = Astro.props;
+---
+
+<section class="author-note-section">
+    <div class="author-note-glow"></div>
+
+    <div class="author-note-container">
+        <div class="author-note-card">
+            <div class="author-note-top-line"></div>
+            <svg class="author-note-quote-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"
+                ></path>
+            </svg>
+
+            <div class="author-note-body">
+                <div class="author-note-avatar">
+                    <svg class="author-note-avatar-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M16.85 2.73c-.47 0-.92.18-1.25.52L3.42 15.42c-.2.2-.33.45-.38.73l-1 5.5c-.06.33.04.67.27.9.23.23.57.33.9.27l5.5-1c.28-.05.53-.18.73-.38L21.6 9.28c.69-.69.69-1.81 0-2.5l-3.5-3.53c-.33-.34-.78-.52-1.25-.52z"
+                        ></path>
+                    </svg>
+                </div>
+
+                <h3 class="author-note-title">
+                    {locale.personalNoteTitle}
+                </h3>
+
+                <div class="author-note-content" set:html={locale.personalNoteText} />
+
+                <div class="author-note-footer">
+                    <a
+                        href={`https://x.com/${twitter}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="author-note-twitter"
+                    >
+                        <svg
+                            class="author-note-twitter-icon"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                            ></path>
+                        </svg>
+                        @{twitter}
+                    </a>
+                    <p class="author-note-badge">
+                        <span class="author-note-dot"></span>
+                        {locale.madeForFun}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .author-note-section {
+        background: #0c0a09;
+        padding: 6rem 0;
+        position: relative;
+        overflow: hidden;
+        border-top: 1px solid #1c1917;
+        width: 100%;
+        margin-top: 4rem;
+    }
+
+    .author-note-glow {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 56rem;
+        height: 16rem;
+        background: rgb(245, 158, 11, 0.05);
+        filter: blur(100px);
+        pointer-events: none;
+    }
+
+    .author-note-container {
+        max-width: 48rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    .author-note-card {
+        position: relative;
+        background: rgb(28, 25, 23, 0.4);
+        backdrop-filter: blur(12px);
+        border: 1px solid #292524;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        transition:
+            border-color 0.5s ease,
+            box-shadow 0.5s ease;
+    }
+
+    .author-note-card:hover {
+        border-color: rgb(120, 53, 15, 0.5);
+        box-shadow: 0 25px 50px -12px rgb(120, 53, 15, 0.1);
+    }
+
+    @media (width >= 768px) {
+        .author-note-card {
+            padding: 3.5rem;
+        }
+
+        .author-note-container {
+            padding: 0 1.5rem;
+        }
+    }
+
+    .author-note-top-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(to right, transparent, rgb(180, 83, 9, 0.5), transparent);
+        opacity: 0.5;
+    }
+
+    .author-note-quote-icon {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        width: 3rem;
+        height: 3rem;
+        color: #292524;
+        z-index: -1;
+        opacity: 0.5;
+        transition: color 0.5s ease;
+    }
+
+    .author-note-card:hover .author-note-quote-icon {
+        color: rgb(120, 53, 15, 0.2);
+    }
+
+    @media (width >= 768px) {
+        .author-note-quote-icon {
+            top: 2rem;
+            left: 2rem;
+            width: 4rem;
+            height: 4rem;
+        }
+    }
+
+    .author-note-body {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .author-note-avatar {
+        width: 3rem;
+        height: 3rem;
+        background: #292524;
+        border-radius: 9999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        box-shadow: inset 0 2px 4px rgb(0, 0, 0, 0.3);
+        border: 1px solid #44403c;
+        transition:
+            border-color 0.5s ease,
+            background-color 0.5s ease;
+    }
+
+    .author-note-card:hover .author-note-avatar {
+        border-color: rgb(245, 158, 11, 0.3);
+        background: rgb(41, 37, 36, 0.8);
+    }
+
+    .author-note-avatar-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        color: rgb(245, 158, 11, 0.8);
+    }
+
+    .author-note-title {
+        font-size: 1.5rem;
+        color: #e7e5e4;
+        margin: 0 0 2rem;
+        letter-spacing: 0.025em;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    @media (width >= 768px) {
+        .author-note-title {
+            font-size: 1.875rem;
+        }
+    }
+
+    .author-note-content {
+        font-size: 1.125rem;
+        line-height: 1.75;
+        color: #a8a29e;
+        font-style: italic;
+        max-width: 42rem;
+    }
+
+    @media (width >= 768px) {
+        .author-note-content {
+            font-size: 1.25rem;
+        }
+    }
+
+    .author-note-footer {
+        margin-top: 2.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid #292524;
+        width: 100%;
+        max-width: 20rem;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .author-note-twitter {
+        color: #78716c;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        font-family: monospace;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .author-note-twitter:hover {
+        color: rgb(245, 158, 11);
+    }
+
+    .author-note-twitter-icon {
+        width: 1rem;
+        height: 1rem;
+        transition: transform 0.2s ease;
+    }
+
+    .author-note-twitter:hover .author-note-twitter-icon {
+        transform: scale(1.1);
+    }
+
+    .author-note-badge {
+        color: #57534e;
+        font-size: 0.75rem;
+        font-family: monospace;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .author-note-dot {
+        width: 0.375rem;
+        height: 0.375rem;
+        background: rgb(245, 158, 11);
+        border-radius: 9999px;
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes pulse {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+    }
+</style>

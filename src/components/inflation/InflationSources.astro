@@ -1,0 +1,545 @@
+---
+import type { InflationLocaleData } from "../../concepts/inflation/types";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    locale: InflationLocaleData;
+}
+
+const { locale } = Astro.props;
+
+const sources = [
+    {
+        name: "INE (Instituto Nacional de Estadística)",
+        description: "Series históricas del IPC y Encuesta de Presupuestos Familiares.",
+        url: "https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176802&menu=ultiDatos&idp=1254735976607",
+        icon: "mdi:chart-box-outline",
+    },
+    {
+        name: "Banco de España",
+        description: "Informes anuales y estadísticas sobre salarios medios y coste de la vida.",
+        url: "https://www.bde.es/wbe/es/estadisticas/temas/economia-empleo/precios-costes-laborales/",
+        icon: "mdi:bank-outline",
+    },
+    {
+        name: "Hemeroteca Digital",
+        description:
+            "Recopilación de precios en anuncios y noticias de prensa histórica (ABC, La Vanguardia).",
+        url: "https://www.bne.es/es/catalogos/hemeroteca-digital",
+        icon: "mdi:newspaper-variant-outline",
+    },
+    {
+        name: "Ministerio de Vivienda",
+        description: "Estadísticas sobre el precio del m² y esfuerzo de acceso a la vivienda.",
+        url: "https://www.mivau.gob.es/",
+        icon: "mdi:home-analytics",
+    },
+];
+---
+
+<section class="sources-section">
+    <div class="sources-overlay"></div>
+
+    <div class="sources-wrapper">
+        <div class="sources-header">
+            <div class="sources-label-container">
+                <span class="sources-label">{locale.sourcesBadge}</span>
+            </div>
+            <h2 class="sources-title">{locale.sourcesTitle}</h2>
+            <p class="sources-subtitle">{locale.sourcesSubtitle}</p>
+        </div>
+
+        <div class="sources-grid">
+            {
+                sources.map((source) => (
+                    <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="source-link-card"
+                    >
+                        <div class="source-icon-container">
+                            <Icon name={source.icon} class="source-icon" />
+                        </div>
+                        <div>
+                            <h3 class="source-card-title">{source.name}</h3>
+                            <p class="source-card-desc">{source.description}</p>
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+
+        <div class="report-card">
+            <div class="report-header">
+                <h3 class="report-title">{locale.reportTitle}</h3>
+                <p class="report-subtitle">
+                    {locale.reportSubtitle}
+                </p>
+            </div>
+
+            <div class="report-section">
+                <div class="section-header">
+                    <h4 class="section-title">
+                        <span class="section-tag">A.1</span>
+                        {locale.table1Title}
+                    </h4>
+                    <span class="section-ref">{locale.table1Ref}</span>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead class="data-table-thead">
+                            <tr>
+                                <th class="data-table-th">{locale.thConcept}</th>
+                                <th class="data-table-th th-center">{locale.thYear}</th>
+                                <th class="data-table-th th-right">{locale.thHistPrice}</th>
+                                <th class="data-table-th th-right">{locale.thPrice2025}</th>
+                                <th class="data-table-th th-right">{locale.thVar}</th>
+                                <th class="data-table-th th-center">{locale.thSource}</th>
+                            </tr>
+                        </thead>
+                        <tbody class="data-table-tbody">
+                            {
+                                locale.reportTable1Rows.map((row) => (
+                                    <tr class="data-table-row">
+                                        <td class="data-table-td td-bold">{row.concept}</td>
+                                        <td class="data-table-td td-center">{row.year}</td>
+                                        <td class="data-table-td td-right">{row.priceHist}</td>
+                                        <td class="data-table-td td-right">{row.price2025}</td>
+                                        <td
+                                            class={`data-table-td td-right ${row.isPositive ? "td-alert-positive" : "td-alert-negative"}`}
+                                        >
+                                            {row.varPercent}
+                                        </td>
+                                        <td class="data-table-td td-center">
+                                            {row.sourceUrl ? (
+                                                <a
+                                                    href={row.sourceUrl}
+                                                    target="_blank"
+                                                    class="table-link"
+                                                >
+                                                    {row.sourceName}
+                                                </a>
+                                            ) : (
+                                                <span
+                                                    class="table-help-text"
+                                                    title={row.sourceTitle}
+                                                >
+                                                    {row.sourceName}
+                                                </span>
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="report-section">
+                <div class="section-header">
+                    <h4 class="section-title">
+                        <span class="section-tag">A.2</span>
+                        {locale.table2Title}
+                    </h4>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead class="data-table-thead">
+                            <tr>
+                                <th class="data-table-th th-center">{locale.thYear}</th>
+                                <th class="data-table-th th-right">{locale.thAvgSalary}</th>
+                                <th class="data-table-th th-right">{locale.thSmiMonthly}</th>
+                                <th class="data-table-th th-right">{locale.thSmiTotal}</th>
+                            </tr>
+                        </thead>
+                        <tbody class="data-table-tbody">
+                            <tr class="data-table-row">
+                                <td class="data-table-td td-center td-bold">1980</td>
+                                <td class="data-table-td td-right">~7.000€</td>
+                                <td class="data-table-td td-right">154€</td>
+                                <td class="data-table-td td-right">2.156€</td>
+                            </tr>
+                            <tr class="data-table-row">
+                                <td class="data-table-td td-center td-bold">1990</td>
+                                <td class="data-table-td td-right">~11.000€</td>
+                                <td class="data-table-td td-right">300€</td>
+                                <td class="data-table-td td-right">4.200€</td>
+                            </tr>
+                            <tr class="data-table-row">
+                                <td class="data-table-td td-center td-bold">2000</td>
+                                <td class="data-table-td td-right">16.500€</td>
+                                <td class="data-table-td td-right">424€</td>
+                                <td class="data-table-td td-right">5.936€</td>
+                            </tr>
+                            <tr class="data-table-row">
+                                <td class="data-table-td td-center td-bold">2010</td>
+                                <td class="data-table-td td-right">22.700€</td>
+                                <td class="data-table-td td-right">633€</td>
+                                <td class="data-table-td td-right">8.866€</td>
+                            </tr>
+                            <tr class="data-table-row">
+                                <td class="data-table-td td-center td-bold">2020</td>
+                                <td class="data-table-td td-right">24.300€</td>
+                                <td class="data-table-td td-right">950€</td>
+                                <td class="data-table-td td-right">13.300€</td>
+                            </tr>
+                            <tr class="data-table-row">
+                                <td class="data-table-td td-center td-bold">2024</td>
+                                <td class="data-table-td td-right">28.500€*</td>
+                                <td class="data-table-td td-right">1.134€</td>
+                                <td class="data-table-td td-right">15.876€</td>
+                            </tr>
+                            <tr class="data-table-row">
+                                <td class="data-table-td td-center td-bold">2025 (Proj.)</td>
+                                <td class="data-table-td td-right">~29.500€*</td>
+                                <td class="data-table-td td-right">~1.184€*</td>
+                                <td class="data-table-td td-right">~16.576€*</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="report-note-box">
+                <h5 class="note-box-title">{locale.noteTitle}</h5>
+                <p class="note-box-text">{locale.noteP1}</p>
+                <p class="note-box-text">{locale.noteP2}</p>
+                <p class="note-box-sources">{locale.noteSources}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .sources-section {
+        background-color: #e8e4d9;
+        color: #292524;
+        padding: 6rem 0;
+        position: relative;
+        overflow: hidden;
+        border-top: 8px solid #d6d3d1;
+        width: 100%;
+    }
+
+    .sources-overlay {
+        position: absolute;
+        inset: 0;
+        opacity: 0.4;
+        mix-blend-mode: multiply;
+        pointer-events: none;
+    }
+
+    .sources-wrapper {
+        max-width: 56rem;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    .sources-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .sources-label-container {
+        display: inline-block;
+        border: 2px solid #292524;
+        padding: 0.25rem 1rem;
+        margin-bottom: 1rem;
+        transform: rotate(-2deg);
+    }
+
+    .sources-label {
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.75rem;
+    }
+
+    .sources-title {
+        font-size: clamp(2rem, 6vw, 3rem);
+        font-weight: bold;
+        color: #1c1917;
+        margin-bottom: 1rem;
+        line-height: 1.1;
+    }
+
+    .sources-subtitle {
+        font-style: italic;
+        color: #57534e;
+        max-width: 42rem;
+        margin: 0 auto;
+        line-height: 1.5;
+    }
+
+    .sources-grid {
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    @media (width >= 768px) {
+        .sources-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    .source-link-card {
+        display: flex;
+        align-items: start;
+        gap: 1rem;
+        background-color: rgb(255 255 255 / 0.5);
+        padding: 1.5rem;
+        border-radius: 0.125rem;
+        border: 1px solid #d6d3d1;
+        text-decoration: none;
+        color: inherit;
+        transition:
+            background-color 0.3s,
+            border-color 0.3s,
+            box-shadow 0.3s;
+    }
+
+    .source-link-card:hover {
+        background-color: #fff;
+        border-color: #292524;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+    }
+
+    .source-icon-container {
+        padding: 0.75rem;
+        background-color: #e7e5e4;
+        color: #44403c;
+        border-radius: 0.125rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .source-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .source-card-title {
+        font-weight: bold;
+        font-size: 1.125rem;
+        color: #1c1917;
+        margin: 0 0 0.25rem;
+        line-height: 1.2;
+    }
+
+    .source-card-desc {
+        font-size: 0.875rem;
+        color: #57534e;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .report-card {
+        margin-top: 6rem;
+        background-color: #fff;
+        padding: 1rem;
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        border: 1px solid #e7e5e4;
+        position: relative;
+    }
+
+    @media (width >= 768px) {
+        .report-card {
+            padding: 3rem;
+        }
+    }
+
+    .report-header {
+        border-bottom: 4px solid #292524;
+        padding-bottom: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .report-title {
+        font-size: clamp(1.5rem, 5vw, 2.25rem);
+        font-weight: bold;
+        color: #1c1917;
+        margin: 0 0 0.5rem;
+    }
+
+    .report-subtitle {
+        color: #57534e;
+        font-style: italic;
+        font-size: 1.125rem;
+        margin: 0;
+    }
+
+    .report-section {
+        margin-bottom: 4rem;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+        font-weight: bold;
+        font-size: 1.25rem;
+        display: flex;
+        align-items: center;
+        color: #292524;
+        margin: 0;
+    }
+
+    .section-tag {
+        background-color: #292524;
+        color: #fff;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.875rem;
+        margin-right: 0.75rem;
+    }
+
+    .section-ref {
+        font-size: 0.75rem;
+        color: #78716c;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+        border: 1px solid #d6d3d1;
+    }
+
+    .data-table {
+        width: 100%;
+        font-size: 0.875rem;
+        text-align: left;
+        border-collapse: collapse;
+    }
+
+    .data-table-thead {
+        background-color: #f5f5f4;
+        color: #1c1917;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+    }
+
+    .data-table-th {
+        padding: 0.5rem;
+        border-bottom: 2px solid #d6d3d1;
+        border-right: 1px solid #e7e5e4;
+    }
+
+    .data-table-th.th-center {
+        text-align: center;
+        width: 5rem;
+    }
+
+    .data-table-th.th-right {
+        text-align: right;
+    }
+
+    .data-table-tbody {
+        color: #44403c;
+    }
+
+    .data-table-row {
+        border-bottom: 1px solid #e7e5e4;
+    }
+
+    .data-table-td {
+        padding: 0.5rem;
+        border-right: 1px solid #e7e5e4;
+        vertical-align: middle;
+    }
+
+    .data-table-td.td-bold {
+        font-weight: bold;
+    }
+
+    .data-table-td.td-center {
+        text-align: center;
+    }
+
+    .data-table-td.td-right {
+        text-align: right;
+    }
+
+    .price-original-sub {
+        font-size: 0.625rem;
+        color: #a8a29e;
+        display: block;
+    }
+
+    .data-table-td.td-alert-negative {
+        font-weight: bold;
+        color: #b91c1c;
+        background-color: #fef2f2;
+    }
+
+    .data-table-td.td-alert-positive {
+        font-weight: bold;
+        color: #15803d;
+        background-color: #f0fdf4;
+    }
+
+    .table-link {
+        color: #2563eb;
+        text-decoration: none;
+    }
+
+    .report-layout-bottom {
+        display: grid;
+        gap: 3rem;
+    }
+
+    @media (width >= 1024px) {
+        .report-layout-bottom {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    .row-projected {
+        background-color: #fffbeb;
+        font-weight: bold;
+    }
+
+    .methodology-box {
+        background-color: #f5f5f4;
+        padding: 1.5rem;
+        border: 1px solid #e7e5e4;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .methodology-title {
+        font-weight: bold;
+        color: #1c1917;
+        margin: 0 0 1rem;
+    }
+
+    .methodology-text {
+        font-size: 0.875rem;
+        color: #57534e;
+        line-height: 1.6;
+        margin: 0 0 1rem;
+    }
+
+    .methodology-footer {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e7e5e4;
+    }
+
+    .methodology-footer-text {
+        font-size: 0.75rem;
+        color: #78716c;
+        margin: 0;
+    }
+</style>

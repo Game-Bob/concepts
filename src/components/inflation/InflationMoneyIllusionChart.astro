@@ -1,0 +1,111 @@
+---
+import type { InflationLocaleData } from "../../concepts/inflation/types";
+
+interface Props {
+    locale: InflationLocaleData;
+}
+
+const { locale } = Astro.props;
+---
+
+<div class="chart-card">
+    <h3 class="chart-card-title">{locale.illusionTitle}</h3>
+    <p class="chart-card-subtitle" set:html={locale.illusionSubtitle} />
+
+    <div class="chart-canvas-wrapper">
+        <canvas
+            id="moneyIllusionChart"
+            data-legend-nominal={locale.illusionLegendNominal}
+            data-legend-real={locale.illusionLegendReal}></canvas>
+    </div>
+
+    <p class="chart-legend-box">
+        <span class="text-highlight-green">{locale.illusionNominalLabel}:</span>
+        {locale.illusionNominalDesc}<br />
+        <span class="text-highlight-rose">{locale.illusionRealLabel}:</span>
+        {locale.illusionRealDesc}
+    </p>
+
+    <div class="chart-author-note">
+        <p class="chart-author-note-title">{locale.personalNoteTitle}</p>
+        <p class="chart-author-note-body" set:html={locale.illusionExplanation} />
+    </div>
+</div>
+
+<style>
+    .chart-card {
+        background-color: #0f172a;
+        border-radius: 1.5rem;
+        padding: 2rem;
+        border: 1px solid #1e293b;
+        margin: 2.5rem 0;
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5);
+    }
+
+    .chart-card-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 0.5rem;
+    }
+
+    .chart-card-subtitle {
+        color: #94a3b8;
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .text-highlight-green {
+        color: #34d399;
+        font-weight: 700;
+    }
+
+    .text-highlight-rose {
+        color: #fb7185;
+        font-weight: 700;
+    }
+
+    .text-highlight-white {
+        color: #fff;
+        font-style: italic;
+    }
+
+    .chart-canvas-wrapper {
+        height: 250px;
+        position: relative;
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    .chart-legend-box {
+        background-color: #1e293b;
+        padding: 1rem;
+        border-radius: 0.75rem;
+        font-size: 0.875rem;
+        color: #cbd5e1;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .chart-author-note {
+        border-left: 3px solid #3b82f6;
+        padding-left: 1rem;
+        margin-top: 1rem;
+    }
+
+    .chart-author-note-title {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #3b82f6;
+        margin-bottom: 0.25rem;
+        letter-spacing: 0.05em;
+    }
+
+    .chart-author-note-body {
+        font-size: 0.875rem;
+        color: #94a3b8;
+        font-style: italic;
+        line-height: 1.5;
+    }
+</style>

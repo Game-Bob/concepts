@@ -1,0 +1,219 @@
+---
+import type { InflationLocaleData } from "../../concepts/inflation/types";
+
+interface Props {
+    locale: InflationLocaleData;
+}
+
+const { locale } = Astro.props;
+---
+
+<div class="inf-bill-card">
+    <div class="inf-bill-badge">{locale.billTitle}</div>
+
+    <div id="items-container" class="inf-items-container"></div>
+
+    <div class="inf-bill-footer">
+        <div class="inf-bill-footer-left">
+            <div class="inf-bill-label">{locale.billYearLabel}</div>
+            <div id="year-display" class="inf-year-val">2025</div>
+        </div>
+        <div class="inf-bill-footer-right">
+            <div class="inf-bill-label">{locale.billValueLabel}</div>
+            <div id="value-display" class="inf-value-val">100€</div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .inf-bill-card {
+        background-color: #fff;
+        border: 4px solid #000;
+        padding: 2rem;
+        box-shadow: 8px 8px 0 0 #000;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+
+    :global(.theme-dark) .inf-bill-card {
+        background-color: #09090b;
+        border-color: #f59e0b;
+        box-shadow: 8px 8px 0 0 #f59e0b;
+        color: #fef3c7;
+    }
+
+    .inf-bill-badge {
+        position: absolute;
+        top: -1.5rem;
+        left: 50%;
+        transform: translateX(-50%) rotate(-2deg);
+        background-color: #16a34a;
+        color: #fff;
+        padding: 0.25rem 1rem;
+        font-weight: bold;
+        border: 2px solid #000;
+    }
+
+    :global(.theme-dark) .inf-bill-badge {
+        border-color: #fde68a;
+    }
+
+    .inf-items-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        min-height: 300px;
+        place-content: flex-start center;
+        padding: 1rem;
+    }
+
+    .inf-bill-footer {
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 2px dashed #d1d5db;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    :global(.theme-dark) .inf-bill-footer {
+        border-top-color: #52525b;
+    }
+
+    .inf-bill-footer-left {
+        text-align: left;
+    }
+
+    .inf-bill-footer-right {
+        text-align: right;
+    }
+
+    .inf-bill-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #6b7280;
+    }
+
+    :global(.theme-dark) .inf-bill-label {
+        color: #a1a1aa;
+    }
+
+    .inf-year-val {
+        font-size: 3rem;
+        font-weight: 900;
+        font-variant-numeric: tabular-nums;
+        line-height: 1;
+        color: #78350f;
+    }
+
+    :global(.theme-dark) .inf-year-val {
+        color: #fcd34d;
+    }
+
+    .inf-value-val {
+        font-size: 1.875rem;
+        font-weight: bold;
+        color: #16a34a;
+        font-variant-numeric: tabular-nums;
+        line-height: 1;
+    }
+
+    :global(.inf-item-wrapper) {
+        position: relative;
+        animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        opacity: 0;
+        color: #78350f;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.5rem;
+        border: 1px solid rgb(253, 230, 138, 0.5);
+    }
+
+    :global(.theme-dark .inf-item-wrapper) {
+        color: #fde68a;
+        border-color: rgb(245, 158, 11, 0.3);
+    }
+
+    :global(.inf-item-normal) {
+        transform: scale(1);
+    }
+
+    :global(.inf-item-large) {
+        transform: scale(1.1);
+    }
+
+    :global(.inf-bg-normal) {
+        background-color: rgb(253, 230, 138, 0.5);
+    }
+
+    :global(.theme-dark .inf-bg-normal) {
+        background-color: rgb(69, 26, 3, 0.6);
+    }
+
+    :global(.inf-bg-large) {
+        background-color: rgb(251, 191, 36, 0.5);
+    }
+
+    :global(.theme-dark .inf-bg-large) {
+        background-color: rgb(180, 83, 9, 0.7);
+    }
+
+    :global(.inf-badge-count) {
+        position: absolute;
+        top: -0.5rem;
+        right: -0.5rem;
+        background-color: #000;
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: bold;
+        border-radius: 50%;
+        width: 1.5rem;
+        height: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #fff;
+        box-shadow: 0 10px 15px -3px rgb(0, 0, 0, 0.1);
+    }
+
+    :global(.inf-item-name) {
+        font-size: 10px;
+        font-weight: bold;
+        margin-top: 0.25rem;
+        opacity: 0.6;
+        text-align: center;
+        display: block;
+    }
+
+    :global(.registry-icon) {
+        width: 2rem;
+        height: 2rem;
+        display: block;
+    }
+
+    :global(.inf-items-container svg) {
+        width: 2rem;
+        height: 2rem;
+        display: block;
+    }
+
+    @keyframes pop {
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        80% {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+</style>

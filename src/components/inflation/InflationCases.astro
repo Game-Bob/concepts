@@ -1,0 +1,394 @@
+---
+import type { InflationLocaleData, InflationCaseItem } from "../../concepts/inflation/types";
+
+interface Props {
+    locale: InflationLocaleData;
+}
+
+const { locale } = Astro.props;
+
+const caseThemes: Record<string, { bg: string; text: string; border: string }> = {
+    "bg-indigo-100 text-indigo-800 border-indigo-200": {
+        bg: "#e0e7ff",
+        text: "#3730a3",
+        border: "#c7d2fe",
+    },
+    "bg-emerald-100 text-emerald-800 border-emerald-200": {
+        bg: "#d1fae5",
+        text: "#065f46",
+        border: "#a7f3d0",
+    },
+    "bg-rose-100 text-rose-800 border-rose-200": {
+        bg: "#ffe4e6",
+        text: "#9f1239",
+        border: "#fecdd3",
+    },
+    "bg-amber-100 text-amber-800 border-amber-200": {
+        bg: "#fef3c7",
+        text: "#92400e",
+        border: "#fde68a",
+    },
+    "bg-yellow-100 text-yellow-800 border-yellow-200": {
+        bg: "#fef9c3",
+        text: "#854d0e",
+        border: "#fef08a",
+    },
+    "bg-orange-100 text-orange-800 border-orange-200": {
+        bg: "#ffedd5",
+        text: "#9a3412",
+        border: "#fed7aa",
+    },
+    "bg-purple-100 text-purple-800 border-purple-200": {
+        bg: "#f3e8ff",
+        text: "#6b21a8",
+        border: "#e9d5ff",
+    },
+    "bg-stone-100 text-stone-800 border-stone-200": {
+        bg: "#f5f5f4",
+        text: "#78716c",
+        border: "#e7e5e4",
+    },
+    "bg-blue-100 text-blue-800 border-blue-200": {
+        bg: "#dbeafe",
+        text: "#1e40af",
+        border: "#bfdbfe",
+    },
+    "bg-teal-100 text-teal-800 border-teal-200": {
+        bg: "#ccfbf1",
+        text: "#115e59",
+        border: "#99f6e4",
+    },
+    "bg-cyan-100 text-cyan-800 border-cyan-200": {
+        bg: "#ecfeff",
+        text: "#155e75",
+        border: "#a5f3fc",
+    },
+    "bg-lime-100 text-lime-800 border-lime-200": {
+        bg: "#f7fee7",
+        text: "#3f6212",
+        border: "#d9f99d",
+    },
+    "bg-fuchsia-100 text-fuchsia-800 border-fuchsia-200": {
+        bg: "#fdf4ff",
+        text: "#86198f",
+        border: "#f5d0fe",
+    },
+    "bg-gray-100 text-gray-800 border-gray-200": {
+        bg: "#f3f4f6",
+        text: "#1f2937",
+        border: "#e5e7eb",
+    },
+    "bg-pink-100 text-pink-800 border-pink-200": {
+        bg: "#fce7f3",
+        text: "#9d174d",
+        border: "#fbcfe8",
+    },
+    "bg-violet-100 text-violet-800 border-violet-200": {
+        bg: "#ede9fe",
+        text: "#5b21b6",
+        border: "#ddd6fe",
+    },
+    "bg-red-100 text-red-800 border-red-200": { bg: "#fee2e2", text: "#991b1b", border: "#fecaca" },
+    "bg-sky-100 text-sky-800 border-sky-200": { bg: "#e0f2fe", text: "#075985", border: "#bae6fd" },
+    "bg-slate-100 text-slate-800 border-slate-200": {
+        bg: "#f1f5f9",
+        text: "#1e293b",
+        border: "#e2e8f0",
+    },
+    "bg-rose-50 text-rose-800 border-rose-200": {
+        bg: "#fff1f2",
+        text: "#9f1239",
+        border: "#fecdd3",
+    },
+    "bg-lime-50 text-lime-800 border-lime-200": {
+        bg: "#f7fee7",
+        text: "#3f6212",
+        border: "#d9f99d",
+    },
+    "bg-cyan-50 text-cyan-800 border-cyan-200": {
+        bg: "#ecfeff",
+        text: "#155e75",
+        border: "#a5f3fc",
+    },
+    "bg-teal-50 text-teal-800 border-teal-200": {
+        bg: "#f0fdfa",
+        text: "#115e59",
+        border: "#99f6e4",
+    },
+    "bg-zinc-100 text-zinc-800 border-zinc-200": {
+        bg: "#f4f4f5",
+        text: "#27272a",
+        border: "#e4e4e7",
+    },
+    "bg-yellow-50 text-yellow-800 border-yellow-200": {
+        bg: "#fefce8",
+        text: "#854d0e",
+        border: "#fef08a",
+    },
+    "bg-orange-50 text-orange-800 border-orange-200": {
+        bg: "#fff7ed",
+        text: "#9a3412",
+        border: "#fed7aa",
+    },
+    "bg-emerald-50 text-emerald-800 border-emerald-200": {
+        bg: "#ecfdf5",
+        text: "#065f46",
+        border: "#a7f3d0",
+    },
+    "bg-blue-50 text-blue-800 border-blue-200": {
+        bg: "#eff6ff",
+        text: "#1e40af",
+        border: "#bfdbfe",
+    },
+};
+---
+
+<div class="cases-wrapper">
+    <h2 class="cases-title">
+        {locale.casesTitle}
+    </h2>
+    <p class="cases-subtitle">
+        {locale.casesSubtitle}
+    </p>
+    <div id="cases-container" class="cases-container">
+        {
+            locale.cases.map((item: InflationCaseItem) => {
+                const theme = caseThemes[item.color] || {
+                    bg: "#ffffff",
+                    text: "#1e293b",
+                    border: "#cbd5e1",
+                };
+                return (
+                    <div
+                        class="case-card"
+                        style={`--bg-color: ${theme.bg}; --text-color: ${theme.text}; --border-color: ${theme.border};`}
+                    >
+                        <div class="case-icon-badge">
+                            <div class="case-icon-svg" data-icon={item.icon} />
+                        </div>
+
+                        <div class="case-meta">
+                            <div class="case-year">{item.year}</div>
+                            <div class="case-price">{item.price}</div>
+                        </div>
+
+                        <h3 class="case-title-text">{item.title}</h3>
+
+                        <p class="case-description" set:html={item.description} />
+
+                        <div class="case-card-footer">
+                            <button
+                                class="case-share-btn"
+                                data-share-btn
+                                data-share-text={`En ${item.year}, ${item.title} costaba ${item.price}. ${item.description.replace(/<[^>]*>?/gm, "")} #Inflacion`}
+                            >
+                                <svg class="case-share-icon" viewBox="0 0 24 24">
+                                    <path
+                                        fill="currentColor"
+                                        d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"
+                                    />
+                                </svg>
+                                {locale.shareButton}
+                            </button>
+                        </div>
+                    </div>
+                );
+            })
+        }
+    </div>
+</div>
+
+<style>
+    .cases-wrapper {
+        width: 100%;
+        max-width: 56rem;
+        margin: 3rem auto;
+    }
+
+    .cases-title {
+        font-size: clamp(1.5rem, 5vw, 1.875rem);
+        font-weight: 900;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: -0.025em;
+        transform: rotate(-1deg);
+        line-height: 1.2;
+    }
+
+    .theme-light .cases-title {
+        color: #1e293b;
+    }
+
+    .theme-dark .cases-title {
+        color: #fde68a;
+    }
+
+    .cases-subtitle {
+        text-align: center;
+        font-family: monospace;
+        font-size: 0.875rem;
+        margin-bottom: 2rem;
+        font-style: italic;
+        transform: rotate(-1deg);
+    }
+
+    .theme-light .cases-subtitle {
+        color: #64748b;
+    }
+
+    .theme-dark .cases-subtitle {
+        color: #a1a1aa;
+    }
+
+    .cases-container {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 1rem;
+        padding: 2rem 1rem 1.5rem;
+        margin: 0 -1rem;
+        cursor: grab;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .cases-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .cases-container.active {
+        cursor: grabbing;
+        scroll-snap-type: none;
+    }
+
+    .case-card {
+        flex: 0 0 auto;
+        width: 85vw;
+        max-width: 24rem;
+        scroll-snap-align: center;
+        position: relative;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        border: 2px solid var(--border-color);
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        transition: box-shadow 0.2s;
+        user-select: none;
+    }
+
+    .case-card:hover {
+        box-shadow:
+            0 4px 6px -1px rgb(0 0 0 / 0.1),
+            0 2px 4px -1px rgb(0 0 0 / 0.06);
+    }
+
+    .case-icon-badge {
+        position: absolute;
+        top: -1rem;
+        right: -1rem;
+        width: 3rem;
+        height: 3rem;
+        background-color: #fff;
+        border-radius: 50%;
+        border: 2px solid currentcolor;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        transition: transform 0.2s;
+    }
+
+    .case-card:hover .case-icon-badge {
+        transform: scale(1.1);
+    }
+
+    .case-icon-svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .case-icon-svg :global(svg) {
+        width: 1.5rem;
+        height: 1.5rem;
+        display: block;
+    }
+
+    .case-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        padding-right: 2rem;
+    }
+
+    .case-year {
+        font-size: 0.75rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        opacity: 0.6;
+    }
+
+    .case-price {
+        font-family: monospace;
+        font-size: 0.875rem;
+        font-weight: bold;
+        background-color: rgb(255 255 255 / 0.6);
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        border: 1px solid rgb(0 0 0 / 0.1);
+    }
+
+    .case-title-text {
+        font-size: 1.25rem;
+        font-weight: 900;
+        margin-bottom: 0.75rem;
+        line-height: 1.25;
+        padding-right: 1.5rem;
+    }
+
+    .case-description {
+        font-size: 0.875rem;
+        line-height: 1.6;
+        opacity: 0.9;
+        margin-bottom: 1rem;
+    }
+
+    .case-card-footer {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .case-share-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        opacity: 0.6;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        color: inherit;
+        padding: 0;
+    }
+
+    .case-share-btn:hover {
+        opacity: 1;
+    }
+
+    .case-share-icon {
+        width: 1rem;
+        height: 1rem;
+        color: inherit;
+    }
+</style>

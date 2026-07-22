@@ -17,6 +17,7 @@ import LibraryExperience from "./LibraryExperience.astro";
 import NuanceExperience from "./NuanceExperience.astro";
 import SiteFooter from "./SiteFooter.astro";
 import WheatExperience from "./WheatExperience.astro";
+import InflationExperience from "./InflationExperience.astro";
 
 interface Props {
     language: Language;
@@ -89,6 +90,11 @@ const languageLinks = LANGUAGES.map(({ code, name }) => ({
     {
         conceptId === "wheat" && (
             <WheatExperience language={language} locale={getConceptLocale("wheat", language)} />
+        )
+    }
+    {
+        conceptId === "inflation" && (
+            <InflationExperience locale={getConceptLocale("inflation", language)} />
         )
     }
     <SiteFooter {language} />

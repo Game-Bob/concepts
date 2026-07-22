@@ -1,0 +1,649 @@
+---
+import type { InflationLocaleData } from "../../concepts/inflation/types";
+
+interface Props {
+    locale: InflationLocaleData;
+}
+
+const { locale } = Astro.props;
+---
+
+<section class="hidden-inf-section" id="hidden-inflation">
+    <div class="hidden-inf-bg-dots"></div>
+
+    <div class="hidden-inf-wrapper">
+        <h2 class="hidden-inf-main-title" set:html={locale.hiddenTypesTitle} />
+
+        <div class="hidden-inf-grid">
+            {
+                locale.hiddenTypesCards.map((card, idx) => {
+                    const colors = [
+                        { color: "#ec4899", hover: "#db2777", rgb: "236, 72, 153", rot: "12deg" },
+                        { color: "#f59e0b", hover: "#d97706", rgb: "245, 158, 11", rot: "-6deg" },
+                        { color: "#a855f7", hover: "#9333ea", rgb: "168, 85, 247", rot: "6deg" },
+                        { color: "#06b6d4", hover: "#0891b2", rgb: "6, 182, 212", rot: "-12deg" },
+                    ][idx] || {
+                        color: "#ec4899",
+                        hover: "#db2777",
+                        rgb: "236, 72, 153",
+                        rot: "0deg",
+                    };
+
+                    return (
+                        <article
+                            class="hidden-inf-card"
+                            style={`--theme-color: ${colors.color}; --theme-color-hover: ${colors.hover}; --theme-rgb: ${colors.rgb}; --badge-rotation: ${colors.rot};`}
+                        >
+                            <div class="hidden-inf-badge">{card.badge}</div>
+
+                            <h3 class="hidden-inf-card-title">
+                                <div class="hidden-inf-icon-wrapper">
+                                    <svg class="hidden-inf-icon" viewBox="0 0 24 24">
+                                        <path
+                                            fill="currentColor"
+                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+                                        />
+                                    </svg>
+                                </div>
+                                {card.title}
+                            </h3>
+
+                            <div class="hidden-inf-card-graphic">
+                                {idx === 0 && (
+                                    <div class="reduflacion-bag">
+                                        <div class="reduflacion-bag-air">
+                                            <svg class="reduflacion-wind-icon" viewBox="0 0 24 24">
+                                                <path
+                                                    fill="currentColor"
+                                                    d="M4 10a2 2 0 1 0 2-2H4zm14 4a2 2 0 1 0-2-2h2zm-8-8a2 2 0 1 0 2-2h-2z"
+                                                />
+                                            </svg>
+                                        </div>
+                                        <div class="reduflacion-bag-content">
+                                            <span class="reduflacion-bag-text">
+                                                {card.graphicLabel1}
+                                            </span>
+                                        </div>
+                                        <div class="reduflacion-new-label">
+                                            {card.graphicLabel2}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {idx === 1 && (
+                                    <div class="receipt-card">
+                                        <div class="receipt-badge">{card.graphicLabel1}</div>
+                                        <div class="receipt-title">{card.graphicLabel2}</div>
+                                        <div class="receipt-items">
+                                            <div class="receipt-item-removed">
+                                                <span>{card.graphicRemoved1}</span>
+                                            </div>
+                                            <div class="receipt-item-added">
+                                                <span>{card.graphicAdded1}</span>
+                                            </div>
+                                            <div class="receipt-item-removed">
+                                                <span>{card.graphicRemoved2}</span>
+                                            </div>
+                                            <div class="receipt-item-added">
+                                                <span>{card.graphicAdded2}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {idx === 2 && (
+                                    <div class="premium-columns-wrapper">
+                                        <div class="premium-column-high">
+                                            <span class="premium-col-label">
+                                                {card.graphicLabel1}
+                                            </span>
+                                            <span class="premium-col-title">
+                                                {card.graphicLabel2}
+                                            </span>
+                                            <div class="premium-col-price">
+                                                {card.graphicLegend1}
+                                            </div>
+                                        </div>
+                                        <div class="premium-column-low">
+                                            <span class="premium-col-label-low">
+                                                {card.graphicRemoved1}
+                                            </span>
+                                            <div class="premium-col-price-low">
+                                                {card.graphicAdded1}
+                                            </div>
+                                        </div>
+                                        <div class="premium-badge-soldout">
+                                            {card.graphicLegend2}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {idx === 3 && (
+                                    <div class="shadow-screen-wrapper">
+                                        <div class="shadow-screen-monitor">
+                                            <svg class="shadow-screen-icon" viewBox="0 0 24 24">
+                                                <path
+                                                    fill="currentColor"
+                                                    d="M2 4h20v16H2V4zm2 2v12h16V6H4z"
+                                                />
+                                            </svg>
+                                            <div class="shadow-screen-error">
+                                                {card.graphicLabel1}
+                                            </div>
+                                        </div>
+                                        <div class="shadow-screen-footer">
+                                            <span class="footer-text">{card.graphicLabel2}</span>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {idx === 0 && (
+                                    <div class="reduflacion-graphic-legend">
+                                        <div class="legend-row">{card.graphicLegend1}</div>
+                                        <div class="legend-row-alert">{card.graphicLegend2}</div>
+                                    </div>
+                                )}
+                            </div>
+
+                            <p class="hidden-inf-tagline">{card.tagline}</p>
+                            <p class="hidden-inf-description">{card.description}</p>
+                            <span class="hidden-inf-source-link">{card.sourceText}</span>
+
+                            <button
+                                data-share-btn
+                                data-share-text={card.shareText}
+                                class="hidden-inf-share-btn"
+                            >
+                                Share
+                            </button>
+                        </article>
+                    );
+                })
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .hidden-inf-section {
+        background-color: #070a13;
+        padding: 6rem 0;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .hidden-inf-bg-dots {
+        position: absolute;
+        inset: 0;
+        opacity: 0.05;
+        background-image: radial-gradient(#fff 1px, transparent 1px);
+        background-size: 16px 16px;
+    }
+
+    .hidden-inf-wrapper {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    .hidden-inf-main-title {
+        font-size: clamp(2.25rem, 8vw, 3.75rem);
+        font-weight: 900;
+        text-align: center;
+        color: #ec4899;
+        margin-bottom: 5rem;
+        text-transform: uppercase;
+        letter-spacing: -0.05em;
+        transform: rotate(-2deg);
+        filter: drop-shadow(0 4px 6px rgb(0 0 0 / 0.3));
+        line-height: 1.1;
+    }
+
+    .mobile-only {
+        display: block;
+    }
+
+    @media (width >= 768px) {
+        .mobile-only {
+            display: none;
+        }
+    }
+
+    .hidden-inf-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    @media (width >= 768px) {
+        .hidden-inf-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 2rem;
+        }
+    }
+
+    .hidden-inf-card {
+        position: relative;
+        background-color: #0f172a;
+        border-radius: 1.5rem;
+        padding: 2rem;
+        border: 2px solid #1e293b;
+        transition:
+            border-color 0.3s,
+            transform 0.3s;
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    }
+
+    .hidden-inf-card:hover {
+        border-color: var(--theme-color);
+        transform: translateY(-0.5rem);
+    }
+
+    .hidden-inf-badge {
+        position: absolute;
+        top: -1.5rem;
+        right: -0.5rem;
+        transform: rotate(var(--badge-rotation));
+        background-color: var(--theme-color-hover);
+        color: #fff;
+        font-weight: 900;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 20px rgb(var(--theme-rgb), 0.4);
+        z-index: 20;
+        border: 2px solid var(--theme-color);
+        font-size: 0.875rem;
+    }
+
+    @media (width >= 768px) {
+        .hidden-inf-badge {
+            right: -1.5rem;
+        }
+    }
+
+    .hidden-inf-card:hover .hidden-inf-badge {
+        transform: rotate(var(--badge-rotation)) scale(1.1);
+    }
+
+    .hidden-inf-card-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--theme-color);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .hidden-inf-icon-wrapper {
+        padding: 0.5rem;
+        background-color: rgb(var(--theme-rgb), 0.1);
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hidden-inf-icon {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .hidden-inf-card-graphic {
+        height: 14rem;
+        background: linear-gradient(to bottom right, #1e293b, #0f172a);
+        border-radius: 1rem;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #334155;
+        transition: box-shadow 0.3s;
+    }
+
+    .hidden-inf-card:hover .hidden-inf-card-graphic {
+        box-shadow: 0 0 30px rgb(var(--theme-rgb), 0.2);
+    }
+
+    .reduflacion-bag {
+        position: relative;
+        width: 8rem;
+        height: 10rem;
+        background-color: #e2e8f0;
+        border-radius: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        padding-bottom: 1rem;
+        overflow: hidden;
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        transform: rotate(3deg);
+    }
+
+    .reduflacion-bag-air {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60%;
+        background: linear-gradient(to bottom, rgb(186 230 253 / 0.5), transparent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .reduflacion-wind-icon {
+        width: 3rem;
+        height: 3rem;
+        color: rgb(2 132 199 / 0.5);
+    }
+
+    .reduflacion-bag-content {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 40%;
+        background-color: #f59e0b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .reduflacion-bag-text {
+        font-size: 0.625rem;
+        font-weight: bold;
+        color: #78350f;
+    }
+
+    .reduflacion-new-label {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background-color: #dc2626;
+        color: #fff;
+        font-size: 0.5rem;
+        font-weight: bold;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.125rem;
+    }
+
+    .reduflacion-graphic-legend {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        background-color: rgb(0 0 0 / 0.8);
+        backdrop-filter: blur(4px);
+        color: #fff;
+        font-size: 0.75rem;
+        font-family: monospace;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        border: 1px solid rgb(255 255 255 / 0.1);
+    }
+
+    .legend-row-alert {
+        color: #ec4899;
+        font-weight: bold;
+    }
+
+    .receipt-card {
+        padding: 1.5rem;
+        background-color: #fff;
+        color: #000;
+        font-family: monospace;
+        font-size: 0.75rem;
+        transform: rotate(-2deg);
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        max-width: 240px;
+        width: 100%;
+        border-radius: 0.25rem;
+        position: relative;
+    }
+
+    .receipt-badge {
+        position: absolute;
+        top: -0.75rem;
+        left: -0.75rem;
+        background-color: #facc15;
+        color: #000;
+        font-weight: bold;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.625rem;
+        box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+        transform: rotate(12deg);
+    }
+
+    .receipt-title {
+        border-bottom: 2px solid #000;
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 900;
+        font-size: 0.875rem;
+    }
+
+    .receipt-items {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .receipt-item-removed {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        opacity: 0.4;
+        text-decoration: line-through #ef4444 2px;
+    }
+
+    .receipt-item-added {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #15803d;
+        font-weight: bold;
+        background-color: #f0fdf4;
+        padding: 0 0.25rem;
+        margin: 0 -0.25rem;
+        border-radius: 0.125rem;
+    }
+
+    .premium-columns-wrapper {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-end;
+        position: relative;
+    }
+
+    .premium-column-high {
+        width: 6rem;
+        height: 8rem;
+        background: linear-gradient(to top, #581c87, #9333ea);
+        border-radius: 0.5rem 0.5rem 0 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0.5rem;
+        border: 2px solid #c084fc;
+        box-shadow: 0 0 20px rgb(168 85 247 / 0.6);
+        z-index: 10;
+        transform: scale(1.1);
+    }
+
+    .premium-col-label {
+        font-size: 0.5rem;
+        letter-spacing: 0.1em;
+        color: #f3e8ff;
+        text-transform: uppercase;
+        margin-bottom: 0.25rem;
+    }
+
+    .premium-col-title {
+        font-size: 1.125rem;
+        font-weight: 900;
+        color: #fff;
+        line-height: 1;
+    }
+
+    .premium-col-price {
+        margin-top: 0.5rem;
+        background-color: #fff;
+        color: #581c87;
+        font-size: 0.75rem;
+        font-weight: bold;
+        padding: 0.125rem 0.5rem;
+        border-radius: 9999px;
+    }
+
+    .premium-column-low {
+        width: 4rem;
+        height: 5rem;
+        background-color: #374151;
+        border-radius: 0.5rem 0.5rem 0 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #4b5563;
+        opacity: 0.3;
+        filter: grayscale(100%) blur(1px);
+    }
+
+    .premium-col-label-low {
+        font-size: 0.5rem;
+        color: #9ca3af;
+    }
+
+    .premium-col-price-low {
+        margin-top: 0.25rem;
+        background-color: #4b5563;
+        color: #9ca3af;
+        font-size: 0.5rem;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.125rem;
+        text-decoration: line-through;
+    }
+
+    .premium-badge-soldout {
+        position: absolute;
+        bottom: -0.5rem;
+        left: 7rem;
+        color: #ef4444;
+        font-weight: bold;
+        font-size: 0.75rem;
+        transform: rotate(12deg);
+    }
+
+    .shadow-screen-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .shadow-screen-monitor {
+        width: 8rem;
+        height: 6rem;
+        border: 4px solid rgb(6 182 212 / 0.3);
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(0 0 0 / 0.5);
+        position: relative;
+    }
+
+    .shadow-screen-icon {
+        width: 4rem;
+        height: 4rem;
+        color: #06b6d4;
+    }
+
+    .shadow-screen-error {
+        position: absolute;
+        bottom: -1.5rem;
+        width: 100%;
+        text-align: center;
+        background-color: #dc2626;
+        color: #fff;
+        font-size: 0.625rem;
+        font-weight: bold;
+        padding: 0.25rem 0;
+        transform: rotate(6deg);
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+        border: 1px solid rgb(255 255 255 / 0.2);
+    }
+
+    .shadow-screen-footer {
+        margin-top: 2rem;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .footer-text {
+        font-size: 0.75rem;
+        color: #94a3b8;
+        background-color: #1e293b;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        border: 1px solid #334155;
+    }
+
+    .hidden-inf-tagline {
+        color: #fff;
+        font-size: 1.125rem;
+        font-weight: bold;
+        margin-bottom: 0.75rem;
+        font-style: italic;
+    }
+
+    .hidden-inf-description {
+        color: #94a3b8;
+        line-height: 1.6;
+        font-size: 0.875rem;
+    }
+
+    .hidden-inf-description strong {
+        color: #fff;
+    }
+
+    .hidden-inf-source-link {
+        font-size: 0.75rem;
+        color: var(--theme-color);
+        text-decoration: none;
+        margin-top: 0.5rem;
+        display: block;
+        opacity: 0.7;
+    }
+
+    .hidden-inf-source-link:hover {
+        opacity: 1;
+        text-decoration: underline;
+    }
+
+    .hidden-inf-share-btn {
+        position: absolute;
+        bottom: 1rem;
+        right: 1.5rem;
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: #64748b;
+        background: none;
+        border: none;
+        cursor: pointer;
+        opacity: 0.5;
+        padding: 0;
+    }
+
+    .hidden-inf-card:hover .hidden-inf-share-btn {
+        opacity: 1;
+    }
+</style>

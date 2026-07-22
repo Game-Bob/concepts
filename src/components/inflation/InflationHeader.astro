@@ -1,0 +1,56 @@
+---
+import type { InflationLocaleData } from "../../concepts/inflation/types";
+
+interface Props {
+    locale: InflationLocaleData;
+}
+
+const { locale } = Astro.props;
+---
+
+<div class="inf-header">
+    <h1 class="inf-header-title">{locale.cardTitle}</h1>
+    <p class="inf-header-subtitle">{locale.headerSubtitle}</p>
+    <slot />
+</div>
+
+<style>
+    .inf-header {
+        max-width: 56rem;
+        width: 100%;
+        text-align: center;
+        z-index: 10;
+        margin: 0 auto;
+    }
+
+    .inf-header-title {
+        font-size: clamp(2.25rem, 8vw, 3.75rem);
+        font-weight: 900;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.05em;
+        line-height: 1.1;
+    }
+
+    .theme-light .inf-header-title {
+        color: #78350f;
+    }
+
+    .theme-dark .inf-header-title {
+        color: #fbbf24;
+    }
+
+    .inf-header-subtitle {
+        font-size: 1.25rem;
+        opacity: 0.7;
+        margin-bottom: 3rem;
+        font-family: monospace;
+    }
+
+    .theme-light .inf-header-subtitle {
+        color: #78350f;
+    }
+
+    .theme-dark .inf-header-subtitle {
+        color: #fcd34d;
+    }
+</style>

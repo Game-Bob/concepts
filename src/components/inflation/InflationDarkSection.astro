@@ -1,0 +1,198 @@
+---
+import InflationEffort from "./InflationEffort.astro";
+import InflationMoneyIllusionChart from "./InflationMoneyIllusionChart.astro";
+import type { InflationLocaleData } from "../../concepts/inflation/types";
+
+interface Props {
+    locale: InflationLocaleData;
+}
+
+const { locale } = Astro.props;
+---
+
+<section class="inf-dark-section">
+    <div class="disclaimer-header">
+        <div class="disclaimer-bg-gradient"></div>
+        <h2 class="disclaimer-bg-text">DISCLAIMER</h2>
+        <h2 class="disclaimer-fg-text">Disclaimer</h2>
+    </div>
+
+    <div class="disclaimer-body">
+        <div class="disclaimer-prose">
+            <p class="text-large" set:html={locale.disclaimerText} />
+
+            <InflationMoneyIllusionChart locale={locale} />
+
+            <hr class="disclaimer-divider" />
+
+            <p class="disclaimer-paragraph" set:html={locale.disclaimerEffortP1} />
+
+            <p class="disclaimer-paragraph" set:html={locale.disclaimerEffortP2} />
+        </div>
+
+        <div class="effort-container">
+            <InflationEffort locale={locale} />
+        </div>
+
+        <div class="disclaimer-prose disclaimer-footer-note">
+            <h3 class="disclaimer-h3">{locale.disclaimerProductivityTitle}</h3>
+            <p class="disclaimer-desc" set:html={locale.disclaimerProductivityText} />
+        </div>
+    </div>
+</section>
+
+<style>
+    .inf-dark-section {
+        background-color: #020617;
+        color: #e2e8f0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .disclaimer-header {
+        position: relative;
+        height: 8rem;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .disclaimer-bg-gradient {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, #fffbeb, #020617);
+    }
+
+    .theme-dark .disclaimer-bg-gradient {
+        background: linear-gradient(to bottom, #18181b, #020617);
+    }
+
+    .disclaimer-bg-text {
+        font-size: clamp(7rem, 20vw, 11rem);
+        font-weight: 900;
+        color: #020617;
+        opacity: 0.1;
+        user-select: none;
+        letter-spacing: -0.05em;
+        line-height: 1;
+        mix-blend-mode: overlay;
+    }
+
+    .disclaimer-fg-text {
+        position: absolute;
+        font-size: clamp(2rem, 8vw, 3.75rem);
+        font-weight: 900;
+        color: #f43f5e;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        z-index: 10;
+    }
+
+    .disclaimer-body {
+        padding: 6rem 0;
+        position: relative;
+    }
+
+    .disclaimer-prose {
+        max-width: 48rem;
+        margin: 0 auto;
+        padding: 0 2.5rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    .text-large {
+        font-size: 1.25rem;
+        line-height: 1.75;
+        color: #cbd5e1;
+        font-weight: 300;
+        margin-bottom: 2rem;
+    }
+
+    .text-highlight-white {
+        color: #fff;
+        font-weight: 700;
+    }
+
+    .text-highlight-green {
+        color: #34d399;
+        font-weight: 700;
+    }
+
+    .disclaimer-divider {
+        border: 0;
+        border-top: 1px solid #1e293b;
+        margin: 3rem 0;
+    }
+
+    .disclaimer-paragraph {
+        line-height: 1.75;
+        margin-bottom: 1.5rem;
+        font-size: 1.125rem;
+    }
+
+    .effort-container {
+        position: relative;
+        z-index: 10;
+        padding: 0 1rem;
+    }
+
+    .disclaimer-footer-note {
+        margin-top: 4rem;
+    }
+
+    .disclaimer-h3 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #fff;
+        margin-bottom: 1rem;
+    }
+
+    .disclaimer-desc {
+        color: #94a3b8;
+        line-height: 1.75;
+        font-size: 1.125rem;
+    }
+
+    :global(.theme-dark) .inf-dark-section {
+        background-color: #f3eee2;
+        color: #292524;
+        border-block: 1px solid #d6d3d1;
+    }
+
+    :global(.theme-dark) .disclaimer-bg-gradient {
+        background: linear-gradient(to bottom, #0c0a09, #f3eee2 88%);
+    }
+
+    :global(.theme-dark) .disclaimer-bg-text {
+        color: #7f1d1d;
+        opacity: 0.14;
+        mix-blend-mode: multiply;
+    }
+
+    :global(.theme-dark) .text-large {
+        color: #44403c;
+    }
+
+    :global(.theme-dark) .disclaimer-divider {
+        border-color: #d6d3d1;
+    }
+
+    :global(.theme-dark) .disclaimer-h3 {
+        color: #1c1917;
+    }
+
+    :global(.theme-dark) .disclaimer-desc {
+        color: #57534e;
+    }
+
+    :global(.theme-dark) .text-large :global(.text-highlight-white) {
+        color: #1c1917;
+    }
+
+    :global(.theme-dark) .disclaimer-paragraph :global(.text-highlight-green) {
+        color: #047857;
+    }
+</style>

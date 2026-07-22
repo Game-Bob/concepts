@@ -1,0 +1,76 @@
+---
+import InflationHeader from "./inflation/InflationHeader.astro";
+import InflationBill from "./inflation/InflationBill.astro";
+import InflationSlider from "./inflation/InflationSlider.astro";
+import InflationCases from "./inflation/InflationCases.astro";
+import InflationInfo from "./inflation/InflationInfo.astro";
+import InflationDarkSection from "./inflation/InflationDarkSection.astro";
+import InflationHiddenTypes from "./inflation/InflationHiddenTypes.astro";
+import InflationSources from "./inflation/InflationSources.astro";
+import InflationPersonalNote from "./inflation/InflationPersonalNote.astro";
+import InflationIconRegistry from "./inflation/InflationIconRegistry.astro";
+import type { InflationLocaleData } from "../concepts/inflation/types";
+
+interface Props {
+    locale: InflationLocaleData;
+}
+
+const { locale } = Astro.props;
+const itemsJson = JSON.stringify(locale.items);
+---
+
+<div class="inf-experience-wrapper" data-items={itemsJson}>
+    <div class="inf-main-container">
+        <InflationHeader locale={locale}>
+            <InflationBill locale={locale} />
+            <InflationSlider />
+            <InflationCases locale={locale} />
+        </InflationHeader>
+
+        <InflationInfo locale={locale} />
+    </div>
+
+    <InflationDarkSection locale={locale} />
+
+    <InflationHiddenTypes locale={locale} />
+
+    <InflationSources locale={locale} />
+    <InflationPersonalNote locale={locale} />
+    <InflationIconRegistry />
+</div>
+
+<script>
+    import { initInflationRuntime } from "../concepts/inflation/runtime";
+
+    const container = document.querySelector<HTMLElement>(".inf-experience-wrapper");
+    if (container) {
+        initInflationRuntime(container);
+    }
+</script>
+
+<style>
+    .inf-experience-wrapper {
+        width: 100%;
+    }
+
+    .inf-main-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(2.5rem, 6vw, 4rem) 1rem 1rem;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .theme-light .inf-main-container {
+        background-color: #fffbeb;
+        color: #78350f;
+    }
+
+    .theme-dark .inf-main-container {
+        background-color: #0c0a09;
+        color: #fef3c7;
+    }
+</style>

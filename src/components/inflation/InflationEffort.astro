@@ -1,0 +1,415 @@
+---
+import type { InflationLocaleData } from "../../concepts/inflation/types";
+
+interface Props {
+    locale: InflationLocaleData;
+}
+
+const { locale } = Astro.props;
+---
+
+<section class="inf-effort-section" id="effort-calculator">
+    <div class="inf-effort-header">
+        <div class="inf-effort-header-text">
+            <h3 class="inf-effort-header-title">{locale.effortTitle}</h3>
+            <p class="inf-effort-header-subtitle">{locale.effortSubtitle}</p>
+        </div>
+
+        <div class="inf-salary-input-container">
+            <div class="inf-input-relative">
+                <span class="inf-currency-symbol">€</span>
+                <input
+                    type="number"
+                    id="user-salary"
+                    value="25000"
+                    class="inf-salary-input"
+                    step="1000"
+                />
+            </div>
+            <span class="inf-salary-input-label">{locale.effortPerYear}</span>
+        </div>
+
+        <button id="reset-salary" class="inf-reset-btn">{locale.effortUseAverageBtn}</button>
+    </div>
+
+    <div class="inf-comparisons-grid">
+        {
+            locale.effortComparisons.map((item) => (
+                <div
+                    class="inf-comparison-card"
+                    data-base-effort={item.now.effortValue}
+                    data-cost={item.now.cost.replace(".", "").replace("€", "").replace(",", ".")}
+                >
+                    <div class="inf-comparison-card-inner">
+                        <div class="inf-comparison-card-header">
+                            <div class="inf-comparison-card-title-group">
+                                <div class="inf-comparison-icon-container">
+                                    <div class="inf-comparison-icon" data-icon={item.icon} />
+                                </div>
+                                <h3 class="inf-comparison-title">{item.title}</h3>
+                            </div>
+
+                            <button
+                                class="inf-comparison-share-btn"
+                                title={locale.shareText}
+                                data-share-btn
+                                data-share-title={item.shareTitle}
+                                data-then-year={item.then.year}
+                                data-then-effort={item.then.effort}
+                                data-now-year={item.now.year}
+                                data-now-effort={item.now.effort}
+                                data-share-text={`${item.then.year}: ${item.title} (${item.then.effort}) vs ${item.now.year} (${item.now.effort})`}
+                            >
+                                <svg class="inf-share-icon" viewBox="0 0 24 24">
+                                    <path
+                                        fill="currentColor"
+                                        d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="inf-comparison-grid-layout">
+                            <div class="inf-vertical-divider" />
+
+                            <div class="inf-comparison-col-then">
+                                <div class="inf-comparison-col-header">
+                                    <span class="inf-year-text-then">{item.then.year}</span>
+                                    <span class="inf-col-badge-then">{locale.effortGoodEra}</span>
+                                </div>
+
+                                <div class="inf-bar-container">
+                                    <div
+                                        class="inf-progress-bar-then"
+                                        style={`width: ${item.then.effortValue}%`}
+                                    />
+                                    <div class="inf-progress-bar-text-container">
+                                        <div class="inf-progress-bar-content">
+                                            <span class="inf-effort-value-text">
+                                                {item.then.effort}
+                                            </span>
+                                            <span class="inf-effort-unit">
+                                                {locale.effortWorkSuffix}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="inf-col-footer">
+                                    <span>
+                                        {locale.effortSalaryLabel}:{" "}
+                                        <span class="inf-highlight-grey">{item.then.salary}</span>
+                                    </span>
+                                    <span>
+                                        {locale.effortCostLabel}:{" "}
+                                        <span class="inf-highlight-grey">{item.then.cost}</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="inf-comparison-col-now">
+                                <div class="inf-comparison-col-header">
+                                    <span class="inf-year-text-now">{item.now.year}</span>
+                                    <span class="inf-col-badge-now">
+                                        {locale.effortHarshReality}
+                                    </span>
+                                </div>
+
+                                <div class="inf-bar-container-interactive">
+                                    <div
+                                        class="inf-progress-bar-now"
+                                        style={`width: ${item.now.effortValue}%`}
+                                    />
+                                    <div class="inf-progress-bar-text-container">
+                                        <div class="inf-progress-bar-content">
+                                            <span class="inf-effort-value-text inf-effort-text-interactive">
+                                                {item.now.effort}
+                                            </span>
+                                            <span class="inf-effort-unit">
+                                                {locale.effortWorkSuffix}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="inf-col-footer">
+                                    <span>
+                                        {locale.effortSalaryLabel}:{" "}
+                                        <span class="inf-user-salary-display">
+                                            {item.now.salary}
+                                        </span>
+                                    </span>
+                                    <span>
+                                        {locale.effortCostLabel}:{" "}
+                                        <span class="inf-user-cost-display">{item.now.cost}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+
+    <div class="inf-effort-footer-note">
+        <p class="inf-effort-footer-text">
+            {locale.effortFooterNote}
+        </p>
+    </div>
+</section>
+
+<style>
+    .inf-effort-section {
+        max-width: 56rem;
+        margin: 0 auto;
+    }
+
+    .inf-effort-header {
+        background-color: #0f172a;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border: 1px solid #1e293b;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        text-align: center;
+    }
+
+    @media (width >= 768px) {
+        .inf-effort-header {
+            flex-direction: row;
+            justify-content: space-between;
+            text-align: left;
+        }
+    }
+
+    .inf-effort-header-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .inf-effort-header-subtitle {
+        font-size: 0.875rem;
+        color: #94a3b8;
+    }
+
+    .inf-salary-input-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .inf-input-relative {
+        position: relative;
+    }
+
+    .inf-currency-symbol {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #94a3b8;
+        font-weight: bold;
+    }
+
+    .inf-salary-input {
+        background-color: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 0.5rem;
+        padding: 0.5rem 0.5rem 0.5rem 2rem;
+        color: #fff;
+        font-weight: bold;
+        width: 8rem;
+    }
+
+    .inf-salary-input-label {
+        color: #94a3b8;
+        font-size: 0.875rem;
+    }
+
+    .inf-reset-btn {
+        background: none;
+        border: none;
+        color: #38bdf8;
+        font-size: 0.75rem;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    .inf-comparisons-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (width >= 768px) {
+        .inf-comparisons-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    .inf-comparison-card {
+        background-color: #0f172a;
+        border: 1px solid #1e293b;
+        border-radius: 1rem;
+        padding: 1.5rem;
+    }
+
+    .inf-comparison-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .inf-comparison-card-title-group {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .inf-comparison-icon-container {
+        width: 2.5rem;
+        height: 2.5rem;
+        background-color: #1e293b;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #38bdf8;
+    }
+
+    .inf-comparison-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .inf-comparison-icon :global(svg) {
+        width: 1.5rem;
+        height: 1.5rem;
+        display: block;
+    }
+
+    .inf-comparison-title {
+        font-size: 1.125rem;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .inf-comparison-share-btn {
+        background: none;
+        border: none;
+        color: #64748b;
+        cursor: pointer;
+    }
+
+    .inf-share-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    .inf-comparison-grid-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .inf-comparison-col-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .inf-year-text-then {
+        color: #94a3b8;
+        font-weight: bold;
+    }
+
+    .inf-year-text-now {
+        color: #f43f5e;
+        font-weight: bold;
+    }
+
+    .inf-col-badge-then {
+        font-size: 0.75rem;
+        background-color: #1e293b;
+        color: #cbd5e1;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+    }
+
+    .inf-col-badge-now {
+        font-size: 0.75rem;
+        background-color: rgb(244 63 94 / 0.1);
+        color: #f43f5e;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+    }
+
+    .inf-bar-container,
+    .inf-bar-container-interactive {
+        height: 2.5rem;
+        background-color: #1e293b;
+        border-radius: 0.5rem;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+    }
+
+    .inf-progress-bar-then {
+        height: 100%;
+        background-color: #3b82f6;
+        border-radius: 0.5rem;
+    }
+
+    .inf-progress-bar-now {
+        height: 100%;
+        background-color: #f43f5e;
+        border-radius: 0.5rem;
+        transition: width 0.3s ease;
+    }
+
+    .inf-progress-bar-text-container {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        padding: 0 1rem;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .inf-col-footer {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        color: #64748b;
+    }
+
+    .inf-highlight-grey {
+        color: #cbd5e1;
+    }
+
+    .inf-user-salary-display {
+        color: #f43f5e;
+        font-weight: bold;
+    }
+
+    .inf-disclaimer-footer-container {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .inf-disclaimer-footer {
+        font-size: 0.75rem;
+        color: #64748b;
+    }
+</style>
