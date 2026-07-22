@@ -37,7 +37,8 @@ if (head !== remoteHead) {
     throw new Error("Tu main local no coincide con origin/main. Sincronízalo antes del release.");
 }
 
-const { version } = await import("../package.json", { with: { type: "json" } });
+const { default: packageJson } = await import("../package.json", { with: { type: "json" } });
+const { version } = packageJson;
 const match = /^(\d+)\.(\d+)\.(\d+)$/.exec(version);
 if (!match) {
     throw new Error(`La versión actual no es válida: ${version}`);
