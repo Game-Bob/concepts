@@ -15,7 +15,12 @@ const run = (command, args, options = {}) =>
     })?.trim();
 
 const git = (args, options) => run("git", args, options);
-const npm = process.platform === "win32" ? "npm.cmd" : "npm";
+const npmCli = process.env.npm_execpath;
+if (!npmCli) {
+    throw new Error("Ejecuta este release mediante npm run minor.");
+}
+
+const runNpm = (args, options) => run(process.execPath, [npmCli, ...args], options);
 
 const branch = git(["branch", "--show-current"], { capture: true });
 if (branch !== "main") {
@@ -55,11 +60,12 @@ try {
 }
 
 if (dryRun) {
+    runNpm(["--version"], { capture: true });
     console.log(`Todo correcto: npm run minor publicaría ${tag}.`);
     process.exit(0);
 }
 
-run(npm, ["version", nextVersion, "--no-git-tag-version"]);
+runNpm(["version", nextVersion, "--no-git-tag-version"]);
 git(["add", "package.json", "package-lock.json"]);
 git(["commit", "--no-verify", "-m", `release: ${tag}`]);
 git(["tag", "-a", tag, "-m", `Release ${tag}`]);
