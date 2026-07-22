@@ -344,6 +344,12 @@
     transition: opacity 0.3s;
 }
 
+.lb-modal.lb-hidden {
+    display: none;
+    visibility: hidden;
+    pointer-events: none;
+}
+
 .lb-modal-fade {
     opacity: 0;
 }

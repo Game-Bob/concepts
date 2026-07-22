@@ -8,12 +8,21 @@ const totalPages = spreads.length;
 
 const prevBtn = document.getElementById("prev-page") as HTMLButtonElement | null;
 const nextBtn = document.getElementById("next-page") as HTMLButtonElement | null;
-const shareBtn = document.getElementById("share-page");
-const book = document.getElementById("life-book");
+const shareBtn = document.getElementById("share-tear-btn");
+const book = document.getElementById("library-book");
 const warningModal = document.getElementById("tear-warning-modal");
 const warningContent = document.getElementById("tear-warning-content");
 const cancelTearBtn = document.getElementById("cancel-tear");
 const confirmTearBtn = document.getElementById("confirm-tear");
+const tornMessagesData = document.getElementById("torn-messages-data");
+
+const tornMessages: Record<string, string> = (() => {
+    try {
+        return JSON.parse(tornMessagesData?.dataset.messages || "{}");
+    } catch {
+        return {};
+    }
+})();
 
 const getTornPages = (): number[] =>
     JSON.parse(localStorage.getItem("life-book-torn-pages") || "[]");
@@ -67,16 +76,11 @@ function handleShareBtnState(tornPages: number[]) {
     }
 }
 
+const getTornMessage = (index: number, value = getActiveStatValue(index)) =>
+    (tornMessages[String(index)] || "").replaceAll("{val}", value);
+
 function fetchTornMessage(index: number, dynamicMsgEl: HTMLElement) {
-    const event = new CustomEvent("get-torn-message", {
-        detail: {
-            index,
-            callback: (msg: string) => {
-                dynamicMsgEl.textContent = msg;
-            },
-        },
-    });
-    document.dispatchEvent(event);
+    dynamicMsgEl.textContent = getTornMessage(index);
 }
 
 function updateTornPageContent(spread: Element, index: number) {
@@ -216,17 +220,9 @@ if (confirmTearBtn) {
         ) as HTMLElement | null;
         if (!activeSpread) return;
 
-        const val = getActiveStatValue(currentPage);
-        const event = new CustomEvent("get-torn-share-details", {
-            detail: {
-                index: currentPage,
-                val,
-                callback: (shareTitle: string, shareText: string) => {
-                    void performTearShare(activeSpread, shareTitle, shareText);
-                },
-            },
-        });
-        document.dispatchEvent(event);
+        const shareTitle = shareBtn.getAttribute("title") || document.title;
+        const shareText = getTornMessage(currentPage);
+        void performTearShare(activeSpread, shareTitle, shareText);
     });
 }
 

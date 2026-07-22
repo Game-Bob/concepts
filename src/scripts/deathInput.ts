@@ -27,10 +27,12 @@ function handleShowMonthInput() {
     }
 }
 
-if (!window.name.includes("__deathInputRegistered")) {
+const documentRoot = document.documentElement;
+
+if (documentRoot.dataset.deathInputRegistered !== "true") {
     document.addEventListener("show-death-year-input", handleShowYearInput);
     document.addEventListener("show-death-month-input", handleShowMonthInput);
-    window.name += "__deathInputRegistered";
+    documentRoot.dataset.deathInputRegistered = "true";
 }
 
 function setupSpineState(el: Element, isActive: boolean) {

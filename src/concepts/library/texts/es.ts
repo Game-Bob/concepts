@@ -1,8 +1,7 @@
 export const LIBRARY_ES_TEXTS = {
-    introGreeting:
-        "HOY NO ESPERABA VISITA. PERO YA QUE ESTÁIS AQUÍ, TENGO UN OBSEQUIO PARA VOSOTROS.",
-    intro1: "DISCULPAD LA MOLESTIA. HAY DEMASIADOS LIBROS AQUÍ Y PARECE QUE CADA VEZ SOIS MÁS. NECESITO AYUDA PARA LOCALIZAR EL VUESTRO.",
-    intro2: "¿EN QUÉ AÑO EMPEZASTEIS?",
+    introGreeting: "HOY NO ESPERABA VISITA. PERO YA QUE ESTÁ AQUÍ, TENGO UN OBSEQUIO PARA USTED.",
+    intro1: "DISCULPE LA MOLESTIA. HAY DEMASIADOS LIBROS AQUÍ Y PARECE QUE CADA VEZ HAY MÁS. NECESITO SU AYUDA PARA LOCALIZAR EL SUYO.",
+    intro2: "¿EN QUÉ AÑO EMPEZÓ?",
     intro3: "COMPRENDO. NECESITO MÁS PRECISIÓN. EL TIEMPO ES UN ASUNTO DELICADO Y LAS ESTANTERÍAS SON INFINITAS. <br><br> ¿Y EL MES?",
     confirmation:
         "AH, SÍ. AQUÍ ESTÁ. <br><br> VAYA... ES UN TOMO MÁS PESADO DE LO QUE ESPERABA. <br><br> VEAMOS QUÉ DICE.",
@@ -10,7 +9,7 @@ export const LIBRARY_ES_TEXTS = {
     months: ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"],
     warningTitle: "Advertencia",
     warningText:
-        "ARRANCAR ESTA PÁGINA PARA COMPARTIRLA LA CONSUMIRÁ PARA SIEMPRE. <br><br> NO PODRÉIS VOLVER A LEERLA JAMÁS. <br><br> ¿ESTÁIS SEGUROS?",
+        "ARRANCAR ESTA PÁGINA PARA COMPARTIRLA LA CONSUMIRÁ PARA SIEMPRE. <br><br> NO PODRÁ VOLVER A LEERLA JAMÁS. <br><br> ¿ESTÁ SEGURO?",
     cancelTear: "No, la conservaré",
     confirmTear: "Sí, arrancadla",
     shareTitle: "Arrancar página para compartir",
@@ -20,7 +19,7 @@ export const LIBRARY_ES_TEXTS = {
         leftFooter: "Edición Única • Volumen I",
         rightQuote: "UNA VIDA. CURIOSA COSA. UN PRINCIPIO, UN FINAL, Y MUCHO RUIDO EN MEDIO.",
         rightDesc:
-            "AQUÍ ESTÁ TODO. CADA INSTANTE. CADA SUSPIRO. NO FALTA NADA. ¿OS ATREVÉIS A MIRAR?",
+            "AQUÍ ESTÁ TODO. CADA INSTANTE. CADA SUSPIRO. NO FALTA NADA. ¿SE ATREVE A MIRAR?",
         rightHint: "Usa las flechas para pasar página",
     },
     pageHeart: {

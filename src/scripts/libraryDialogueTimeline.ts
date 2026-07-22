@@ -3,7 +3,7 @@ import { calculateLifeStats } from "../utils/libraryLogic";
 let currentYear: number | null = null;
 let currentMonth: number | null = null;
 
-const book = document.getElementById("life-book");
+const book = document.getElementById("library-book");
 const d0 = document.getElementById("death-dialogue-0");
 const d1 = document.getElementById("death-dialogue-1");
 const d2 = document.getElementById("death-dialogue-2");
