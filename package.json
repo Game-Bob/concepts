@@ -18,6 +18,11 @@
         "test": "vitest run",
         "audit": "npm audit --audit-level=low",
         "qa": "npm run check && npm run lint && npm run test && npm run build && npm run audit",
+        "cf:dry-run": "npm run build && wrangler deploy --dry-run",
+        "cf:preview": "npm run build && wrangler deploy --config wrangler.staging.jsonc",
+        "cf:deploy": "npm run build && wrangler deploy",
+        "cf:deployments": "wrangler deployments list",
+        "cf:rollback": "wrangler rollback",
         "prepare": "husky"
     },
     "dependencies": {
@@ -44,6 +49,10 @@
         "stylelint-declaration-strict-value": "1.11.1",
         "typescript": "5.9.3",
         "typescript-eslint": "8.49.0",
-        "vitest": "4.1.10"
+        "vitest": "4.1.10",
+        "wrangler": "4.113.0"
+    },
+    "overrides": {
+        "sharp": "^0.35.0"
     }
 }
