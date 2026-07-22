@@ -16,11 +16,6 @@
     overflow: visible;
     text-decoration: none;
     box-sizing: border-box;
-    z-index: 5;
-}
-
-.library-card:hover {
-    z-index: 50;
 }
 
 .library-card__double-card {
