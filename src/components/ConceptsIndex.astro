@@ -43,7 +43,7 @@ const concepts = CONCEPTS.map((concept) => ({
 <BaseLayout
     {language}
     {brand}
-    title={`${locale.title} - ${BRANDS[brand].name}`}
+    title={locale.title}
     description={locale.description}
     canonical={getConceptsIndexUrl(language)}
     alternates={getConceptsAlternateLinks()}
